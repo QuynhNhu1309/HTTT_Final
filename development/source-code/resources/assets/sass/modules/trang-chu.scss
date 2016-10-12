@@ -1,0 +1,15 @@
+body{
+    .right_col{
+        .row .tile_count{
+            margin-left: 15px;
+        }
+
+        .pagination{
+            padding-left: 75%;
+        }
+       
+    #datatable tr:hover {
+        background-color: $datatable-hover;
+        }
+    }
+}

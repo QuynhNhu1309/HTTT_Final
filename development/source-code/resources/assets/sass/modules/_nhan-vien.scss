@@ -1,0 +1,22 @@
+
+body{
+    .right_col{
+            .profile_content_table 
+            {
+                tr{
+                border-bottom: 1px dotted $black;
+                    td{
+                        height: 20px;
+                        width: 400px;
+
+                    }
+                    th{
+                        padding-left : 10%;
+                    }
+                }
+
+                
+            }
+   
+    }
+}
