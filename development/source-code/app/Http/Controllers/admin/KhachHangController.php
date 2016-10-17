@@ -10,4 +10,18 @@ use App\Http\Controllers\Controller;
 class KhachHangController extends Controller
 {
     //
+      public function getDanhSach ()
+    {
+        return view('admin.khachhang.danhsach');
+    }
+
+     public function getSua ()
+    {
+        return view('admin.khachhang.sua');
+    }
+
+    public function getThem ()
+    {
+       
+    }
 }

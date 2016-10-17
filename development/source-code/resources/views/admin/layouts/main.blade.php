@@ -18,17 +18,17 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
           
-            @include("admin.layouts.left_section"); 
+            @include("admin.layouts.left_section")
 
           </div>
         </div>
 
-
+<div class="top_nav">
         <!-- top navigation -->
-         @include('admin.layouts.top_navigation'); 
+         @include('admin.layouts.top_navigation')
         <!-- /top navigation -->
 
-
+</div>
 
         <!-- page content -->
         <div class="right_col" role="main">
