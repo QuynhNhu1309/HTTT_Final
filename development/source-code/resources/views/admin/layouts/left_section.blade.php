@@ -47,7 +47,7 @@
                  
                   <li><a><i class="fa fa-table"></i> Đơn hàng<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
+                      <li><a href="/admin/donhang/danhsach">Danh sách</a></li>
                       <li><a href="tables_dynamic.html">Table Dynamic</a></li>
                     </ul>
                   </li>

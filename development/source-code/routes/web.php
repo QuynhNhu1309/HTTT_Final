@@ -51,6 +51,22 @@ Route::group(['prefix'=>'admin'], function(){
 
     });
 
+    Route::group(['prefix'=>'donhang'], function(){
+        Route::get('danhsach','admin\DonHangController@index');
+
+        Route::get('{id}/sua','admin\DonHangController@edit');
+
+        Route::get('them','admin\DonHangController@create');
+
+        Route::delete('{id}/xoa','admin\DonHangController@destroy');
+
+        Route::post('/','admin\DonHangController@store');
+
+        Route::put('{id}','admin\DonHangController@update');
+
+        Route::get('{id}','admin\DonHangController@show');
+        
+    });
 
 });
 

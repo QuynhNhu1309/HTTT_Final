@@ -18,12 +18,68 @@ class MinxDatabaseSeeder extends Seeder
         $randomString=self::createRandomString();
         $quantityOfSanPhamRecords=100;
 
+        self::seedKhachHangTable();
+        self::seedTaiKhoanTable();
+        self::seedDonHangTable();
         // Then we will execute functions
-        self::seedDanhMucSanPhamTable();
-        self::seedSanPhamTable($randomString, $quantityOfSanPhamRecords);
-        self::seedGiaoDichTable($randomString, $quantityOfSanPhamRecords);
-        self::seedTaiKhoanTable($randomString, $quantityOfSanPhamRecords);
-        self::seedChiTietGiaoDichTable($quantityOfSanPhamRecords);
+        // self::seedDanhMucSanPhamTable();
+        // self::seedSanPhamTable($randomString, $quantityOfSanPhamRecords);
+        // self::seedGiaoDichTable($randomString, $quantityOfSanPhamRecords);
+        // self::seedTaiKhoanTable($randomString, $quantityOfSanPhamRecords);
+        // self::seedChiTietGiaoDichTable($quantityOfSanPhamRecords);
+    }
+
+    private function seedKhachHangTable()
+    {
+        DB::table('dbo.khachhang')->insert([
+            // 'id' => 1,
+            'MaKhachHang' => 1,
+            'HoTen' => 'Xuan',
+            'DiaChi' => '1',
+            'DienThoai' => '1',
+            'NgayDangKy' => '10/10/2016',
+            'NgayCapNhat' => '10/10/2016',
+            'idTaiKhoan' => 1,
+        ]);
+    }
+
+    private function seedTaiKhoanTable()
+    {
+        DB::table('dbo.taikhoan')->insert([
+            // 'id' => 1,
+            'MaTaiKhoan' => '1',
+            'HoTen' => 'Nhieu',
+            'GioiTinh' => 1,
+            'HinhDaiDien' => 'abx',
+            'Username' => 'abc',
+            'Pass' => 'abc',
+            'DiaChi' => 'abc',
+            'DienThoai' => '1',
+            'Email' => 'abc',
+            'NgayDangKy' => '10/10/2016',
+            'NgayCapNhat' => '10/10/2016',
+            'idGroup' => 1,
+            'Luong' => 1,
+            'idTinhTrang' => 1,
+        ]);
+    }
+
+    private function seedDonHangTable()
+    {
+        for($i=0;$i<100;$i++){
+            DB::table('dbo.donhang')->insert([
+                'MaDonHang' => 'DH01',
+                'idTaiKhoan' => 1,
+                'idKhachHang' => 1,
+                'ThoiDiemDatHang' => '10/10/2016',
+                'TenNguoiNhan' => 'abc',
+                'DTNguoiNhan' => '1',
+                'DiaChi' => '1',
+                'Ngaygiao' => '10/10/2016',
+                'TongTien' => 2,
+                'idTinhTrang' => 1,
+            ]);
+        }
     }
 
     private function createRandomString()
@@ -128,27 +184,27 @@ class MinxDatabaseSeeder extends Seeder
         }
     }
 
-    private function seedTaiKhoanTable($randomString, $quantityOfSanPhamRecords)
-    {
-        for($i=0;$i<$quantityOfSanPhamRecords;$i++){
-            $randomInteger= rand(1202055681,1362055681);
-            $randomDate = date("Y-m-d H:i:s",$randomInteger);
-            $randomString=str_shuffle($randomString);
-            DB::table('tai_khoan')->insert([
-                'ten_dang_nhap' => strtolower(str_random(10)),
-                'anh_dai_dien' => str_random(10),
-                'email' => str_random(10),
-                'mat_khau' =>  bcrypt('root'),
-                'gioi_tinh' => rand(0,1),
-                'ho' => str_random(10),
-                'ten' => str_random(10),
-                'so_dien_thoai' => '0'.rand(1000000000,129000000),
-                'dia_chi' => str_random(10),
-                'ma_kich_hoat' => str_random(20),
-                'tinh_trang' => rand(0,2),
-                'ngay_tao' => $randomDate,
-                'ngay_cap_nhat' => $randomDate,
-            ]);
-        }
-    }    
+    // private function seedTaiKhoanTable($randomString, $quantityOfSanPhamRecords)
+    // {
+    //     for($i=0;$i<$quantityOfSanPhamRecords;$i++){
+    //         $randomInteger= rand(1202055681,1362055681);
+    //         $randomDate = date("Y-m-d H:i:s",$randomInteger);
+    //         $randomString=str_shuffle($randomString);
+    //         DB::table('tai_khoan')->insert([
+    //             'ten_dang_nhap' => strtolower(str_random(10)),
+    //             'anh_dai_dien' => str_random(10),
+    //             'email' => str_random(10),
+    //             'mat_khau' =>  bcrypt('root'),
+    //             'gioi_tinh' => rand(0,1),
+    //             'ho' => str_random(10),
+    //             'ten' => str_random(10),
+    //             'so_dien_thoai' => '0'.rand(1000000000,129000000),
+    //             'dia_chi' => str_random(10),
+    //             'ma_kich_hoat' => str_random(20),
+    //             'tinh_trang' => rand(0,2),
+    //             'ngay_tao' => $randomDate,
+    //             'ngay_cap_nhat' => $randomDate,
+    //         ]);
+    //     }
+    // }    
 }
