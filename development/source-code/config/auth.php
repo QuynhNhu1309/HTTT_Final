@@ -35,10 +35,10 @@ return [
     |
     */
 
-    'guards' => [
+     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'tai_khoan',
+            'provider' => 'TaiKhoan',
         ],
 
         'api' => [
@@ -51,6 +51,8 @@ return [
             'provider' => 'quan_tri_vien',
         ],
     ],
+
+   
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +77,7 @@ return [
         //     'model' => App\User::class,
         // ],
 
-        'tai_khoan' => [
+        'TaiKhoan' => [
             'driver' => 'eloquent',
             'model' => App\TaiKhoan::class,
         ],

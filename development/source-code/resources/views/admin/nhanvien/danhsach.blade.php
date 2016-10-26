@@ -64,8 +64,8 @@
                           <td>System Architect</td>
                           <td>
                           <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                            <a href="/admin/nhanvien/sua" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                            <a href="/admin/nhanvien/sua" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                             <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
                           </center>
                           </td>

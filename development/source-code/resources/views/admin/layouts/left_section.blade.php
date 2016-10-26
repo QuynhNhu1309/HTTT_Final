@@ -39,8 +39,8 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> Thông tin cá nhân <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="">Nhân viên </a></li>
-                      <li><a href="index.php?key=">Khách hàng</a></li>
+                      <li><a href="{{ route('danh_sach_nhan_vien') }}">Nhân viên </a></li>
+                      <li><a href="{{ route('danh_sach_khach_hang') }}">Khách hàng</a></li>
                       
                     </ul>
                   </li>

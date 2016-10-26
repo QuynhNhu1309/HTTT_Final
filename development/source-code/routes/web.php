@@ -11,9 +11,15 @@
 |
 */
 
+Route::get('dangnhap', 'admin\DangNhapController@getDangNhap')->name('getDangNhap');
+Route::post('dangnhap', 'admin\DangNhapController@postDangNhap')->name('postDangNhap');
 
+Route::get('dangxuat','admin\DangNhapController@getDangXuat')->name('getDangXuat');
 
-Route::group(['prefix'=>'admin'], function(){
+Route::get('dangky','admin\DangKyController@getDangKy')->name('getDangKy');
+Route::post('dangky','admin\DangKyController@postDangKy')->name('postDangKy');
+
+Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], function(){
     //admin/theloai/danhsach
     Route::group(['prefix'=>'loaisanpham'], function(){
         Route::get('danhsach', 'admin\LoaiSanPhamController@getDanhSach');
@@ -34,7 +40,7 @@ Route::group(['prefix'=>'admin'], function(){
     });
 
     Route::group(['prefix'=>'nhanvien'], function(){
-        Route::get('danhsach','admin\NhanVienController@getDanhSach');
+        Route::get('danhsach','admin\NhanVienController@getDanhSach')->name('danh_sach_nhan_vien');
 
         Route::get('sua','admin\NhanVienController@getSua');
 
@@ -43,7 +49,7 @@ Route::group(['prefix'=>'admin'], function(){
     });
 
     Route::group(['prefix'=>'khachhang'], function(){
-        Route::get('danhsach','admin\KhachHangController@getDanhSach');
+        Route::get('danhsach','admin\KhachHangController@getDanhSach')->name('danh_sach_khach_hang');
 
         Route::get('sua','admin\KhachHangController@getSua');
 

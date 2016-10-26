@@ -28,10 +28,12 @@
 <script type="text/javascript" src="{{ URL::asset('packages/angular-froala/src/angular-froala.js')}}"></script>
 -->
 <!-- NHƯ: Bỏ script của datatable css -->
-<!-- Project CSS -->
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/app.css')}}">
+
 <!-- Custom Theme Style -->
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/custom.min.css')}}">
+
+<!-- Project CSS -->
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/app.css')}}">
 
 <!-- Angular App -->
 <!--
@@ -44,7 +46,7 @@
 
 <!-- Bootstrap -->
     <!-- NProgress -->
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/nprogress/nprogress.css')}}">
+    <!--Cmt temp <link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/nprogress/nprogress.css')}}">-->
     <!-- iCheck -->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/iCheck/skins/flat/green.css')}}">
     <!-- bootstrap-progressbar -->

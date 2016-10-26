@@ -6,23 +6,27 @@
               </div>
 
               <ul class="nav navbar-nav navbar-right">
+              @if(Auth::check())
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="../../assets/img/img.jpg" alt="">Hieu Minh
+                    <img src="../../assets/img/img.jpg" alt="">{{ Auth::user()->Username}}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
+                  
                     <li><a href="javascript:;"> Profile</a></li>
                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
+                        <span><a href="#">Settings</a></span>
                       </a>
                     </li>
                     <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="{{ route('getDangXuat') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                   
                   </ul>
                 </li>
+                 @endif
 
                 <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
