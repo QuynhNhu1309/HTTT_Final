@@ -47,8 +47,10 @@
                  
                   <li><a><i class="fa fa-table"></i> Đơn hàng<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/admin/donhang/danhsach">Danh sách</a></li>
-                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                      <li><a href="/admin/donhang/them">Tạo đơn hàng</a></li>
+                      <li><a href="/admin/donhang/danhsach">Danh sách đơn hàng</a></li>
+                      <li><a href="tables_dynamic.html">Đơn hàng chưa xử lý</a></li>
+                      <li><a href="tables_dynamic.html">Đơn hàng đã xử lý</a></li>
                     </ul>
                   </li>
 
