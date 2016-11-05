@@ -4,10 +4,6 @@
 
 @section('content')
 
-    @foreach ($dsDonHang as $donHang)
-        {{ $donHang -> TenNguoiNhan }}
-    @endforeach
-
     <!--Begin Content -->
 
     <div class="row tile_count">
@@ -17,7 +13,7 @@
                 <h2>
                 <ul class="breadcrumb">
                     <li><a href="/admin/donhang/danhsach">Đơn hàng</a></li>
-                    <li class="active">Danh sách</li>
+                    <li class="active">Danh sách đơn hàng</li>
                 </ul>
                 </h2>
               </div>
@@ -56,11 +52,11 @@
                       <tbody>
                        @foreach ($dsDonHang as $donHang)
                         <tr>
-                            <td>{{$donhang -> MaDonHang}}</td>
-                            <td>{{}}</td>
-                            <td>System Architect</td>
-                            <td>System Architect</td>
-                            <td>System Architect</td>
+                            <td>{{$donHang -> MaDonHang}}</td>
+                            <td>{{$donHang -> HoTen}}</td>
+                            <td>{{$donHang -> Ngaygiao}}</td>
+                            <td>{{$donHang -> TongTien}}</td>
+                            <td>{{$donHang -> idTinhTrang}}</td>
                             <td>
                             <center>
                               <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
@@ -70,70 +66,10 @@
                             </td>
                           </tr>
                         @endforeach
-                        
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                        </tr>
-                        
                       </tbody>
-                  
-
-                        
                     </table>
-                      
+
+
                       <div class="pagination_div">
                         <ul class="pagination pagination-sm">
                             <li><a href="#"><<</a></li>
@@ -144,10 +80,7 @@
                             <li><a href="#">5</a></li>
                             <li><a href="#">>></a></li>
                           </ul>
-
-                      
                       </div>
-
                   </div>
                 </div>
               </div>

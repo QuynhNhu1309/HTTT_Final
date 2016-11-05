@@ -17,8 +17,11 @@ class DonHangController extends Controller
      */
     public function index()
     {
-        $dsDonHang = DB::select('select * from dbo.donhang');
-        // $dsDonHang = ['Victoria'=>'asd'];
+        // $dsDonHang = DB::select('select * from dbo.donhang');
+        // $dsDonHang = DB::table('dbo.donhang')
+        //                 ->join('dbo.taikhoan', 'dbo.donhang.idTaiKhoan', '=', 'dbo.taikhoan.id')
+        //                 ->get();
+        $dsDonHang = DB::select('EXEC dbo.GetDonHang');
         return view('admin.donhang.danhsach')
                     ->with('dsDonHang', $dsDonHang);
     }
@@ -31,6 +34,7 @@ class DonHangController extends Controller
     public function create()
     {
         //
+        return view('admin.donhang.them');
     }
 
     /**
