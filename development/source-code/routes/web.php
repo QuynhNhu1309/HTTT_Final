@@ -10,7 +10,6 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-
 Route::get('dangnhap', 'admin\DangNhapController@getDangNhap')->name('getDangNhap');
 Route::post('dangnhap', 'admin\DangNhapController@postDangNhap')->name('postDangNhap');
 
@@ -22,20 +21,22 @@ Route::post('dangky','admin\DangKyController@postDangKy')->name('postDangKy');
 Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], function(){
     //admin/theloai/danhsach
     Route::group(['prefix'=>'loaisanpham'], function(){
-        Route::get('danhsach', 'admin\LoaiSanPhamController@getDanhSach');
-
-        Route::get('sua', 'admin\LoaiSanPhamController@getSua');
-
-        Route::get('them', 'admin\LoaiSanPhamController@getThem');
+        Route::get('danhsach', 'admin\LoaiSanPhamController@getDanhSach')->name('getLoaiSPList');
+        Route::get('xoa/{id}','admin\LoaiSanPhamController@getXoa')->name('getLoaiSPXoa')->where('id','[0-9]+');
+        Route::get('sua/{id}', 'admin\LoaiSanPhamController@getSua')->name('getLSPSua')->where('id','[0-9]+');
+        Route::post('sua/{id}', 'admin\LoaiSanPhamController@postSua')->name('postLSPSua')->where('id','[0-9]+');
+        Route::get('them', 'admin\LoaiSanPhamController@getThem')->name('getLSPThem');
+        Route::post('them', 'admin\LoaiSanPhamController@postThem')->name('postLSPThem');
 
     });
 
     Route::group(['prefix'=>'sanpham'], function(){
-        Route::get('danhsach','admin\SanPhamController@getDanhSach');
-
-        Route::get('sua','admin\SanPhamController@getSua');
-
-        Route::get('them','admin\SanPhamController@getThem');
+        Route::get('danhsach','admin\SanphamController@getDanhSach')->name('getSPList');
+        Route::get('xoa/{id}','admin\SanphamController@getXoa')->name('getSpXoa')->where('id','[0-9]+');
+        Route::get('sua/{id}','admin\SanphamController@getSua')->name('getSpSua')->where('id','[0-9]+');
+        Route::post('sua/{id}','admin\SanphamController@postSua')->name('postSpSua')->where('id','[0-9]+');
+        Route::get('them','admin\SanphamController@getThem')->name('getSpThem');
+        Route::post('them','admin\SanphamController@postThem')->name('postSpThem');
 
     });
 

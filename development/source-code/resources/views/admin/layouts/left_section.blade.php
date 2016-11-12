@@ -14,7 +14,7 @@
             </div>
             <div class="profile_info">
                     <span>Xin chào,</span>
-                    <h2>Minh Hiếu</h2>
+                    <h2>{{ Auth::user()->Username}}</h2>
             </div>
         </div>
 
@@ -33,8 +33,8 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Sản phẩm <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="index.php?link=the_loai">Loại sản phẩm</a></li>
-                      <li><a href="index.php?link=san_pham">Sản phẩm</a></li>
+                      <li><a href="{{ route('getLoaiSPList') }}">Loại sản phẩm</a></li>
+                      <li><a href="{{ route('getSPList') }}">Sản phẩm</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> Thông tin cá nhân <span class="fa fa-chevron-down"></span></a>
