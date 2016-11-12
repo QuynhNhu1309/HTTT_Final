@@ -32,7 +32,7 @@
 <!-- Custom Theme Style -->
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/custom.min.css')}}">
 
-<!-- Project CSS -->
+
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/app.css')}}">
 
 <!-- Angular App -->
@@ -102,3 +102,6 @@
 
     <!-- Custom Theme Scripts -->
     <script type="text/javascript" src="{{ URL::asset('js/custom.min.js')}}"></script>
+    <!-- Project CSS -->
+
+

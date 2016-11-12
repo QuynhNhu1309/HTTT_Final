@@ -65,80 +65,30 @@
                           <th>Họ tên</th>
                           <th>Địa chỉ</th>
                           <th>Điện thoại</th>
+                          <th><center><a href="/admin/khachhang/them" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Thêm</a></center></th>
                          
                         </tr>
                       </thead>
 
 
                       <tbody>
+                      @foreach($danhsach_khachhang as $khachhang)
                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
+                          <td>{{$khachhang->MaKhachHang}}</td>
+                          <td>{{$khachhang->HoTen}}</td>
+                          <td>{{$khachhang->DiaChi}}</td>
+                          <td>{{$khachhang->DienThoai}}</td>
                           <td>
                           <center>
                             <a href="/admin/khachhang/sua" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                            <a href="/admin/khachhang/sua/{{$khachhang->id}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                             <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
                           </center>
                           </td>
                           
                         </tr>
-
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
+                        @endforeach
+                        
                         </tr>
                         
                         </tbody>

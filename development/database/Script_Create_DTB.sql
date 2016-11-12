@@ -305,7 +305,7 @@ Insert into tinhtrang(TinhTrang, TenBang) values (N'Hết hàng', 'sanpham')
    GioiTinh tinyint,
    HinhDaiDien varchar(200),
    Username varchar(50) NOT NULL DEFAULT '',
-   Pass varchar(50) NOT NULL,
+   Pass varchar(255) NOT NULL,
    DiaChi nvarchar(255) DEFAULT NULL,
    DienThoai varchar(50) DEFAULT NULL,
    Email varchar(75) NOT NULL DEFAULT '',

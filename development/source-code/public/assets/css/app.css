@@ -15,8 +15,7 @@ body .right_col .profile_content_table tr {
   body .right_col .profile_content_table tr th {
     padding-left: 10%; }
 
-   body div.panel .panel-custom{
-       margin-top: 20%;
-   }
+body .panel.panel-custom {
+  margin-top: 20%; }
 
 /*# sourceMappingURL=app.css.map */

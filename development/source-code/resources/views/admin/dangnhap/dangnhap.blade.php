@@ -17,7 +17,7 @@
   <body>
     <br/>
     <div class="col-md-4 col-md-offset-4">
-        <div class="panel panel-custom" style="margin-top:20%;">
+        <div class="panel panel-custom">
             <div class="panel-heading"><center><strong><h3>ĐĂNG NHẬP</h3></strong></center></div>
             <div class="panel-body">
 
