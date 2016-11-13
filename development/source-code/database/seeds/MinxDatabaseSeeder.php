@@ -20,7 +20,7 @@ class MinxDatabaseSeeder extends Seeder
 
         self::seedKhachHangTable();
         //self::seedTaiKhoanTable();
-        //self::seedDonHangTable();
+        self::seedDonHangTable();
         // Then we will execute functions
         // self::seedDanhMucSanPhamTable();
         // self::seedSanPhamTable($randomString, $quantityOfSanPhamRecords);
