@@ -43,37 +43,43 @@
                 <div class="x_panel">
                  
                   <div class="x_content">
-                    
+                     @if(session('thongbao'))
+
+                  <div class="alert alert-success" fade in>
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('thongbao')}}
+                  </div>
+                  @endif
                     <table id="datatable" class="table table-striped table-bordered" name="datatable">
                       <thead>
                         <tr>
                           <th>STT</th>
                           <th>Mã SP</th>
-                          <th>Loại</th>
+                          <th>Loại SP</th>
                           <th>Tên SP</th>
                           <th>Số lượng</th>
-                          <th>Mô Tả</th>
                           <th>Giá bán</th>
-                          <th>Tình Trạng</th>
-                          <th><a href="{!! route('getSpThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></th>
+                          <th><center><a href="{!! route('getSpThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
                         
                          
                         </tr>
                       </thead>
                       <?php $stt = 0; ?>
                           @foreach($sp as $item)
-                          <?php $stt++; ?>
+                            @foreach($loaisp as $item_lsp)
+                          <?php
+                          if($item->idLoai == $item_lsp->id) 
+                          {
+                           $stt++; ?>
 
                       <tbody>
                         <tr>
                           <td>{!! $stt !!}</td>
                           <td>{!!  $item->MaSP !!}</td>
-                           <td>{!!  $item->idLoai !!}</td>
+                           <td>{!!  $item_lsp->TenLoai !!}</td>
                            <td>{!!  $item->TenSP !!}</td>
                            <td>{!!  $item->SoLuongTonKho !!}</td>
-                           <td>{!!  $item->MoTa !!}</td>
-                           <td>{!!  $item->GiaBan !!}</td>
-                           <td>{!!  $item->idTinhTrang !!}</td>     
+                           <td>{!!  $item->GiaBan !!}</td>    
                           <td>
                           <center>
                     
@@ -84,24 +90,12 @@
                           
                         </tr>
                         
-                    
-
+                          <?php } ?>
+                          @endforeach 
                        @endforeach 
                     </table>
-                      
-                      <div class="pagination_div">
-                        <strong>Tổng số sản phẩm:</strong> {!! $sp->total() !!}<br>
-                      <strong>Tổng số trang:</strong> {!! $sp->lastPage() !!}
-                        <ul class="pagination pagination-sm">
-                            <li><a href="{!! $sp->previousPageUrl() !!}"><<</a></li>
-                            @for ($i =1;$i <= $sp->lastPage(); $i = $i +1 )
-                            <li class="{!! ($sp->currentPage() == $i) ? 'active' : '' !!}"><a href="{!! $sp->url($i) !!}">{!! $i !!}</a></li>
-                            @endfor
-                            <li><a href="{!! $sp->nextPageUrl() !!}">>></a></li>
-                          </ul>
-
-                      
-                      </div>
+                       <div class="pagination"> {{ $sp->links() }} </div>
+                     
 
                   </div>
                 </div>

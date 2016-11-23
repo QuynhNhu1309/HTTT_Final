@@ -346,10 +346,12 @@ DROP TABLE users
    DienThoai varchar(50) DEFAULT NULL,
    NgayDangKy SMALLDATETIME,
    NgayCapNhat SMALLDATETIME,
-   idTaiKhoan int FOREIGN KEY (idTaiKhoan) references taikhoan(id),
+   idTaiKhoan int,
 )
 
+ALTER TABLE khachhang DROP FK__khachhang__idTai__276EDEB3
 
+DROP table khachhang
 ---------------------- ĐƠN HÀNG  ----------------------------
 DROP TABLE donhang
 CREATE TABLE  donhang (

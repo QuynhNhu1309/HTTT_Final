@@ -44,9 +44,12 @@ class LoaiSanPhamController extends Controller
        return view('admin.loaisanpham.them');
     }
 
-    public function postThem(Request $request){
-      $lsp            = new LoaiSanPham;
-      $lsp->MaLoai= $request ->txt_maloai_them;
+    public function postThem(Request $request)
+    {
+      $lsp   = new LoaiSanPham;
+      $MaLoai = DB::select("EXEC Them_Lay_Ma_Loai");
+       
+      $lsp->MaLoai =  $MaLoai[0]->MaLoai;
        $lsp->TenLoai = $request ->txt_tenloai_them;
        $lsp ->save();
        echo '<script type="text/javascript">
@@ -55,5 +58,15 @@ class LoaiSanPhamController extends Controller
           echo route('getLoaiSPList');
         echo'"
         </script>';
+    }
+
+     public function getXoa($id)
+    {
+      //$lsp = LoaiSanPham::find($id);
+			//$lsp->delete($id);
+      $sp = DB::select("EXEC Del_LoaiSP_SanPham ".$id);
+      //DB::select("SET ANSI_NULLS ON; SET ANSI_WARNINGS ON;EXEC [Del_LoaiSP_SanPham] $id;");
+      //DB::select("SET ANSI_NULLS ON; SET ANSI_WARNINGS ON;EXEC [storedprocedure] $param1,$param2;");
+       return redirect('admin/loaisanpham/danhsach')->with('thongbao', 'Xóa thành công');
     }
 }

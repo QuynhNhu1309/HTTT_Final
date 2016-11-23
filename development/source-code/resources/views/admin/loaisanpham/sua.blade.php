@@ -43,10 +43,19 @@
                     <br />
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="">
                         {{ csrf_field() }}
+                        @foreach($lsp as $item)
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên Loại: <span class="required">*</span>
+                        
+                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txt_maloai">Mã Loại: <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">@foreach($lsp as $item)
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" name="txt_maloai" required="required" class="form-control col-md-7 col-xs-12" value="{!!  $item->MaLoai !!}" readonly/>
+                        </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="txt_tenloai">Tên Loại: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" name="txt_tenloai" required="required" class="form-control col-md-7 col-xs-12" value="{!!  $item->TenLoai !!}"/>
                           @endforeach
                         </div>
@@ -56,7 +65,7 @@
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button type="submit" name="btnLSPSua" class="btn btn-primary">Sửa</button>
-                          <button type="submit" class="btn btn-success">Submit</button>
+                          <button type="reset" class="btn btn-success">Hủy</button>
                         </div>
                       </div>
 

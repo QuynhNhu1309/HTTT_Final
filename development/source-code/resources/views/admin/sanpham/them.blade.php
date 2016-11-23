@@ -37,26 +37,26 @@
                  
                       
                   <div class="x_content">
+
+                   @if(count($errors) > 0 )
+                  <div class="alert alert-danger" fade in>
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    @foreach($errors->all() as $err)
+                        {{ $err }}<br/>
+                    @endforeach
+                  </div>
+                  @endif
                     <br />
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mã SP: <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="txt_masp" required="required" class="form-control col-md-7 col-xs-12" value=""/>
-                          
-                        </div>
-
-                      </div>
+                      
 
                        <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Loại</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Loại sản phẩm</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="form-control" name="txt_loaisp">
-                            <option>Chọn</option>
                             @foreach($data as $item)
-                            <option value="{!! $item->MaLoai !!}">{!! $item->TenLoai !!}</option>
+                            <option value="{!! $item->id !!}">{!! $item->TenLoai !!}</option>
                             @endforeach
                           </select>
                         </div>
@@ -71,10 +71,18 @@
                       </div>
 
                        <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên SP: <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mô tả: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="txt_mota" required="required" class="form-control col-md-7 col-xs-12" value=""/>                          
+                          <!--<input type="text" name="txt_mota" required="required" class="form-control col-md-7 col-xs-12" value=""/>   -->  
+                          <textarea id="txt_mota" name="txt_mota" rows="7" required="required" class="form-control ckeditor col-md-7 col-xs-12" placeholder="Thêm mô tả vào đây"></textarea>                      
+                                <script type="text/javascript">
+                                      CKEDITOR.replace( 'txt_mota',
+                                      {
+                                        customConfig : 'config.js',
+                                        toolbar : 'simple'
+                                        })
+                              </script> 
                         </div>
                       </div>
 
@@ -113,49 +121,48 @@
                       <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh đại diện:</label>
                        <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="file" name="anh_1" id="file">
+                      <input type="file" name="anh_dai_dien" id="anh_1">
                       </div>
                       </div>
 
                       <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh chi tiết 1:</label>
                        <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="file" name="anh_ct_1" id="file">
+                      <input type="file" name="anh_ct_1" id="anh_ct_1">
                       </div>
                       </div>
 
                       <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh chi tiết 2:</label>
                        <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="file" name="anh_ct_2" id="file">
+                      <input type="file" name="anh_ct_2" id="anh_ct_2">
                       </div>
                       </div>
 
                       <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh chi tiết 3:</label>
                        <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="file" name="anh_ct_3" id="file">
+                      <input type="file" name="anh_ct_3" id="anh_ct_3">
                       </div>
                       </div>
 
-                      <div class="form-group">
+                      <!--<div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tình trạng</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="form-control" name="txt_tinhtrang">
-                            <option>Chọn</option>
                             @foreach($data1 as $item1)
                             <option value="{!! $item1->id !!}">{!! $item1->TinhTrang !!}</option>
                             @endforeach
                           </select>
                         </div>
-                      </div>
+                      </div>-->
 
                    
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button type="submit" name="btnLSPSua" class="btn btn-primary">Thêm</button>
-                          <button type="submit" class="btn btn-success">Submit</button>
+                          <button type="reset" class="btn btn-success">Hủy</button>
                         </div>
                       </div>
 

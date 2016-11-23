@@ -11,8 +11,8 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Sản phẩm</a></li>
-                    <li class="active">Loại sản phẩm</li>
+                    <li><a href="#">Thông tin cá nhân</a></li>
+                    <li class="active">Nhân viên</li>
                 </ul>
                 </h2>
               </div>
@@ -36,211 +36,81 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Default Example <small>Users</small></h2>
+                    <h2>Nhân viên</h2>
                     
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <p class="text-muted font-13 m-b-30">
-                      DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
-                    </p>
+
+                   @if(session('thongbao'))
+
+                  <div class="alert alert-success" fade in>
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('thongbao')}}
+                  </div>
+                  @endif
+                    
                     <table id="datatable" class="table table-striped table-bordered" name="datatable">
                       <thead>
                         <tr>
+                          <th>STT</th>
                           <th>Mã</th>
                           <th>Họ tên</th>
                           <th>Tên đăng nhập</th>
-                          <th>Tình trạng</th>
-                          <th>Chức năng</th>
+                          <th>Chức vụ</th>
+                          <th><center><a href="{!! route('get_nhan_vien_them') !!}" class="btn btn-info btn-xs"><i class="fa fa-plus-circle"></i> Thêm </a><center></th>
+                          
                         </tr>
                       </thead>
 
 
                       <tbody>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="/admin/nhanvien/sua" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="/admin/nhanvien/sua" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
 
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
+                      <?php
+                      
+                              $stt = 0;
+                              if(isset($danhsach_nhanvien))
+                              {
+                                
+                      ?>
+                      @foreach($danhsach_nhanvien as $item)
+                          <?php $stt++; ?>
+                        <tr>
+                          <td>{{ $stt}}</td>
+                          <td>{!! $item -> MaTaiKhoan !!}</td>
+                          <td>{!! $item -> HoTen !!}</td>
+                          <td>{!! $item -> Username !!}</td>
+                          <td><?php if($item -> idGroup == 1) echo 'Bán hàng';
+                                    else if ($item -> idGroup == 2)
+                                    echo 'Quản lý kho';
                           
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
+                          ?></td>
                           <td>
                           <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </center>
-                          </td>
-                          
-                        </tr>
-                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>System Architect</td>
-                          <td>
-                          <center>
-                            <a href="index.php?link=nhan_vien_chi_tiet" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                            <a href="{!! route('get_sua_nhanvien', ['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+                            <?php 
+                              if($item -> idTinhTrang == 4)
+                              {
+                            ?>
+                            <a href="{!! route('get_nhan_vien_an', ['id'=>$item->id]) !!}" class="btn btn-warning btn-xs" style ="width: 50px;"><i class="fa fa-low-vision"></i> Ẩn</a>
+
+                            <?php }
+                            else if($item -> idTinhTrang == 5)
+                            {
+                              ?>
+                              <a href="{!! route('get_nhan_vien_hien', ['id'=>$item->id]) !!}" class="btn btn-success btn-xs" style ="width: 50px;"><i class="fa fa-eye"></i>Hiện</a>
+
+
+                           <?php  } ?>
+                            
                           </center>
                           </td>
                           
                         </tr>
                         
+                        @endforeach
+                        <?php } ?>
+                         
                         
                         </tbody>
                   
@@ -248,8 +118,8 @@
                         
                     </table>
                       
-                      <div class="pagination_div">
-                        <ul class="pagination pagination-sm">
+                     <!-- <div class="pagination_div">
+                       <ul class="pagination pagination-sm">
                             <li><a href="#"><<</a></li>
                             <li><a href="#">1</a></li>
                             <li class="active"><a href="#">2</a></li>
@@ -257,10 +127,10 @@
                             <li><a href="#">4</a></li>
                             <li><a href="#">5</a></li>
                             <li><a href="#">>></a></li>
-                          </ul>
-
+                          </ul>-->
+                          <div class="pagination"> {{ $danhsach_nhanvien->links() }} </div>
                       
-                      </div>
+                      <!--</div> -->
 
                   </div>
                 </div>

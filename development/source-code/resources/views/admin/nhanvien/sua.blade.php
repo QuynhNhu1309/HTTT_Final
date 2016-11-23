@@ -12,8 +12,8 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Sản phẩm</a></li>
-                    <li class="active">Loại sản phẩm</li>
+                    <li><a href="{!! route('danh_sach_nhan_vien') !!}">Thông tin cá nhân</a></li>
+                    <li class="active">Nhân viên</li>
                 </ul>
                 </h2>
               </div>
@@ -36,30 +36,64 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>User Report <small>Activity report</small></h2>
+                    <h2>Nhân viên</h2>
                     
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
+
+                  @if(count($errors) > 0 )
+                  <div class="alert alert-danger" fade in>
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    @foreach($errors->all() as $err)
+                        {{ $err }}<br/>
+                    @endforeach
+                  </div>
+                  @endif
+                  @if(session('thongbao'))
+
+                  <div class="alert alert-success" fade in>
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('thongbao')}}
+                  </div>
+                  @endif
+                  <?php 
+
+                    if(isset($chi_tiet_nhan_vien))
+                    {
+
+                  ?>
+                  @foreach($chi_tiet_nhan_vien as $item)
+                    <form action="{{ URL::Route('post_sua_nhanvien',['id'=>$item->id]) }}" method="POST" name="form_sua_nv" ng-app="myApp_sua_nv" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                  
                     <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="../../assets/img/picture.jpg" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="{{asset('assets/img/'.$item->HinhDaiDien)}}" alt="Avatar" title="Change the avatar" width ="220px" height ="220px">
                         </div>
                       </div>
                       <h3>Samuel Doe</h3>
+                      <input type="file" name="upload_img" />
 
                       <ul class="list-unstyled user_data">
                         <li>
                             <div class="form-group">
+                                <br/>
                                 <label>Mã nhân viên</label>
-                                <input type="text" class="form-control border-input" readonly value="michael23">
+                                <input type="text" class="form-control border-input" readonly value="{!! $item->MaTaiKhoan !!}">
                             </div>
                         </li>
 
                         <li>
-                          <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
+                          <i class="fa fa-briefcase user-profile-icon"></i> 
+                          <?php
+                                if($item->idGroup ==1)
+                                echo 'Nhân viên bán hàng';
+                                else if ($item->idGroup ==2)
+                                echo "Quản lý kho";
+                          ?>
                         </li>
 
                         <li class="m-top-xs">
@@ -76,7 +110,7 @@
 
                       <div class="profile_title">
                         <div class="col-md-6">
-                          <h2>User Activity Report</h2>
+                          <h2>Thông tin chi tiết</h2>
                         </div>
                       </div>
                         
@@ -84,24 +118,25 @@
                         <div class="card">
                             <br/>
                             <div class="content">
-                                <form>
+                                
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Họ và tên</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="Company" value="Creative Code Inc.">
+                                                <input type="text" class="form-control border-input" name ="txt_hoten"  placeholder="Họ và tên" value="{!! $item ->HoTen !!}">
+                                                
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Tên đăng nhập</label>
-                                                <input type="text" class="form-control border-input" placeholder="Username" value="michael23">
+                                                <input type="text" class="form-control border-input" name ="txt_ten_dang_nhap" placeholder="Username" value="{!! $item->Username !!}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Email</label>
-                                                <input type="email" class="form-control border-input" placeholder="Email">
+                                                <label for="txt_email">Email</label>
+                                                <input type="email" class="form-control border-input" name="txt_email"placeholder="Email" value ="{!! $item->Email !!}">
                                             </div>
                                         </div>
                                     </div>
@@ -112,18 +147,18 @@
                                                 
                                                 <label>Giới tính</label>
                                                 <br/>
-                                                <input type="radio" name="gender" value="nam"> Nam
+                                                <input type="radio" name="gender" value="6" <?php if($item->GioiTinh == 6) echo "checked ='checked'"; ?>> Nam
                                                 <span style="padding-left: 5em;"></span>
-                                                <input type="radio" name="gender" value="nu"> Nữ
+                                                <input type="radio" name="gender" value="7" <?php if($item->GioiTinh == 7) echo "checked ='checked'"; ?>> Nữ
                                                 <span style="padding-left: 5em;"></span>
-                                                 <input type="radio" name="gender" value="nam"> Khác
+                                                 <input type="radio" name="gender" value="8" <?php if($item->GioiTinh == 8) echo "checked ='checked'"; ?>> Khác
                                                 <span style="padding-left: 6em;"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Số điện thoại</label>
-                                                <input type="text" class="form-control border-input" placeholder="Số điện thoại" value="Faker">
+                                                <input type="text" class="form-control border-input" placeholder="Số điện thoại" name ="txt_sdt" value="{!! $item->DienThoai !!}">
                                             </div>
                                         </div>
                                     </div>
@@ -132,13 +167,13 @@
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label>Địa chỉ</label>
-                                                <input type="text" class="form-control border-input" placeholder="Địa chỉ" value="">
+                                                <input type="text" class="form-control border-input" placeholder="Địa chỉ" name ="txt_diachi" value="{!! $item->DiaChi !!}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>CMND</label>
-                                                <input type="text" class="form-control border-input" placeholder="CMND" value="">
+                                                <label>Lương</label>
+                                                <input type="text" class="form-control border-input" placeholder="Lương" name ="txt_luong" value="{!! $item->Luong !!}">
                                             </div>
                                         </div>
                                     </div>
@@ -147,49 +182,36 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Ngày tạo</label>
-                                                
-                                           <div class='input-group date' id='datetimepicker1' data-provide="datepicker">
-                                    <input type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar" onclick="show_date();"></span>
-                                    </span>
-                                </div>
+                                                 <input type="text" class="form-control border-input" name ="txt_ngaytao" value="{!! $item->NgayDangKy !!}" readonly>
+                                           
                                             </div>
-                                        </div>
+                                            </div>
+                                    
                                         <div class="col-md-4">
-                                            <div class="form-group">
+                                            <div class="form-group">                              
                                                 <label>Ngày cập nhật</label>
-                                                <div class='input-group date' id='datetimepicker1' data-provide="datepicker">
-                                    <input type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar" onclick="show_date();"></span>
-                                    </span>
-                                </div>
-                            
-                                               
-                                            </div>
+                                                <input type="text" class="form-control border-input" name ="txt_ngaycapnhat" value="{!! $item->NgayCapNhat !!}" readonly>
+                                            </div>   
                                         </div>
+                                        
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Chức vụ</label>
-                                                <input type="text" class="form-control border-input" placeholder="Chức vụ">
+                                                <select class="form-control" name="cb_chucvu" id="cb_chucvu">
+
+                                                     <option value="1" <?php if($item->idGroup == 1) echo "selected"; ?>>Bán hàng</option>
+                                                    <option value="2" <?php if($item->idGroup == 2) echo "selected"; ?> >Quản lý kho</option>
+
+                                                 </select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>About Me</label>
-                                                <textarea rows="5" class="form-control border-input" placeholder="Here can be your description" value="Mike">Oh so, your weak rhyme
-You doubt I'll bother, reading into it
-I'll probably won't, left to my own devices
-But that's the difference in our opinions.</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>
+                                        <br/>
+                                        <button type="submit" class="btn btn-info btn-fill btn-wd">Cập nhật</button>
+                                        <button type="reset" class="btn btn-success btn-fill btn-wd">Hủy</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </form>
@@ -200,6 +222,11 @@ But that's the difference in our opinions.</textarea>
 
                      
                     </div>
+
+
+
+                        @endforeach
+                    <?php } //end if $chi_tiet_nhan_vien ?>
                   </div>
                 </div>
               </div>
@@ -207,5 +234,5 @@ But that's the difference in our opinions.</textarea>
           
         </div>
         <!-- /page content -->
-
+       
        @endsection

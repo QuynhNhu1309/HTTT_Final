@@ -40,15 +40,7 @@
                     <br />
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="">
                         {{ csrf_field() }}
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mã Loại: <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="txt_maloai_them" required="required" class="form-control col-md-7 col-xs-12" value=""/>
-                          
-                        </div>
-
-                      </div>
+                      
                        <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên Loại: <span class="required">*</span>
                         </label>

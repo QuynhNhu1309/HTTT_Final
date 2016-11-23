@@ -32,7 +32,7 @@ class DangKyController extends Controller
         $taiKhoanIns->Pass=Hash::make($matKhau);
         $taiKhoanIns->HoTen=$ten;
         $taiKhoanIns->idGroup =1;
-        $taiKhoanIns->NgayDangKy =date("Y-m-d H:i:s");
+        $taiKhoanIns->NgayDangKy = date("Y-m-d H:i:s");
         //$taiKhoanIns->idGroup =1;
         $taiKhoanIns->save();
 

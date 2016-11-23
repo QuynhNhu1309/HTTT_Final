@@ -18,7 +18,7 @@ class MinxDatabaseSeeder extends Seeder
         //$randomString=self::createRandomString();
         //$quantityOfSanPhamRecords=100;
 
-        self::seedKhachHangTable();
+        //self::seedKhachHangTable();
         //self::seedTaiKhoanTable();
         self::seedDonHangTable();
         // Then we will execute functions
@@ -71,8 +71,8 @@ class MinxDatabaseSeeder extends Seeder
         for($i=0;$i<40;$i++){
             DB::table('dbo.donhang')->insert([
                 'MaDonHang' => 'DH01',
-                'idTaiKhoan' => 1,
-                'idKhachHang' => 1,
+                'idTaiKhoan' => 9,
+                'idKhachHang' => 43,
                 'ThoiDiemDatHang' => '10/10/2016',
                 'TenNguoiNhan' => 'abc',
                 'DTNguoiNhan' => '1',

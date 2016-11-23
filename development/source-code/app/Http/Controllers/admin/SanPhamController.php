@@ -7,34 +7,66 @@ use App\Http\Controllers\Controller;
 use App\SanPham;
 use App\LoaiSanPham;
 use App\TinhTrang;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 class SanphamController extends Controller
 {
     //
     public function getDanhSach ()
     {
-        $data = DB::table('sanpham')
-        
-        ->paginate(15);
-    	return view('admin.sanpham.danhsach',['sp' => $data]);
+        $data = SanPham::paginate(15);
+        $loaisp = DB::table('loaisp')->get();
+    	return view('admin.sanpham.danhsach',['sp' => $data,'loaisp' => $loaisp]);
     }
 
 
     public function getThem(){
-        $data = DB::table('loaisp')
-        
-        ->get();
+        $data = DB::table('loaisp')->get();
 
-        $data1 = DB::table('TinhTrang')
-        
-        ->get();
+        $data1 = DB::table('TinhTrang')->where('TenBang','sanpham')->get();
         return view('admin.sanpham.them',['data'=>$data,'data1'=>$data1]);
 
     }
 
-    public function postThem(SPAddRequest $request){
+    public function postThem(Request $request){
         $sp           = new SanPham;
-      $sp->MaSP= $request ->txt_masp;
+        $MaSP = DB::select("EXEC Them_Lay_Ma_SP");
+        $sp->MaSP=  $MaSP[0]->MaSP;
+
+
+         $this ->validate($request, [
+                            'txt_tensp' => 'required|max:150|min:5',
+                            'txt_mota' => 'required|min:5',
+                            'txt_giaban' => 'required|numeric',
+                            'txt_giaban_hientai' => 'required|numeric',
+                            'txt_soluong' => 'required|numeric',
+                            'txt_nsx' => 'required',
+                            'anh_dai_dien' =>'required',
+                            
+
+                            ],
+                            ['txt_tensp.required'=>'Vui lòng nhập tên sản phẩm',
+                            'txt_tensp.max'=>'Tên sản phẩm chứa ít nhất 5 kí tự, nhiều nhất 150 kí tự',
+                            'txt_tensp.min'=>'Tên sản phẩm chứa ít nhất 5 kí tự, nhiều nhất 150 kí tự',
+
+                             'txt_mota.required'=>'Vui lòng nhập mô tả',
+                             'txt_mota.min'=>'Mô tả chứa ít nhất 5 kí tự', 
+
+                             'txt_giaban.required' => 'Vui lòng nhập giá bán',
+                             'txt_giaban.numeric' => 'Gía bán không phải số',
+
+                             'txt_giaban_hientai.required' => 'Vui lòng nhập giá bán hiện tại',
+                             'txt_giaban_hientai.numeric' => 'Gía bán hiện tại không phải số',
+
+
+                             'txt_soluong.required' => 'Vui lòng nhập số lượng',
+                             'txt_soluong.numeric' => 'Số lượng không phải số',
+
+                             'txt_nsx.required' => 'Vui lòng nhập nhà sản xuất',  
+
+                             'anh_dai_dien.required' => 'Vui lòng chọn hình đại diện',                       
+                            ]);
+
        $sp->idLoai = $request ->txt_loaisp;
        $sp->TenSP =$request->txt_tensp;
         /*)
@@ -52,8 +84,8 @@ class SanphamController extends Controller
        }
        */
        $sp->MoTa=$request->txt_mota;
-       $sp->NgayCapNhat=new DateTime();
-       $sp->NgayTao=new DateTime();
+       $sp->NgayCapNhat=date("Y-m-d H:i:s");
+       $sp->NgayTao=date("Y-m-d H:i:s");
        $sp->GiaBan= $request->txt_giaban;
        $sp->GiaBanHienTai= $request->txt_giaban_hientai;
        /*if(strlen($file) >0){
@@ -63,13 +95,43 @@ class SanphamController extends Controller
         $sp->AnhDaiDien=$filename
        }*/
 
-       
        $sp->SoLuongTonKho= $request->txt_soluong;
        $sp->NhaSanXuat=$request->txt_nsx;
-       $sp->idTinhTrang=$request->txt_tinhtrang;
+
+       if(Input::file('anh_dai_dien'))
+        {
+        $name_img = Input::file('anh_dai_dien')->getClientOriginalName();
+        Input::file('anh_dai_dien')->move("assets/img/", $name_img);
+     
+        $sp->AnhDaiDien = $name_img;
+        }
+
+        if(Input::file('anh_ct_1'))
+        {
+        $name_img_ct1 = Input::file('anh_ct_1')->getClientOriginalName();
+        Input::file('anh_ct_1')->move("assets/img/", $name_img_ct1);
+     
+        $sp->AnhCT1 = $name_img_ct1;
+        }
+
+        if(Input::file('anh_ct_2'))
+        {
+        $name_img_ct2 = Input::file('anh_ct_2')->getClientOriginalName();
+        Input::file('anh_ct_2')->move("assets/img/", $name_img_ct2);
+     
+        $sp->AnhCT2 = $name_img_ct2;
+        }
+
+        if(Input::file('anh_ct_3'))
+        {
+        $name_img_ct3 = Input::file('anh_ct_3')->getClientOriginalName();
+        Input::file('anh_ct_3')->move("assets/img/", $name_img_ct3);
+     
+        $sp->AnhCT3 = $name_img_ct3;
+        }
 
        $sp ->save();
-       return $sp;
+       return redirect('admin/sanpham/danhsach')->with('thongbao', 'Thêm thành công');
     }
 
     public function getXoa($id){
@@ -98,6 +160,85 @@ class SanphamController extends Controller
         ->get();
        return view('admin.sanpham.sua',['sps' => $data,'lsp' => $lsp]);
     }
+
+    public function postSua(Request $request,$id){
+         $this ->validate($request, [
+                            'txt_tensp' => 'required|max:150|min:5',
+                            'txt_mota' => 'required|min:5',
+                            'txt_giaban' => 'required|numeric',
+                            'txt_giaban_hientai' => 'required|numeric',
+                            'txt_soluong' => 'required|numeric',
+                            'txt_nsx' => 'required',
+
+                            ],
+                            ['txt_tensp.required'=>'Vui lòng nhập tên sản phẩm',
+                            'txt_tensp.max'=>'Tên sản phẩm chứa ít nhất 5 kí tự, nhiều nhất 150 kí tự',
+                            'txt_tensp.min'=>'Tên sản phẩm chứa ít nhất 5 kí tự, nhiều nhất 150 kí tự',
+
+                             'txt_mota.required'=>'Vui lòng nhập mô tả',
+                             'txt_mota.min'=>'Mô tả chứa ít nhất 5 kí tự', 
+
+                             'txt_giaban.required' => 'Vui lòng nhập giá bán',
+                             'txt_giaban.numeric' => 'Gía bán không phải số',
+
+                             'txt_giaban_hientai.required' => 'Vui lòng nhập giá bán hiện tại',
+                             'txt_giaban_hientai.numeric' => 'Gía bán hiện tại không phải số',
+
+
+                             'txt_soluong.required' => 'Vui lòng nhập số lượng',
+                             'txt_soluong.numeric' => 'Số lượng không phải số',
+
+                             'txt_nsx.required' => 'Vui lòng nhập nhà sản xuất',                       
+                            ]);
+
+       $sp = SanPham::find($id);
+       $sp->idLoai = $request ->txt_loaisp;
+       $sp->TenSP =$request->txt_tensp;
+       
+       $sp->MoTa=$request->txt_mota;
+       $sp->NgayCapNhat=date("Y-m-d H:i:s");
+       $sp->GiaBan= $request->txt_giaban;
+       $sp->GiaBanHienTai= $request->txt_giaban_hientai;
+       
+       $sp->SoLuongTonKho= $request->txt_soluong;
+       $sp->NhaSanXuat=$request->txt_nsx;
+
+       if(Input::file('anh_dai_dien'))
+        {
+        $name_img = Input::file('anh_dai_dien')->getClientOriginalName();
+        Input::file('anh_dai_dien')->move("assets/img/", $name_img);
+     
+        $sp->AnhDaiDien = $name_img;
+        }
+
+        if(Input::file('anh_ct_1'))
+        {
+        $name_img_ct1 = Input::file('anh_ct_1')->getClientOriginalName();
+        Input::file('anh_ct_1')->move("assets/img/", $name_img_ct1);
+     
+        $sp->AnhCT1 = $name_img_ct1;
+        }
+
+        if(Input::file('anh_ct_2'))
+        {
+        $name_img_ct2 = Input::file('anh_ct_2')->getClientOriginalName();
+        Input::file('anh_ct_2')->move("assets/img/", $name_img_ct2);
+     
+        $sp->AnhCT2 = $name_img_ct2;
+        }
+
+        if(Input::file('anh_ct_3'))
+        {
+        $name_img_ct3 = Input::file('anh_ct_3')->getClientOriginalName();
+        Input::file('anh_ct_3')->move("assets/img/", $name_img_ct3);
+     
+        $sp->AnhCT3 = $name_img_ct3;
+        }
+
+       $sp ->save();
+       return redirect('admin/sanpham/sua/'.$id)->with('thongbao', 'Sửa thành công');
+    }
+
 
     
 }

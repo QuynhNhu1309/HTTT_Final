@@ -18,7 +18,7 @@ class adminDangNhap_Middleware
     {
         if(Auth::check())
         {
-            if(Auth::user()->idGroup == 1)
+            if(Auth::user()->idGroup >= 1)
             {
                  return $next($request);
             }

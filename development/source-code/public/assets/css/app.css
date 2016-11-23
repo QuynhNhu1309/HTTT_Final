@@ -2,7 +2,8 @@ body .right_col .row .tile_count {
   margin-left: 15px; }
 
 body .right_col .pagination {
-  padding-left: 75%; }
+  padding-left: 20%;
+  display: inline !important; }
 
 body .right_col #datatable tr:hover {
   background-color: #f1f1f1; }
@@ -17,5 +18,11 @@ body .right_col .profile_content_table tr {
 
 body .panel.panel-custom {
   margin-top: 20%; }
+
+body .top_search .form-control {
+  border: 1px solid #555; }
+
+body .top_search .input-group-button button {
+  border: 1px solid #555; }
 
 /*# sourceMappingURL=app.css.map */

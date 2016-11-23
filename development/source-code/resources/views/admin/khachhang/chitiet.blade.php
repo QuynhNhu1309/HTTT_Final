@@ -48,29 +48,29 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mã khách hàng <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" value =" {!! $item -> MaKhachHang !!}">
+                          <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" readonly value =" {!! $item -> KH_MaKhachHang !!}">
                         </div>
                       </div>
-                      
+
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Họ tên <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" value =" {!! $item -> HoTen !!}">
+                          <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" readonly value =" {{ $item -> KH_HoTen }}">
                         </div>
                       </div>
-                      
-                      <div class="form-group">
+
+                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Địa chỉ <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12" value =" {!! $item -> DiaChi!!}">
+                          <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12" readonly value =" {!! $item -> KH_DiaChi !!}">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Điện thoại</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name" value =" {!! $item -> DienThoai !!}">
+                          <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name" readonly value =" {!! $item -> KH_DienThoai !!}">
                         </div>
                       </div>
                       
@@ -78,7 +78,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Ngày đăng ký <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" value =" {!! $item -> HoTen !!}">
+                          <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" readonly value =" {!! $item -> KH_NgayDangKy !!}">
                         </div>
                       </div>
                       
@@ -86,31 +86,28 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Ngày cập nhật <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                          <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" readonly value =" {!! $item -> KH_NgayCapNhat !!}">
                         </div>
                       </div>
                       
+                      
+                    
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Người tạo</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="select2_single form-control" tabindex="-1">
-                            <option></option>
-                            <option value="AK">Alaska</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MO">Missouri</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TX">Texas</option>
+                          <select class="select2_single form-control" tabindex="-1" readonly>
+                        
+                            <option value="" selected >{!! $item -> TK_HoTen !!}</option>
+
                           </select>
                         </div>
                       </div>
-                      
-                      
+                    
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button type="submit" class="btn btn-primary">Cancel</button>
-                          <button type="submit" class="btn btn-success">Submit</button>
+                          <a href ="{!! route('danh_sach_khach_hang') !!}"><button type="button" class="btn btn-primary">Trở về</button></a>
+                       
                         </div>
                       </div>
 

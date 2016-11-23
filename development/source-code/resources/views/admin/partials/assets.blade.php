@@ -15,6 +15,9 @@
 <script type="text/javascript" src="{{ URL::asset('packages/jquery/jquery.min.js')}}"></script>
 
 <script type="text/javascript" src="{{ URL::asset('packages/angular/angular.min.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('packages/bootstrap/js/bootstrap-datetimepicker.js')}}" charset="UTF-8"></script>
+<script type="text/javascript" src="{{ URL::asset('packages/bootstrap/js/bootstrap-datetimepicker.fr.js')}}"></script>
+
 <!--
 <script type="text/javascript" src="{{ URL::asset('packages/froala-editor/js/froala_editor.min.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('packages/froala-editor/js/plugins/align.min.js')}}"></script>
@@ -31,6 +34,7 @@
 
 <!-- Custom Theme Style -->
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/custom.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/bootstrap-datetimepicker.min.css')}}">
 
 
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/app.css')}}">
@@ -59,6 +63,8 @@
     <script type="text/javascript" src="{{ URL::asset('js/datatable.js')}}"></script>
 
     <!-- jQuery -->
+    <script type="text/javascript" src="{{ URL::asset('packages/jquery/jquery-1.8.3.min.js')}}"></script>
+    
     <script type="text/javascript" src="{{ URL::asset('packages/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
     <script type="text/javascript" src="{{ URL::asset('packages/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -103,5 +109,9 @@
     <!-- Custom Theme Scripts -->
     <script type="text/javascript" src="{{ URL::asset('js/custom.min.js')}}"></script>
     <!-- Project CSS -->
+
+
+    <!--- CK Editor -->
+     <script type="text/javascript" src="{{ URL::asset('packages/ckeditor/ckeditor.js')}}"></script>
 
 

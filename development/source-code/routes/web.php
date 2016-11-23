@@ -43,18 +43,30 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
     Route::group(['prefix'=>'nhanvien'], function(){
         Route::get('danhsach','admin\NhanVienController@getDanhSach')->name('danh_sach_nhan_vien');
 
-        Route::get('sua','admin\NhanVienController@getSua');
+        Route::get('sua/{id}','admin\NhanVienController@getSua')->name('get_sua_nhanvien')->where('id','[0-9]+');
 
-        Route::get('them','admin\NhanVienController@getThem');
+        Route::get('an/{id}','admin\NhanVienController@getSua_An')->name('get_nhan_vien_an')->where('id','[0-9]+');
+ 
+        Route::get('hien/{id}','admin\NhanVienController@getSua_Hien')->name('get_nhan_vien_hien')->where('id','[0-9]+');
+
+        Route::post('sua/{id}','admin\NhanVienController@postSua')->name('post_sua_nhanvien')->where('id','[0-9]+');
+
+        Route::get('them','admin\NhanVienController@getThem')->name('get_nhan_vien_them');
+
+        Route::post('them','admin\NhanVienController@postThem')->name('post_nhan_vien_them');
 
     });
 
     Route::group(['prefix'=>'khachhang'], function(){
         Route::get('danhsach','admin\KhachHangController@getDanhSach')->name('danh_sach_khach_hang');
 
-        Route::get('sua','admin\KhachHangController@getSua');
+        Route::get('sua/{id}','admin\KhachHangController@getSua')->name('get_sua_khach_hang')->where('id','[0-9]+');
 
-        Route::get('them','admin\KhachHangController@getThem');
+        Route::get('chitiet/{id}','admin\KhachHangController@getChiTiet')->name('get_chi_tiet_khach_hang')->where('id','[0-9]+');
+
+        Route::get('them','admin\KhachHangController@getThem')->name('get_them_khach_hang');
+
+        Route::post('them','admin\KhachHangController@postThem')->name('post_them_khach_hang');
 
     });
 

@@ -43,15 +43,20 @@
                 <div class="x_panel">
                  
                   <div class="x_content">
-                    
+                    @if(session('thongbao'))
+
+                  <div class="alert alert-success" fade in>
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('thongbao')}}
+                  </div>
+                  @endif
                     <table id="datatable" class="table table-striped table-bordered" name="datatable">
                       <thead>
                         <tr>
                           <th>STT</th>
-                          <th>id</th>
                           <th>Mã loại</th>
                           <th>Tên loại</th>
-                          <th><center><a href="{{ route('getLSPThem') }}">Thêm</a></center></th>
+                          <th><center><a href="{!! route('getLSPThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
                          
                         </tr>
                       </thead>
@@ -62,7 +67,6 @@
                       <tbody>
                         <tr>
                           <td>{!! $stt !!}</td>
-                          <td>{!! $item->id !!}</td>
                           <td>{!! $item->MaLoai !!}</td>
                           <td>{!! $item->TenLoai !!}</td>
                           <td>

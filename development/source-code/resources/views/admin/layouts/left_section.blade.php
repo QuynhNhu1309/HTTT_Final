@@ -10,7 +10,7 @@
 
         <div class="profile">
             <div class="profile_pic">
-                    <img src="../../assets/img/img.jpg" alt="..." class="img-circle profile_img">
+                    <img src="{{asset('assets/img/'.Auth::user()->HinhDaiDien)}}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
                     <span>Xin chào,</span>
