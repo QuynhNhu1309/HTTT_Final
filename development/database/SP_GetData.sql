@@ -35,3 +35,18 @@ DROP PROCEDURE Data_nhanvien
  END
 
 EXEC Data_nhanvien
+
+
+
+----- LẤY RA NHỮNG ĐẶC ĐIỂM CẦN SORT TRONG BẢNG NHÂN VIÊN ----
+
+IF OBJECT_ID('Data_NV_Feature_Gender') IS NOT NULL
+DROP PROCEDURE Data_NV_Feature_Gender;
+GO
+ CREATE PROCEDURE Data_NV_Feature_Gender
+ AS
+ BEGIN
+	SELECT * FROM tinhtrang WHERE ThuocTinh like '%GioiTinh%'
+ END
+
+ EXEC Data_NV_Feature_Gender

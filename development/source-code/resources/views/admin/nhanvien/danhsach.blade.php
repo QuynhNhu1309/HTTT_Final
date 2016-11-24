@@ -11,24 +11,91 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Thông tin cá nhân</a></li>
-                    <li class="active">Nhân viên</li>
+                    <li><a href="{{ Route('danh_sach_nhan_vien') }}">Thông tin cá nhân</a></li>
+                    <li class="active"><a href="{{ Route('danh_sach_nhan_vien') }}">Nhân viên</a></li>
                 </ul>
                 </h2>
               </div>
 
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+
+                <form action="{{ URL::Route('danh_sach_nhan_vien')}}" method="GET" name="form_search_nv">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..." name="search_input" id="search_input">
+                    <input type="text" class="form-control" placeholder="Tìm ... " name="search" id="search" 
+                    value ="<?php if(isset($_GET['search'])) {echo $_GET['search']; }?>">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" onclick="search_function()">Go!</button>
+                      <button class="btn btn-default" type="submit">Tìm</button>
                     </span>
                   </div>
+                </form>
+
                 </div>
               </div>
             </div>
             
+            <div class="clearfix"></div>
+
+
+            <div class="row">
+            <form action="{{ URL::Route('danh_sach_nhan_vien')}}" method="GET" name="form_ad_search_nv">
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="form-group">
+                         <select class="form-control" name="gender" id="gender">
+                            <option value="">Giới tính</option>
+                         @foreach($nhanvien_sort_gender as $item)
+                            <option value="{{ $item->id}}" <?php if (isset($_GET['gender']) && $_GET['gender'] == $item->id) echo 'selected'; ?>>{{ $item->TinhTrang }}</option>
+                        @endforeach
+                            </select>
+                </div>
+              </div>
+
+
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="form-group">
+
+                         <select class="form-control" name="chucvu" id="chucvu" >
+                            <option value="">Chức vụ</option>
+                         @foreach($nhanvien_sort_chucvu as $item)
+                            <option value="{{ $item->id}}" <?php if (isset($_GET['chucvu']) && $_GET['chucvu'] == $item->id) echo 'selected'; ?>>{{ $item->TinhTrang }}</option>
+                        @endforeach
+                            </select>
+                </div>
+              </div>
+
+              
+
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="form-group">
+                         <select class="form-control" name="status" id="status">
+                            <option value="">Tình trạng</option>
+                         @foreach($nhanvien_sort_tinhtrang as $item)
+                            <option value="{{ $item->id}}" <?php if (isset($_GET['status']) && $_GET['status'] == $item->id) echo 'selected'; ?>>{{ $item->TinhTrang }}</option>
+                        @endforeach
+                            </select>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Tìm ... " name="key" id="key" 
+                    value ="<?php if(isset($_GET['key'])) {echo $_GET['key']; }?>">
+                  </div>
+              </div>
+
+
+              <div class="col-md-1 col-sm-1 col-xs-12">
+                <div class="form-group">
+                     
+                      <button class="btn btn-default" type="submit">Lọc</button>
+                  
+                </div>
+              </div>
+
+
+            </form>
+            </div>
+
             <div class="clearfix"></div>
 
             <!-- Table dynamics -->
@@ -128,7 +195,8 @@
                             <li><a href="#">5</a></li>
                             <li><a href="#">>></a></li>
                           </ul>-->
-                          <div class="pagination"> {{ $danhsach_nhanvien->links() }} </div>
+                          
+                          <div class="pagination">{!! $danhsach_nhanvien->appends(Request::except('page'))->render() !!}</div>
                       
                       <!--</div> -->
 
@@ -139,6 +207,8 @@
 
             <!-- Table dynamics -->
 </div>
+
+
 
    <!-- End Content -->
 

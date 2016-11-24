@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\LoaiSanPham;
@@ -13,7 +13,10 @@ class LoaiSanPhamController extends Controller
     //
     public function getDanhSach ()
     {
-       $data = DB::table('loaisp')->get();
+       //$data = DB::table('loaisp')->paginate(5);
+
+       $search = \Request::get('search');
+       $data = LoaiSanPham::where('TenLoai','like','%'.$search.'%')->paginate(10);
     	return view('admin.loaisanpham.danhsach',['lsp' => $data]);
     }
 

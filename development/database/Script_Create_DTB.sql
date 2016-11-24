@@ -289,6 +289,10 @@ create table tinhtrang(
 go
 
 
+ALTER TABLE tinhtrang ADD ThuocTinh  varchar(200)
+
+
+
 --- INSERT TINH TRANG ----
 Insert into tinhtrang(TinhTrang, TenBang) values (N'Còn hàng', 'sanpham')
 Insert into tinhtrang(TinhTrang, TenBang) values (N'Hàng lỗi', 'sanpham')

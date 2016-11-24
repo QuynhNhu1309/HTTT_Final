@@ -11,8 +11,8 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Sản phẩm</a></li>
-                    <li class="active">Loại sản phẩm</li>
+                    <li><a href="{{ Route('getSPList') }}">Sản phẩm</a></li>
+                    <li class="active"><a href="{{ Route('getLoaiSPList') }}">Loại sản phẩm</a></li>
                 </ul>
                 </h2>
               </div>
@@ -23,19 +23,24 @@
               <div class="title_right">
                 
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  
+
+                  <form action="{{ URL::Route('getLoaiSPList')}}" method="GET" name="form_search_lsp">
                   <div class="input-group">
                     
-                    <input type="text" class="form-control" placeholder="Search for..." name="search_input" id="search_input">
+                    <input type="text" class="form-control" placeholder="Search for..." name="search" id="search_lsp"  value ="<?php if(isset($_GET['search'])) {echo $_GET['search']; }?>">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" onclick="search_function()">Go!</button>
+                      <button class="btn btn-default" type="submit">Go!</button>
                     </span>
                   </div>
+                  </form>
+
                 </div>
               </div>
             </div>
             
             <div class="clearfix"></div>
+
+            
 
             <!-- Table dynamics -->
              <div class="row">
@@ -85,6 +90,7 @@
                         @endforeach
                     </table>
                       
+                      <div class="pagination">{!! $lsp->appends(Request::except('page'))->render() !!}</div>
                       
 
                   </div>
