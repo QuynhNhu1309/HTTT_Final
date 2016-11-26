@@ -10,6 +10,8 @@
       type="image/png" 
       href="../../assets/logo.png">
     <title>@yield('title')</title>
+    
+    @include('admin.partials.css-assets')
 
     
   </head>
