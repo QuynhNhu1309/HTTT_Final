@@ -1,12 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('minxApp', ['froala'])
-        .config(appConfig)
-        .value('froalaConfig', {
-            toolbarInline: false,
-            placeholderText: 'Enter Text Here'
-        });
+    angular.module('minxApp', []);
 
     appConfig.$inject = ['$interpolateProvider'];
 

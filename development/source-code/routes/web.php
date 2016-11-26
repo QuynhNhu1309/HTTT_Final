@@ -79,9 +79,11 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
         Route::delete('{id}/xoa','admin\DonHangController@destroy');
 
-        Route::post('/','admin\DonHangController@store');
+        Route::post('them','admin\DonHangController@store')->name('them.donhang.post');
 
         Route::put('{id}','admin\DonHangController@update');
+
+        Route::get('khachhang/{ma_khach_hang}','admin\DonHangController@timkhachhang');
 
         Route::get('{id}','admin\DonHangController@show');
         

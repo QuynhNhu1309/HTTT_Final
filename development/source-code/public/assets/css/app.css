@@ -1,3 +1,6 @@
+ul {
+  list-style-type: none; }
+
 body .right_col .row .tile_count {
   margin-left: 15px; }
 
@@ -20,9 +23,32 @@ body .panel.panel-custom {
   margin-top: 20%; }
 
 body .top_search .form-control {
-  border: 1px solid #555; }
+  border: 1px solid #D9DEE4; }
 
-body .top_search .input-group-button button {
-  border: 1px solid #555; }
+body .top_search .input-group-btn button {
+  border: 1px solid #D9DEE4;
+  border-left: 1px solid #D9DEE4; }
+
+body .page-title .title_left .breadcrumb {
+  background-color: #F7F7F7;
+  float: left; }
+
+body .page-title .title_right {
+  width: 100%; }
+  body .page-title .title_right ul {
+    margin-top: 15px;
+    padding-left: 15px; }
+    body .page-title .title_right ul li.active {
+      font-weight: bold; }
+    body .page-title .title_right ul li {
+      display: inline-block;
+      padding-right: 10px;
+      padding-right: 4px;
+      border-right: 1px solid #D9DEE4; }
+      body .page-title .title_right ul li:last-child {
+        border-right: 0; }
+
+body .btn-hoan-tat {
+  margin-right: 0px; }
 
 /*# sourceMappingURL=app.css.map */

@@ -64,7 +64,14 @@ class DonHangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hoTen = $request->ho_ten;
+        $soDienThoai = $request->so_dien_thoai;
+        $diaChi = $request->dia_chi;
+        $email = $request->email;
+        $thongTinKhachHang = ["hoTen" => $hoTen, "soDienThoai" => $soDienThoai, "diaChi" => $diaChi, "email" => $email];
+        DB::raw('insert into don_hang (column1,column2,column3) values ('.$hoTen.','.$soDienThoai.',value3.);');
+        return $thongTinKhachHang;
+
     }
 
     /**
@@ -111,4 +118,13 @@ class DonHangController extends Controller
     {
         //
     }
+
+    public function timkhachhang(Request $request)
+    {
+        $maKhachHang = $request->ma_khach_hang;
+        $result = DB::select(DB::raw('select * from khachhang where MaKhachHang = :maKhachHang'),
+                                array('maKhachHang' => $maKhachHang));
+        return $result;
+    }
+    
 }

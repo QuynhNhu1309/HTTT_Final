@@ -47,6 +47,8 @@
 <script type="text/javascript" src="{{ URL::asset('app/directives/scroll2top-btn.directive.js')}}"></script>
 
 -->
+<script type="text/javascript" src="{{ URL::asset('app/app.module.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('app/controllers/ThongTinDonHangCtrl.js')}}"></script>
 
 <!-- Bootstrap -->
     <!-- NProgress -->
