@@ -1,12 +1,6 @@
 (function() {
     'use strict';
 
-    angular.module('minxApp', []);
+    angular.module('minxApp', ['ui.bootstrap']);
 
-    appConfig.$inject = ['$interpolateProvider'];
-
-    function appConfig($interpolateProvider) {
-        $interpolateProvider.startSymbol('<%');
-        $interpolateProvider.endSymbol('%>');
-    };
 })();
