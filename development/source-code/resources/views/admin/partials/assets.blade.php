@@ -39,8 +39,8 @@
 -->
 
 <!-- Angular App -->
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/angular-ui-bootstrap/dist/ui-bootstrap.js')}}">
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js')}}">
+<script type="text/javascript" src="{{ URL::asset('packages/angular-ui-bootstrap/dist/ui-bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('packages/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('app/app.module.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('app/controllers/ThongTinDonHangCtrl.js')}}"></script>
 
