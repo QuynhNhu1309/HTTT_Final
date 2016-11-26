@@ -85,6 +85,8 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
         Route::get('khachhang/{ma_khach_hang}','admin\DonHangController@timkhachhang');
 
+        Route::get('sanpham/{ma_san_pham}','admin\DonHangController@timsanpham');
+
         Route::get('{id}','admin\DonHangController@show');
         
     });

@@ -126,5 +126,13 @@ class DonHangController extends Controller
                                 array('maKhachHang' => $maKhachHang));
         return $result;
     }
+
+    public function timsanpham(Request $request)
+    {
+        $maSanPham = $request->ma_san_pham;
+        $result = DB::select(DB::raw('select * from sanpham where MaSP = :maSanPham'),
+                                array('maSanPham' => $maSanPham));
+        return $result;
+    }
     
 }
