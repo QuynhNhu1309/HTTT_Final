@@ -9,6 +9,7 @@
 
     <title>Đăng Nhập </title>
 
+     @include('admin.partials.css-assets')
      @include('admin.partials.assets')
 
      
