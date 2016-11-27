@@ -148,7 +148,6 @@
                             </tfoot>
                         </table>
 
-
                         <div class="pagination_div">
                             <ul class="pagination pagination-sm">
                                 <li>

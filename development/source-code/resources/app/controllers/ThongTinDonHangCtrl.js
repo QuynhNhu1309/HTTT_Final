@@ -5,9 +5,9 @@
         .module('minxApp')
         .controller('ThongTinDonHangCtrl', ThongTinDonHangCtrl);
 
-    ThongTinDonHangCtrl.$inject = ['$scope', '$http']
+    ThongTinDonHangCtrl.$inject = ['$scope', '$http', '$window']
 
-    function ThongTinDonHangCtrl($scope, $http) {
+    function ThongTinDonHangCtrl($scope, $http, $window) {
         $scope.maKhachHang;
         $scope.maSanPham;
         $scope.panelKhachHangShow = false;
@@ -15,7 +15,7 @@
         $scope.panelSanPhamShow = false;
         $scope.khachHangInfo;
         $scope.sanPhamInfo = [];
-        var flagDiaChiKhac = true;
+        var flagDiaChiKhac = false;
 
         //Function
         $scope.togglePanelKhachHang = togglePanelKhachHang;
@@ -76,6 +76,17 @@
         }
 
         function submitSanPham() {
+            var duplicateFlag = false;
+            $scope.sanPhamInfo.forEach(function(sanPham) {
+                if (sanPham.MaSP == $scope.maSanPham) {
+                    alert('Sản phẩm bạn chọn bị trùng');
+                    duplicateFlag = true;
+                    return;
+                }
+            });
+            if (duplicateFlag) {
+                return;
+            }
             $http
                 .get('/admin/donhang/sanpham/' + $scope.maSanPham)
                 .then(function successCallBack(response) {
@@ -96,24 +107,56 @@
         }
 
         function submitDonHang() {
+            if ($scope.sanPhamInfo.length == 0) {
+                alert('Bạn thêm đơn hàng không thành công');
+                resetData();
+                return;
+            }
             if (flagDiaChiKhac == false) {
+                var today = new Date();
+                var thongTinKhachHang = Object.assign({}, $scope.khachHangInfo, {
+                    ngayGiao: Date.parse(today)
+                });
                 var requestdata = {
-                    thongTinKhachHang: $scope.khachHangInfo
+                    thongTinKhachHang: thongTinKhachHang,
+                    thongTinSanPham: $scope.sanPhamInfo,
+                    tongTien: getTotal()
                 };
                 console.log(requestdata);
             }
             if (flagDiaChiKhac == true) {
                 var requestdata = {
                     thongTinKhachHang: {
-                        maKhachHang: $scope.khachHangInfo.MaKhachHang,
-                        hoTen: $scope.ho_ten,
-                        soDienThoai: $scope.so_dien_thoai,
-                        diaChi: $scope.dia_chi,
+                        id: $scope.khachHangInfo.id,
+                        HoTen: $scope.ho_ten,
+                        DienThoai: $scope.so_dien_thoai,
+                        DiaChi: $scope.dia_chi,
                         ngayGiao: Date.parse($scope.ngay_giao)
-                    }
+                    },
+                    thongTinSanPham: $scope.sanPhamInfo,
+                    tongTien: getTotal()
                 };
                 console.log(requestdata);
             }
+            $http
+                .post('/admin/donhang/them/', requestdata)
+                .then(function successCallBack(response) {
+                    console.log(response);
+                    if (response.data) {
+                        $window.location.href = '/admin/donhang/danhsach';
+                    } else {
+                        alert('Bạn thêm đơn hàng không thành công');
+                        resetData();
+                    }
+                }, function errorCallback(error) {
+                    console.log(error);
+                });
+        }
+
+        function resetData() {
+            $scope.panelKhachHangShow = false;
+            $scope.panelNguoiNhanShow = false;
+            $scope.panelSanPhamShow = false;
         }
 
         //Hàm convert dd-mm-yyyy

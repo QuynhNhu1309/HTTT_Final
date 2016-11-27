@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class DonHangController extends Controller
 {
@@ -64,17 +65,59 @@ class DonHangController extends Controller
      */
     public function store(Request $request)
     {
-        $hoTen = $request->ho_ten;
-        $soDienThoai = $request->so_dien_thoai;
-        $diaChi = $request->dia_chi;
-        $email = $request->email;
-        $thongTinKhachHang = ["hoTen" => $hoTen, "soDienThoai" => $soDienThoai, "diaChi" => $diaChi, "email" => $email];
-        DB::raw('insert into don_hang (column1,column2,column3) values ('.$hoTen.','.$soDienThoai.',value3.);');
-        return $thongTinKhachHang;
+        $donHangInsert = array('procedureName' => '[dbo].[Them_Don_Hang]',
+        'idTaiKhoan' => (int)Auth::user()->id, 
+        'idKhachHang' => (int)$request->thongTinKhachHang['id'], 
+        'thoiDiemDatHang' => date("Y-m-d H:i:s"),
+        'tenNguoiNhan' => $request->thongTinKhachHang['HoTen'], 
+        'dtNguoiNhan' => $request->thongTinKhachHang['DienThoai'], 
+        'diaChi' =>$request->thongTinKhachHang['DiaChi'], 
+        'ngayGiao' => date("Y-m-d H:i:s", $request->thongTinKhachHang['ngayGiao']/1000), 
+        'tongTien' => (int)$request->tongTien,
+        'idTinhTrang' => 1);
+
+
+        $result = DB::select(DB::raw('
+        DECLARE	@return_value int;
+
+        EXEC	@return_value = :procedureName
+		@idTaiKhoan = :idTaiKhoan,
+		@idKhachHang = :idKhachHang,
+		@thoiDiemDatHang = :thoiDiemDatHang,
+		@tenNguoiNhan = :tenNguoiNhan,
+		@dtNguoiNhan = :dtNguoiNhan,
+		@diaChi = :diaChi,
+		@ngayGiao = :ngayGiao,
+		@tongTien = :tongTien,
+		@idTinhTrang = :idTinhTrang'),  $donHangInsert);
+
+        $idDonHang = $result[0]->idDonHang;
+
+        foreach($request->thongTinSanPham as $sanPham)
+        {
+            $ctdhinsert = array('procedureName' => '[dbo].[Them_Chi_Tiet_Don_Hang]',
+            'idDonHang' => (int)$idDonHang,
+            'idSanPham' => (int)$sanPham['id'],
+            'TenSP' => $sanPham['TenSP'],
+            'SoLuong' => (int)$sanPham['soLuong'],
+            'Gia' => (int)$sanPham['GiaBanHienTai']);
+
+            $result = DB::select(DB::raw('
+            DECLARE	@return_value int;
+
+            EXEC	@return_value = :procedureName
+            @idDonHang = :idDonHang,
+            @idSanPham = :idSanPham,
+            @TenSP = :TenSP,
+            @SoLuong = :SoLuong,
+            @Gia = :Gia'),  $ctdhinsert);
+        }
+
+        return json_encode(true);
 
     }
 
-    /**
+    /** 
      * Display the specified resource.
      *
      * @param  int  $id
