@@ -189,3 +189,154 @@ EXEC Them_Lay_Ma_KH
 
 
 ALTER TABLE khachhang DROP column idTaiKhoan
+
+
+----- THÊM SẢN PHẨM TỪ LARAVEL SAU ĐÓ THÊM VÀO BẢNG PHIẾU NHẬP VÀ PHIẾU NHẬP CHI TIẾT -----
+
+IF OBJECT_ID('Them_PhieuNhap_PhieuNhapChiTiet') IS NOT NULL
+DROP PROCEDURE Them_PhieuNhap_PhieuNhapChiTiet;
+GO
+ CREATE PROCEDURE Them_PhieuNhap_PhieuNhapChiTiet
+	@id_PhieuNhap int,
+	@idTaiKhoan int,
+	@NgayXuatHoaDon datetime
+
+ AS
+ BEGIN
+SET NOCOUNT ON;
+declare @tongtien float;
+declare @tongtien_phieunhap_existed float;
+declare  @idSanPham int;
+declare  @idLoai int;
+declare  @GiaNhap float;
+declare  @SoLuongNhap int;
+declare  @NhaSanXuat varchar(300);
+
+SET @idSanPham = (SELECT TOP 1 id FROM sanpham ORDER BY id DESC);
+
+SET @idLoai = (SELECT TOP 1 idLoai FROM sanpham ORDER BY id DESC);
+
+SET @GiaNhap = (SELECT TOP 1 GiaNhap FROM sanpham ORDER BY id DESC);
+
+SET @SoLuongNhap = (SELECT TOP 1 SoLuongTonKho FROM sanpham ORDER BY id DESC);
+
+SET @NhaSanXuat = (SELECT TOP 1 NhaSanXuat FROM sanpham ORDER BY id DESC );
+
+SET @tongtien = @GiaNhap * @SoLuongNhap; 
+
+
+
+declare @MaPNCT varchar(200);
+declare @stt_pnct int;
+	IF(@id_PhieuNhap = -1)
+	BEGIN
+	declare @MaPN varchar(100);
+	declare @stt int;
+	
+	if(not exists(select * from phieunhap))
+		begin
+		set @stt = 1;
+		set @MaPN = 'PN0000' + CAST(@stt as varchar(100));
+		
+		select @MaPN as MaPhieuNhap;
+		end
+	else
+		begin
+		set @MaPN = (select TOP 1 MaPhieuNhap from phieunhap ORDER BY id DESC)
+		set @stt = cast(SUBSTRING(@MaPN, 3, 7) as int);
+		set @stt = @stt + 1;
+			if(@stt < 10)
+				begin 
+				set @MaPN = 'PN0000' + CAST(@stt as varchar(100))
+				select @MaPN as MaPhieuNhap;
+				end
+			else if(@stt < 100 and @stt >= 10)
+				begin 
+				set @MaPN = 'PN000' + CAST(@stt as varchar(100));
+				select @MaPN as MaPhieuNhap;
+				end
+			else if(@stt < 1000 and @stt >= 100)
+				begin 
+				set @MaPN = 'PN00' + CAST(@stt as varchar(100));
+				select @MaPN as MaPhieuNhap;
+				end
+			else if(@stt < 10000 and @stt >= 1000)
+				begin 
+				set @MaPN = 'PN0' + CAST(@stt as varchar(100));
+				select @MaPN as MaPhieuNhap;
+				end
+		end
+	
+		INSERT INTO phieunhap(MaPhieuNhap, idTaiKhoan, TongTien, NgayXuatHoaDon, NgayCapNhat) 
+		VALUES(@MaPN, @idTaiKhoan, @tongtien, @NgayXuatHoaDon, @NgayXuatHoaDon)
+
+		SET @id_PhieuNhap = (SELECT TOP 1 id FROM phieunhap ORDER BY id DESC);
+
+	END
+	
+	ELSE IF(@id_PhieuNhap != -1)
+	BEGIN
+		SET @tongtien_phieunhap_existed = (SELECT TongTien FROM phieunhap WHERE id = @id_PhieuNhap);
+		SET @tongtien_phieunhap_existed = @tongtien_phieunhap_existed + @tongtien;
+		UPDATE phieunhap SET idTaiKhoan = @idTaiKhoan, NgayCapNhat = @NgayXuatHoaDon, TongTien = @tongtien_phieunhap_existed
+		WHERE id = @id_PhieuNhap;
+
+	END
+
+
+	if(not exists(select * from phieunhap_chitiet))
+		begin
+		set @stt_pnct = 1;
+		set @MaPNCT = 'PNCT0000' + CAST(@stt as varchar(100));
+		
+		select @MaPNCT as MaPhieuNhapChiTiet;
+		end
+	else
+		begin
+		set @MaPNCT = (select TOP 1 MaPhieuNhapChiTiet from phieunhap_chitiet ORDER BY id DESC)
+		set @stt_pnct = cast(SUBSTRING(@MaPNCT, 5, 7) as int);
+		set @stt_pnct = @stt_pnct + 1;
+			if(@stt_pnct < 10)
+				begin 
+				set @MaPNCT = 'PNCT0000' + CAST(@stt_pnct as varchar(100))
+				select @MaPNCT as MaPhieuNhapChiTiet;
+				end
+			else if(@stt_pnct < 100 and @stt_pnct >= 10)
+				begin 
+				set @MaPNCT = 'PNCT000' + CAST(@stt_pnct as varchar(100));
+				select @MaPNCT as MaPhieuNhapChiTiet;
+				end
+			else if(@stt_pnct < 1000 and @stt_pnct >= 100)
+				begin 
+				set @MaPNCT = 'PNCT00' + CAST(@stt_pnct as varchar(100));
+				select @MaPNCT as MaPhieuNhapChiTiet;
+				end
+			else if(@stt_pnct < 10000 and @stt_pnct >= 1000)
+				begin 
+				set @MaPNCT = 'PNCT0' + CAST(@stt_pnct as varchar(100));
+				select @MaPNCT as MaPhieuNhapChiTiet;
+				end
+		end
+	
+
+	INSERT INTO phieunhap_chitiet (MaPhieuNhapChiTiet, NhaSanXuat, idLoai, idSanPham, GiaNhap, SoLuongNhap, ThanhTien, idPN)
+	VALUES (@MaPNCT, @NhaSanXuat, @idLoai, @idSanPham, @GiaNhap, @SoLuongNhap, @tongtien, @id_PhieuNhap)
+
+ END
+
+ EXEC Them_PhieuNhap_PhieuNhapChiTiet @id_PhieuNhap = -1,
+	@idTaiKhoan = 9,
+	@NgayXuatHoaDon ='1955-12-13 12:43:00'
+
+	EXEC Them_PhieuNhap_PhieuNhapChiTiet @id_PhieuNhap = -1, @idTaiKhoan = 3,
+@NgayXuatHoaDon = "2016-11-28 15:27:21"
+
+ EXEC Them_PhieuNhap_PhieuNhapChiTiet @id_PhieuNhap = -1, @idTaiKhoan = 3,
+@NgayXuatHoaDon = '2016-11-28 15:28:51'
+
+
+
+
+
+
+

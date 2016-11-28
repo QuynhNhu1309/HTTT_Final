@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title','Thêm Sản Phẩm Mới')
+@section('title','Thêm Phiếu Nhập mới')
 
 @section('content')
     <!--Begin Content -->
@@ -38,7 +38,15 @@
                   </div>
                   @endif
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="{{ URL::Route('postSpThem') }}" enctype="multipart/form-data" ng-app="">
+
+                     @if(session('thongbao'))
+
+                  <div class="alert alert-success" fade in>
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('thongbao')}}
+                  </div>
+                  @endif
+                    <form data-parsley-validate class="form-horizontal form-label-left" method="POST" action="{{ URL::Route('post_them_phieu_nhap') }}" enctype="multipart/form-data" ng-app="">
                         {{ csrf_field() }}
                       
 
@@ -154,17 +162,7 @@
                       </div>
                       </div>
 
-                      <!--<div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tình trạng</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control" name="txt_tinhtrang">
-                            @foreach($data1 as $item1)
-                            <option value="{!! $item1->id !!}">{!! $item1->TinhTrang !!}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                      </div>-->
-
+                    
                    
                       <div class="ln_solid"></div>
                       <div class="form-group">

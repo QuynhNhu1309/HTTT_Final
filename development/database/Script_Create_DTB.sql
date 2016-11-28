@@ -8,6 +8,7 @@ Use dodunghoctap
 
 Go
 
+
 ----------- PHIẾU NHẬP -------
 
 DROP TABLE phieunhap
@@ -20,6 +21,9 @@ CREATE TABLE phieunhap(
 	NgayXuatHoaDon date NOT NULL DEFAULT '0000-00-00',
 	TongTien int
 	)
+
+
+
 
 Insert into phieunhap(idDH_Nhap, idUser, NoiNhap, NgayXuatHoaDon) values('NDH01', 'U02', N'Cửa hàng Quỳnh Như', '2015-02-10'),
 ('NDH02', 'U02', N'Cửa hàng Minh Hiếu', '2015-02-12'),
@@ -90,6 +94,21 @@ CREATE TABLE sanpham (
 	Slug varchar(255),
 	SoLanMua int DEFAULT '0',
 )
+
+ALTER TABLE SANPHAM ADD GiaNhap int
+ALTER TABLE SANPHAM ADD PhanTramKM int
+
+ALTER TABLE SANPHAM ALTER COLUMN PhanTramKM float
+ALTER TABLE SANPHAM ALTER COLUMN GiaNhap float
+ALTER TABLE SANPHAM ALTER COLUMN GiaBan float
+ALTER TABLE SANPHAM ALTER COLUMN GiaBanHienTai float
+
+ALTER TABLE SANPHAM DROP COLUMN GiaBan 
+ALTER TABLE SANPHAM DROP COLUMN GiaBanHienTai
+
+ALTER TABLE sanpham DROP CONSTRAINT DF__sanpham__GiaBanH__173876EA
+ALTER TABLE sanpham DROP CONSTRAINT DF__sanpham__GiaBan__164452B1
+UPDATE sanpham SET GiaNhap = GiaBan - GiaBan* 0.3
 
 INSERT INTO sanpham (idSP, idLoai, TenSP, urlPreview, MoTa, NgayCapNhat, Gia, urlHinh, SoLanXem, SoLuongTonKho, GhiChu, SoLanMua) VALUES
 ('SP01', 'L01', N'Bút bi vương miện Crown Love Magic', N'BUT_BI_Pre (1).jpg', N'<ul><li>Chiều dài: 20cm.</li><li>Chất liệu: Inox.Bút có 3 màu: đỏ, xanh, tím.</li><li>Ở trên đầu bút có hình vương miện màu vàng bóng kết hợp với đầu bi tròn.</li></ul>', '2015-02-12', 18000, N'Butbi1.jpg', 20, 10, NULL, 3),
@@ -426,6 +445,19 @@ CREATE TABLE  phieunhap (
   idTinhTrang int Foreign KEY (idTinhTrang) references tinhtrang(id), 
 )
 
+ALTER TABLE phieunhap DROP COLUMN NhaSanXuat
+ALTER TABLE phieunhap DROP COLUMN NgayXuatHoaDon datetime
+ALTER TABLE phieunhap ADD NgayXuatHoaDon DATETIME
+
+ALTER TABLE phieunhap AlTER COLUMN TongTien float
+
+ALTER TABLE phieunhap DROP COLUMN TongTien float
+
+ALTER TABLE phieu_nhap DROP CONSTRAINT DF__phieunhap__TongT__440B1D61
+
+ALTER TABLE phieu_nhap ADD NgayCapNhat DATETIME
+
+
 
 
 ------------------------  PHIẾU NHẬP CHI TIẾT  -----------------
@@ -442,5 +474,14 @@ CREATE TABLE phieunhap_chitiet(
   idTinhTrang int Foreign KEY (idTinhTrang) references tinhtrang(id)
 )
 
+
+ALTER TABLE phieunhap_chitiet ALTER COLUMN GiaNhap float
+ALTER TABLE phieunhap_chitiet ALTER COLUMN ThanhTien float
+
+ALTER TABLE phieunhap_chitiet DROP COLUMN idTinhTrang
+
+ALTER TABLE phieunhap_chitiet ADD idPN int 
+
+ALTER TABLE phieunhap_chitiet ADD CONSTRAINT FK_idPN FOREIGN KEY(idPN) REFERENCES phieunhap(id)
 
 

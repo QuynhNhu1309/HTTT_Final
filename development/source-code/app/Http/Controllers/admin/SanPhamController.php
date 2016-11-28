@@ -14,8 +14,155 @@ class SanphamController extends Controller
     //
     public function getDanhSach ()
     {
-        $data = SanPham::paginate(15);
+        //$data = SanPham::paginate(15);
         $loaisp = DB::table('loaisp')->get();
+        $search = \Request::get('search');
+        $data = SanPham::where('TenSP','like','%'.$search.'%')->orwhere('MoTa','like','%'.$search.'%')->paginate(2);
+
+         if(isset($_GET['s_loaisp']))
+        {
+            $s_loaisp = \Request::get('s_loaisp');
+        }
+
+        if(isset($_GET['status']))
+        {
+            $status = \Request::get('status');
+        }
+
+        if(isset($_GET['cost_min']))
+        {
+            $cost_min =  \Request::get('cost_min');
+        }
+
+        if(isset($_GET['cost_max']))
+        {
+            $cost_max =  \Request::get('cost_max');
+        }
+
+         //Loại SP
+        if(isset($_GET['s_loaisp']) && $_GET['s_loaisp']!= "" && $_GET['status'] =="" && $_GET['cost_min'] =="" && $_GET['cost_max'] == "")
+        {
+            $data = SanPham::where('idLoai',$s_loaisp)->paginate(2);
+        }
+
+
+        //Check tình trạng còn hàng
+
+        if(isset($_GET['status']) && $_GET['status']!= "" && $_GET['s_loaisp'] =="" && $_GET['cost_min'] =="" && $_GET['cost_max'] == "")
+        {
+
+            if($_GET['status'] == 1)
+            {
+                $data = SanPham::where('SoLuongTonKho','>', 10)->paginate(2);
+            }
+
+            if($_GET['status'] == 2)
+            {
+                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->paginate(1);
+            }
+
+            if($_GET['status'] == 3)
+            {
+                $data = SanPham::where('SoLuongTonKho', 0)->paginate(2);
+            }
+        }
+
+        if(isset($_GET['cost_max']) && $_GET['cost_max']!= "" && isset($_GET['cost_min']) && $_GET['cost_min']!= "" &&  $_GET['s_loaisp'] =="" && $_GET['status'] =="")
+        {
+           if($cost_max >= $cost_min)
+           {
+               $data = SanPham::whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+           }
+
+        }
+
+        //Cost & loaisp
+
+        if(isset($_GET['s_loaisp']) && $_GET['s_loaisp']!= "" && isset($_GET['cost_max']) && $_GET['cost_max']!= "" && isset($_GET['cost_min']) && $_GET['cost_min']!= "" && $_GET['status'] =="")
+        {
+           if($cost_max >= $cost_min)
+           {
+               $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(12);
+           }
+
+        }
+
+        //Status & loaisp
+
+        if(isset($_GET['s_loaisp']) && $_GET['s_loaisp']!= "" && $_GET['cost_max']== "" && $_GET['cost_min']== "" && isset($_GET['status']) && $_GET['status'] !="")
+        {
+               if($_GET['status'] == 1)
+            {
+                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho','>', 10)->paginate(2);
+            }
+
+            if($_GET['status'] == 2)
+            {
+                $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('SoLuongTonKho',[1, 10])->paginate(1);
+            }
+
+            if($_GET['status'] == 3)
+            {
+                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho', 0)->paginate(2);
+            }
+           
+
+        }
+
+        //Status & cost
+
+        if(isset($_GET['cost_max']) && $_GET['cost_max']!= "" && isset($_GET['cost_min']) && $_GET['cost_min']!= ""  && isset($_GET['status']) && $_GET['status'] !="" && $_GET['s_loaisp']== "")
+        {
+               if($cost_max >= $cost_min)
+           {
+
+               if($_GET['status'] == 1)
+            {
+                $data = SanPham::where('SoLuongTonKho','>', 10)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+            }
+
+            if($_GET['status'] == 2)
+            {
+                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(1);
+            }
+
+            if($_GET['status'] == 3)
+            {
+                $data = SanPham::where('SoLuongTonKho', 0)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+            }
+               
+        }
+        }
+
+        //Status & cost
+
+        if(isset($_GET['cost_max']) && $_GET['cost_max']!= "" && isset($_GET['cost_min']) && $_GET['cost_min']!= ""  && isset($_GET['status']) && $_GET['status'] !="" && isset($_GET['s_loaisp']) && $_GET['s_loaisp']!= "")
+        {
+               if($cost_max >= $cost_min)
+           {
+
+               if($_GET['status'] == 1)
+            {
+                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho','>', 10)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+            }
+
+            if($_GET['status'] == 2)
+            {
+                $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('SoLuongTonKho',[1, 10])->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(1);
+            }
+
+            if($_GET['status'] == 3)
+            {
+                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho', 0)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+            }
+               
+        }
+
+           
+
+        }
+        
+
     	return view('admin.sanpham.danhsach',['sp' => $data,'loaisp' => $loaisp]);
     }
 
@@ -86,8 +233,10 @@ class SanphamController extends Controller
        $sp->MoTa=$request->txt_mota;
        $sp->NgayCapNhat=date("Y-m-d H:i:s");
        $sp->NgayTao=date("Y-m-d H:i:s");
-       $sp->GiaBan= $request->txt_giaban;
-       $sp->GiaBanHienTai= $request->txt_giaban_hientai;
+       $sp->GiaNhap= $request->txt_gianhap;
+       $sp->GiaBan=$request->txt_gianhap + $request->txt_gianhap * 0.3 ;
+       $sp->PhanTramKM= $request->txt_phantramKM;
+       $sp->GiaBanHienTai= ($request->txt_gianhap + $request->txt_gianhap * 0.3) -  ($request->txt_gianhap + $request->txt_gianhap * 0.3)* $request->txt_phantramKM/100;
        /*if(strlen($file) >0){
         $filename=time().'.'.$file->getClientOriginalName();
         $destinationPath='public/upload/'
@@ -143,8 +292,7 @@ class SanphamController extends Controller
 			$sp->delete($id);
 			echo '<script type="text/javascript">
     			alert("Xóa Thành Công !");
-    			window.location = "';
-    			echo route('getSPList');
+    			window.location = "';    			echo route('getSPList');
     		echo'"
     		</script>';
     	} 
@@ -197,6 +345,9 @@ class SanphamController extends Controller
        
        $sp->MoTa=$request->txt_mota;
        $sp->NgayCapNhat=date("Y-m-d H:i:s");
+
+       $sp->GiaNhap= $request->txt_gianhap;
+       $sp->PhanTramKM= $request->txt_phantramKM;
        $sp->GiaBan= $request->txt_giaban;
        $sp->GiaBanHienTai= $request->txt_giaban_hientai;
        

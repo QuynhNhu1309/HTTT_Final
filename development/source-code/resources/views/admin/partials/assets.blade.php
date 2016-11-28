@@ -108,6 +108,6 @@
 
 
     <!--- CK Editor -->
-     <!--<script type="text/javascript" src="{{ URL::asset('packages/ckeditor/ckeditor.js')}}"></script>-->
+     <script type="text/javascript" src="{{ URL::asset('packages/ckeditor/ckeditor.js')}}"></script>
 
 

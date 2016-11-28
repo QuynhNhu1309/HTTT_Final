@@ -19,16 +19,69 @@
 
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <form action="{{ URL::Route('danh_sach_khach_hang')}}" method="GET" name="form_search_kh">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..." name="search_input" id="search_input">
+                    <input type="text" class="form-control" placeholder="Tìm nhanh ... " name="search" id="search" 
+                    value ="<?php if(isset($_GET['search'])) {echo $_GET['search']; }?>">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" onclick="search_function()">Go!</button>
+                      <button class="btn btn-default" type="submit">Tìm</button>
                     </span>
                   </div>
+                </form>
                 </div>
               </div>
             </div>
             
+            <div class="clearfix"></div>
+
+             <div class="row">
+            <form action="{{ URL::Route('danh_sach_khach_hang')}}" method="GET" name="form_ad_search_nv">
+
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="form-group">
+
+                         <select class="form-control" name="chucvu" id="chucvu" >
+                            <option value="">Chức vụ</option>
+                         @foreach($khachhhang_sort_NguoiTao as $item)
+                            <option value="{{ $item->id}}" <?php if (isset($_GET['chucvu']) && $_GET['chucvu'] == $item->id) echo 'selected'; ?>>{{ $item->TinhTrang }}</option>
+                        @endforeach
+                            </select>
+                </div>
+              </div>
+
+              
+
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="form-group">
+                         <select class="form-control" name="sapxep" id="sapxep">
+                            <option value="">Sắp xếp</option>
+                            <option value="1" 
+                            <?php if(isset($_GET['sapxep']) && $_GET['sapxep'] == 1) echo 'selected'; ?>>Tăng dần</option>
+                            <option value="2" <?php if(isset($_GET['sapxep']) && $_GET['sapxep'] == 2) echo 'selected'; ?>>Gỉam dần</option>
+                            </select>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Tìm ... " name="key" id="key" 
+                    value ="<?php if(isset($_GET['key'])) {echo $_GET['key']; }?>">
+                  </div>
+              </div>
+
+
+              <div class="col-md-1 col-sm-1 col-xs-12">
+                <div class="form-group">
+                     
+                      <button class="btn btn-default" type="submit">Lọc</button>
+                  
+                </div>
+              </div>
+
+
+            </form>
+            </div>
+
             <div class="clearfix"></div>
 
             <!-- Table dynamics -->
@@ -87,14 +140,15 @@
                         </tr>
                         @endforeach
                         
-                        </tr>
+
                         
                         </tbody>
                   
 
                         
                     </table>
-                      <div class="pagination"> {{ $danhsach_khachhang->links() }} </div>
+
+                      <div class="pagination">{!! $danhsach_khachhang->appends(Request::except('page'))->render() !!}</div>
                       
 
                   </div>

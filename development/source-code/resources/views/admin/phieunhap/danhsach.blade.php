@@ -11,8 +11,8 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Sản phẩm</a></li>
-                    <li class="active">Danh sách sản phẩm</li>
+                    <li><a href="#">Phiếu nhập</a></li>
+                    <li class="active">Danh sách phiếu nhập</li>
                 </ul>
                 </h2>
               </div>
@@ -40,7 +40,7 @@
             <div class="clearfix"></div>
 
             <div class="row">
-            <form action="{{ URL::Route('getSPList')}}" method="GET" name="form_ad_search_nv">
+            <form action="{{ URL::Route('danh_sach_phieu_nhap')}}" method="GET" name="form_ad_search_pn">
 
             <div class="col-md-2 col-sm-2 col-xs-12">
                 <div class="form-group">
@@ -122,47 +122,42 @@
                       <thead>
                         <tr>
                           <th>STT</th>
-                          <th>Mã SP</th>
-                          <th>Loại SP</th>
-                          <th>Tên SP</th>
-                          <th>Số lượng</th>
-                          <th>Giá bán</th>
-                          <th><center><a href="{!! route('getSpThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
+                          <th>Mã phiếu nhập</th>
+                          <th>Tổng tiền</th>
+                          <th>Ngày xuất hóa đơn</th>
+                          <th>Chức vụ</th>
+                          <th><center><a href="{!! route('get_them_phieu_nhap') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
                         
                          
                         </tr>
                       </thead>
                       <?php $stt = 0; ?>
-                          @foreach($sp as $item)
-                            @foreach($loaisp as $item_lsp)
+                          @foreach($phieunhap as $item)
                           <?php
-                          if($item->idLoai == $item_lsp->id) 
-                          {
+                         
                            $stt++; ?>
 
                       <tbody>
                         <tr>
                           <td>{!! $stt !!}</td>
-                          <td>{!!  $item->MaSP !!}</td>
-                           <td>{!!  $item_lsp->TenLoai !!}</td>
-                           <td>{!!  $item->TenSP !!}</td>
-                           <td>{!!  $item->SoLuongTonKho !!}</td>
-                           <td>{!!  (float)$item->GiaBan !!}</td>    
+                          <td>{!!  $item->MaPhieuNhap !!}</td>
+                           <td>{!!  (float)$item->TongTien !!}</td>
+                           <td>{!!  $item->NgayXuatHoaDon !!}</td>
+                           <td>{!!  $item->idTaiKhoan !!}</td>
                           <td>
                           <center>
                     
-                            <a href="{!! route('getSpSua',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                            <a href="{!! route('getSpXoa',['id'=>$item->id]) !!}" onclick="return xacnhanxoa('Bạn Có Chắc Muốn Xóa Sản Phẩm Này ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                            <a href="{!! route('get_chi_tiet_phieu_nhap',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Xem </a>
+                            <a href="{!! route('getSpSua',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a>
                           </center>
                           </td>
                           
                         </tr>
                         
-                          <?php } ?>
-                          @endforeach 
+                    
                        @endforeach 
                     </table>
-                       <div class="pagination">{!! $sp->appends(Request::except('page'))->render() !!}</div>
+                       <div class="pagination">{!! $phieunhap->appends(Request::except('page'))->render() !!}</div>
                      
 
                   </div>

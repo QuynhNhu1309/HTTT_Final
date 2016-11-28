@@ -20,16 +20,7 @@
                 </h2>
               </div>
 
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
+              
             </div>
             
             <div class="clearfix"></div>
@@ -37,7 +28,8 @@
             <div class="row">
                 <div class="x_panel">
                 @foreach($sps as $item) 
-                  <form class="form-horizontal form-label-left input_mask" action="{{ URL::Route('postSpSua',['id'=>$item->id]) }}" method="POST" name="form_sua_sp" enctype="multipart/form-data">
+                  <form class="form-horizontal form-label-left input_mask" action="{{ URL::Route('postSpSua',['id'=>$item->id]) }}" method="POST" name="form_sua_sp" enctype="multipart/form-data" ng-app="myApp" 
+                  ng-controller="myCtrl">
                    {{ csrf_field() }}
                   <div class="x_title">
                     <h2>{!!  $item->TenSP !!}</h2>
@@ -68,7 +60,8 @@
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <select class="form-control" name="txt_loaisp">
                             @foreach($lsp as $lsp)
-                            <option value="{!!  $lsp->id !!}" <?php if($item->idLoai == $lsp->id) echo  "selected";?>>{!!  $lsp->TenLoai !!}</option>
+                            <option value="{!!  $lsp->id !!}" <?php if($item->idLoai == $lsp->id) echo  "selected";?>>
+                            {!!  $lsp->TenLoai !!}</option>
                             @endforeach
                           </select>
                         </div>
@@ -105,17 +98,36 @@
                         </div>
                       </div>
 
-                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gía bán</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12" >
-                          <input type="text" class="form-control" name="txt_giaban" value="{{ $item->GiaBan }}">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Giá nhập: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="number" name="txt_gianhap" id ="txt_gianhap" required="required" class="form-control col-md-7 col-xs-12" value="{{ (float)$item->GiaNhap }}" oninput="Process_Cost()" />                          
                         </div>
                       </div>
 
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Giá bán = <span class="required">Gía nhập  + 30% Gía nhập</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="number" name="txt_giaban" id ="txt_giaban" required="required" class="form-control col-md-7 col-xs-12" value="{{ (float)$item->GiaBan }}" readonly />                          
+                        </div>
+                      </div>
+
+                    <!--- Khuyến mãi tối đa 30% -->
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gía bán hiện tại</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" name="txt_giaban_hientai" value="{{ $item->GiaBanHienTai }}">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Phần trăm khuyến mãi <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="number" name="txt_phantramKM" id ="txt_phantramKM" required="required" class="form-control col-md-7 col-xs-12" value="{{ (float)$item->PhanTramKM }}" oninput="Process_Cost()"/>                          
+                        </div>
+                      </div>
+
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Giá bán hiện tại =  <span class="required">Gía bán - Gía bán * % KM</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="number" name="txt_giaban_hientai" id ="txt_giaban_hientai" required="required" class="form-control col-md-7 col-xs-12" readonly value="{{ (float)$item->GiaBanHienTai }}"/>                          
                         </div>
                       </div>
 
@@ -201,6 +213,27 @@
                 
               </div>
               </form>
+
+              <script>
+              function Process_Cost()
+              {
+                var gianhap = parseInt(document.getElementById("txt_gianhap").value);
+                console.log(gianhap);
+                var cm = gianhap*0.3;
+                console.log(cm);
+                var giaban = gianhap+gianhap*0.3;
+                console.log(giaban);
+                document.getElementById("txt_giaban").value = giaban;
+                var phantramKM = parseInt(document.getElementById("txt_phantramKM").value);
+                var giabanhientai = giaban - giaban* phantramKM/100;
+                document.getElementById("txt_giaban_hientai").value = giabanhientai;
+                console.log(giabanhientai)
+              }
+
+
+              </script>
+
+              
                @endforeach
             </div>
           </div>
@@ -209,3 +242,5 @@
     <!-- End Content -->
 
 @endsection
+
+ 

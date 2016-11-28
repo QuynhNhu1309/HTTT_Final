@@ -91,6 +91,21 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
         
     });
 
+    Route::group(['prefix'=>'phieunhap'], function(){
+        Route::get('danhsach','admin\PhieuNhapController@getDanhSach')->name('danh_sach_phieu_nhap');
+
+        Route::get('sua/{id}','admin\PhieuNhapController@getSua')->name('get_sua_phieu_nhap')->where('id','[0-9]+');
+
+        Route::get('xem/{id}','admin\PhieuNhapController@getChiTiet')->name('get_chi_tiet_phieu_nhap')->where('id','[0-9]+');
+
+        Route::get('them','admin\PhieuNhapController@getThem')->name('get_them_phieu_nhap');
+
+        Route::post('them','admin\PhieuNhapController@postThem')->name('post_them_phieu_nhap');
+
+        Route::post('them_exist/id','admin\PhieuNhapController@postThem')->name('post_them_phieu_nhap_exist')->where('id','[0-9]+');;
+
+    });
+
 });
 
 // Route::resource('san-pham',$baseFolder.'SanPhamController', ['names' => [

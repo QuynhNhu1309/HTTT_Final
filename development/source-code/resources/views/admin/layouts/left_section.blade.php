@@ -56,8 +56,8 @@
 
                    <li><a><i class="fa fa-clone"></i>Kho hàng<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                      <li><a href="fixed_footer.html">Fixed Footer</a></li>
+                      <li><a href="{{ route('get_them_phieu_nhap') }}">Tạo phiếu nhập</a></li>
+                      <li><a href="{{ route('danh_sach_phieu_nhap') }}">Danh sách phiếu nhập</a></li>
                     </ul>
                   </li>
 

@@ -218,61 +218,6 @@ class NhanVienController extends Controller
                                             })->paginate(2);
         }
 
-
-       
-        // if(isset($_GET['chucvu']) && \Request::get('status'))
-        // {
-        //     $danhsach_nhanvien = TaiKhoan::where('idGroup',$chucvu)->where('idTinhTrang', $status)->paginate(2);
-        // }
-
-        // if(isset($_GET['gender']) && \Request::get('status'))
-        // {
-        //     $danhsach_nhanvien = TaiKhoan::where('GioiTinh',$gender)->where('idTinhTrang', $status)->paginate(2);
-        // }
-
-        // if(isset($_GET['chucvu']) && \Request::get('gender') && isset($_GET['status']) )
-        // {
-        //     $danhsach_nhanvien = TaiKhoan::where('idGroup',$chucvu)->where('GioiTinh', $gender)->where('idTinhTrang', $status)->paginate(2);
-        // }
-
-        // if(isset($_GET['chucvu']) && \Request::get('gender') && isset($_GET['status']) )
-        // {
-        //     $danhsach_nhanvien = TaiKhoan::where('idGroup',$chucvu)->where('GioiTinh', $gender)->where('idTinhTrang', $status)->paginate(2);
-        // }
-
-
-        // if(isset($_GET['chucvu']) && \Request::get('gender') && isset($_GET['status']) && isset($_GET['key']) )
-        // {
-        //     // $danhsach_nhanvien = TaiKhoan::where('idGroup',$chucvu)->where('GioiTinh', $gender)->where('idTinhTrang', $status)->where('HoTen','like','%'.$search.'%')->orwhere('Username','like','%'.$search.'%')->orWhere('DiaChi','like','%'.$search.'%')->orWhere('Email','like','%'.$search.'%')paginate(2);
-
-            
-        //     $danhsach_nhanvien = TaiKhoan::where(function ($query) {
-        //                                         $query->where('idGroup',$chucvu)
-        //                                         ->where('GioiTinh', $gender)
-        //                                         ->where('idTinhTrang', $status);
-        //                                     })
-        //                                     ->where(function ($query) {
-        //                                         $query->orwhere('HoTen','like','%'.$search.'%')
-        //                                         ->orwhere('Username','like','%'.$search.'%')
-        //                                         ->orWhere('DiaChi','like','%'.$search.'%')
-        //                                         ->orWhere('Email','like','%'.$search.'%');
-        //                                     })->paginate(2);
-            
-            
-//             ('idGroup',$chucvu)->where('GioiTinh', $gender)->where('idTinhTrang', $status)->where('HoTen','like','%'.$search.'%')->orwhere('Username','like','%'.$search.'%')->orWhere('DiaChi','like','%'.$search.'%')->orWhere('Email','like','%'.$search.'%')paginate(2);
-
-
-//             Model::where(function ($query) {
-//     $query->where('a', '=', 1)
-//           ->orWhere('b', '=', 1);
-// })->where(function ($query) {
-//     $query->where('c', '=', 1)
-//           ->orWhere('d', '=', 1);
-// });
-        //}
-
-
-
         return view('admin.nhanvien.danhsach', ['danhsach_nhanvien' => $danhsach_nhanvien, 'nhanvien_sort_gender' => $nhanvien_sort_gender, 'nhanvien_sort_chucvu' => $nhanvien_sort_chucvu, 'nhanvien_sort_tinhtrang' => $nhanvien_sort_tinhtrang]);
     }
 
