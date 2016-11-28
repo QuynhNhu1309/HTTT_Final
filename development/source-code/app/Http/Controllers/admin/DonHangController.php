@@ -136,7 +136,10 @@ class DonHangController extends Controller
      */
     public function edit($id)
     {
-        //
+        $result = DB::table('dbo.donhang')
+            ->where('id', $id)
+            ->update(['idTinhTrang' => 14]);
+        return back();
     }
 
     /**
@@ -177,5 +180,6 @@ class DonHangController extends Controller
                                 array('maSanPham' => $maSanPham));
         return $result;
     }
+    
     
 }

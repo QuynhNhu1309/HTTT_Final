@@ -98,7 +98,7 @@
                         sanPham.soLuong = 1;
                         $scope.sanPhamInfo.push(sanPham);
                     } else {
-                        $scope.panelSanPhamShow = true;
+                        $scope.panelSanPhamShow = false;
                         alert('Không tìm thấy mã sản phẩm');
                     }
                 }, function errorCallback(error) {
@@ -106,10 +106,14 @@
                 });
         }
 
-        function submitDonHang() {
-            if ($scope.sanPhamInfo.length == 0) {
+        function submitDonHang(isValid) {
+            console.log($scope.form_nguoi_nhan);
+            if ($scope.sanPhamInfo.length == 0 || $scope.khachHangInfo == null) {
                 alert('Bạn thêm đơn hàng không thành công');
-                resetData();
+                return;
+            }
+            if (flagDiaChiKhac == true && isValid == false) {
+                alert('Bạn thêm đơn hàng không thành công');
                 return;
             }
             if (flagDiaChiKhac == false) {

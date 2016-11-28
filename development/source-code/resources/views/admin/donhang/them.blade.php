@@ -10,7 +10,7 @@
                 <h2>
                     <ul class="breadcrumb">
                         <li><a href="/admin/donhang/danhsach">Đơn hàng</a></li>
-                        <li class="active">Danh sách đơn hàng</li>
+                        <li class="active">Thêm đơn hàng</li>
                     </ul>
                 </h2>
             </div>
@@ -57,7 +57,7 @@
 
                             <div class="thong_tin_nguoi_nhan col-md-6 col-xs-6" ng-show="panelNguoiNhanShow">
                                 <div class="x_content">
-                                    <form class="form-horizontal form-label-left input_mask" action="{{URL::Route('them.donhang.post')}}" method="POST">
+                                    <form class="form-horizontal form-label-left input_mask" action="{{URL::Route('them.donhang.post')}}" name= "form_nguoi_nhan" method="POST">
                                         {{csrf_field()}}
 
                                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
@@ -169,7 +169,7 @@
                 <!-- End Invoice Form -->
             </div>
             <div class="text-right">
-                <button class="btn btn-primary btn-hoan-tat" ng-click="submitDonHang()">Hoàn tất</button>
+                <button class="btn btn-primary btn-hoan-tat" ng-click="submitDonHang(form_nguoi_nhan.$valid)">Hoàn tất</button>
             </div>
         </div>
     </div>

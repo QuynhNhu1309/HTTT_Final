@@ -47,13 +47,13 @@
                       <table id="datatable" class="table table-striped table-bordered table-hover" name="datatable">
                         <thead>
                           <tr>
-                            <th>STT</th>
-                            <th>Mã đơn hàng</th>
-                            <th>Nhân viên</th>
-                            <th>Ngày giao</th>
-                            <th>Tổng tiền</th>
-                            <th>Tình trạng</th>
-                            <th>Chức năng</th>
+                            <th class="col-md-1">STT</th>
+                            <th class="col-md-2">Mã đơn hàng</th>
+                            <th class="col-md-2">Nhân viên</th>
+                            <th class="col-md-2">Ngày giao</th>
+                            <th class="col-md-1">Tổng tiền</th>
+                            <th class="col-md-2">Tình trạng</th>
+                            <th class="col-md-2">Chức năng</th>
                           </tr>
                         </thead>
 
@@ -65,13 +65,15 @@
                               <td>{{$donHang -> HoTen}}</td>
                               <td>{{$donHang -> Ngaygiao}}</td>
                               <td>{{$donHang -> TongTien}}</td>
-                              <td>{{$donHang -> idTinhTrang}}</td>
+                              <td>@if($donHang -> idTinhTrang == 13) Chưa xử lý
+                                  @else Đã xử lý
+                                  @endif
+                              </td>
                               <td>
-                              <center>
-                                <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                                <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                                <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                              </center>
+                                <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Chi tiết </a>
+                                @if($donHang -> idTinhTrang == 13)
+                                  <a href="{{$donHang -> id}}/sua" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Xác nhận </a>
+                                @endif
                               </td>
                             </tr>
                           @endforeach
