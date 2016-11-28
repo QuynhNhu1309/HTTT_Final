@@ -24,7 +24,7 @@
                     <input type="text" class="form-control" placeholder="Tìm nhanh ... " name="search" id="search" 
                     value ="<?php if(isset($_GET['search'])) {echo $_GET['search']; }?>">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="submit">Tìm</button>
+                      <button class="btn btn-default" type="submit">Tìm1</button>
                     </span>
                   </div>
                 </form>
