@@ -81,14 +81,13 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
         Route::post('them','admin\DonHangController@store')->name('them.donhang.post');
 
-        Route::put('{id}','admin\DonHangController@update');
-
         Route::get('khachhang/{ma_khach_hang}','admin\DonHangController@timkhachhang');
 
         Route::get('sanpham/{ma_san_pham}','admin\DonHangController@timsanpham');
 
         Route::get('{id}','admin\DonHangController@show');
         
+        Route::get('{id}/sua/{idTinhTrang}','admin\DonHangController@update');
     });
 
     Route::group(['prefix'=>'phieunhap'], function(){

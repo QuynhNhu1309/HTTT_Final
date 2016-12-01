@@ -66,13 +66,14 @@
                               <td>{{$donHang -> Ngaygiao}}</td>
                               <td>{{$donHang -> TongTien}}</td>
                               <td>@if($donHang -> idTinhTrang == 13) Chưa xử lý
-                                  @else Đã xử lý
+                                  @elseif($donHang -> idTinhTrang == 14) Đã xử lý
+                                  @elseif($donHang -> idTinhTrang == 15) Đã hủy
                                   @endif
                               </td>
                               <td>
-                                <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Chi tiết </a>
+                                <a href="{{$donHang -> id}}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Chi tiết </a>
                                 @if($donHang -> idTinhTrang == 13)
-                                  <a href="{{$donHang -> id}}/sua" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Xác nhận </a>
+                                  <a href="{{$donHang -> id}}/sua" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Cập nhật </a>
                                 @endif
                               </td>
                             </tr>

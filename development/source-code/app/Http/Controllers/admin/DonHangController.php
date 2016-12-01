@@ -123,9 +123,24 @@ class DonHangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idDonHang)
     {
-        //
+        $donHang = DB::table('donhang')
+                    ->where('id', $idDonHang)
+                    ->first();
+        $idKhachHang = $donHang->idKhachHang;
+        $thongTinKhachHang =  DB::table('khachhang')
+                                ->where('id', $idKhachHang)
+                                ->first();
+        $dsChiTietDonHang = DB::table('donhang_chitiet')
+                            ->join('sanpham', 'donhang_chitiet.idSanPham', '=', 'sanpham.id')
+                            ->select('donhang_chitiet.*','sanpham.MaSP')
+                            ->where('idDonHang', $idDonHang)
+                            ->get();
+        return view('admin.donhang.chitiet')
+                ->with('thongTinKhachHang', $thongTinKhachHang)
+                ->with('dsChiTietDonHang', $dsChiTietDonHang)
+                ->with('donHang', $donHang);
     }
 
     /**
@@ -134,12 +149,24 @@ class DonHangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idDonHang)
     {
-        $result = DB::table('dbo.donhang')
-            ->where('id', $id)
-            ->update(['idTinhTrang' => 14]);
-        return back();
+        $donHang = DB::table('donhang')
+                    ->where('id', $idDonHang)
+                    ->first();
+        $idKhachHang = $donHang->idKhachHang;
+        $thongTinKhachHang =  DB::table('khachhang')
+                                ->where('id', $idKhachHang)
+                                ->first();
+        $dsChiTietDonHang = DB::table('donhang_chitiet')
+                            ->join('sanpham', 'donhang_chitiet.idSanPham', '=', 'sanpham.id')
+                            ->select('donhang_chitiet.*','sanpham.MaSP')
+                            ->where('idDonHang', $idDonHang)
+                            ->get();
+        return view('admin.donhang.sua')
+                ->with('thongTinKhachHang', $thongTinKhachHang)
+                ->with('dsChiTietDonHang', $dsChiTietDonHang)
+                ->with('donHang', $donHang);
     }
 
     /**
@@ -149,9 +176,32 @@ class DonHangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($idDonHang, $idTinhTrang)
     {
-        //
+        if($idTinhTrang == "14")
+        {
+            DB::table('donhang')
+                ->where('id', $idDonHang)
+                ->update(['idTinhTrang' => $idTinhTrang]);
+        }
+        elseif ($idTinhTrang == "15")
+        {
+            $dsChiTietDonHang = DB::table('donhang_chitiet')
+                                ->join('sanpham', 'donhang_chitiet.idSanPham', '=', 'sanpham.id')
+                                ->select('donhang_chitiet.*','sanpham.SoLuongTonKho')
+                                ->where('idDonHang', $idDonHang)
+                                ->get();
+            foreach($dsChiTietDonHang as $chiTietDonHang)
+            {
+                DB::table('sanpham')
+                    ->where('id', $chiTietDonHang->idSanPham)
+                    ->update(['SoLuongTonKho' => $chiTietDonHang->SoLuongTonKho + $chiTietDonHang->SoLuong]);
+            }
+            DB::table('donhang')
+                ->where('id', $idDonHang)
+                ->update(['idTinhTrang' => $idTinhTrang]);
+        }
+        return redirect('/admin/donhang/danhsach');
     }
 
     /**

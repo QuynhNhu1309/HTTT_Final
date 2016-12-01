@@ -10,7 +10,7 @@
                 <h2>
                     <ul class="breadcrumb">
                         <li><a href="/admin/donhang/danhsach">Đơn hàng</a></li>
-                        <li class="active">Cập nhật đơn hàng</li>
+                        <li class="active">Chi tiết đơn hàng</li>
                     </ul>
                 </h2>
             </div>
@@ -97,7 +97,6 @@
                                         <th class="col-md-1">Đơn giá</th>
                                         <th class="col-md-1">Số lượng</th>
                                         <th class="col-md-1">Thành tiền</th>
-                                        <th class="col-md-1">Chức năng</th>
                                     </tr>
                                 </thead>
 
@@ -110,11 +109,6 @@
                                             <td>{{$chiTietDonHang->Gia}}</td>
                                             <td>{{$chiTietDonHang->SoLuong}}</td>
                                             <td>{{$chiTietDonHang->Gia*$chiTietDonHang->SoLuong}}</td>
-                                            <td>
-                                                <center>
-                                                    <button class="btn btn-danger btn-xs" ng-click ="removeSanPham(sanpham.MaSP)"><i class="fa fa-trash-o"></i> Hủy </button>
-                                                </center>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -144,10 +138,6 @@
                     </div>
                 </div>
                 <!-- End Invoice Form -->
-            </div>
-            <div class="text-right">
-                <a class="btn btn-warning btn-hoan-tat" href="sua/15">Hủy hóa đơn</a>
-                <a class="btn btn-primary btn-hoan-tat" href="sua/14">Xuất hóa đơn</a>
             </div>
         </div>
     </div>
