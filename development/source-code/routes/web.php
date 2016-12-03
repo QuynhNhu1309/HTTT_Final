@@ -71,6 +71,9 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
     });
 
     Route::group(['prefix'=>'donhang'], function(){
+        
+        Route::get('{idDonHang}/laydanhsachchitiet','admin\DonHangController@danhSachChiTiet');
+
         Route::get('danhsach','admin\DonHangController@index');
 
         Route::get('{id}/sua','admin\DonHangController@edit');
@@ -88,6 +91,8 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
         Route::get('{id}','admin\DonHangController@show');
         
         Route::get('{id}/sua/{idTinhTrang}','admin\DonHangController@update');
+        
+        Route::get('{idDonHang}/xoachitiet/{idChiTietDonHang}','admin\DonHangController@removeChiTietDonHang');
     });
 
     Route::group(['prefix'=>'phieunhap'], function(){

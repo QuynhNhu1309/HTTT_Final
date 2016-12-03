@@ -21,11 +21,41 @@
                 </div>
 
                 <div class="title_right">
-                  <ul class="pull-left">
-                    <li class="active"><a href="/admin/donhang/danhsach">Tất cả (100)</a></li>
-                    <li><a href="/admin/donhang/danhsach?tinhtrang=1">Đã xử lý (10)<a></li>
-                    <li><a href="/admin/donhang/danhsach?tinhtrang=0">Chưa xử lý (90)</a></li>
-                  </ul>
+
+                <form action="" method="GET" name="form_loc">
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div class="form-group">
+                            <select class="form-control" name="tinhtrang" id="tinhtrang" >
+                                <option value="" @php if($idTinhTrang == null) echo 'selected'; @endphp>Tình trạng</option>
+                                @foreach($dsTinhTrang as $tinhTrang)
+                                  @if( $tinhTrang->TenBang == 'donhang')
+                                  <option value="{{$tinhTrang->id}}" @php if($tinhTrang->id == $idTinhTrang) echo 'selected'; @endphp>{{ $tinhTrang->TinhTrang }}</option>
+                                  @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div class="form-group">
+                            <select class="form-control" name="taikhoan" id="taikhoan" >
+                                <option value="" @php if($idTaiKhoan == null) echo 'selected'; @endphp>Tài khoản</option>
+                                @foreach($dsTaiKhoan as $taiKhoan)
+                                <option value="{{$taiKhoan->id}}" @php if($taiKhoan->id == $idTaiKhoan) echo 'selected'; @endphp>{{ $taiKhoan->HoTen }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                      <div class="form-group">
+                            <button class="btn btn-default" type="submit">Lọc</button>
+                      </div>
+                    </div>
+
+                  </form>
+
                   <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-right top_search">
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="Search for..." name="search_input" id="search_input">
@@ -65,11 +95,7 @@
                               <td>{{$donHang -> HoTen}}</td>
                               <td>{{$donHang -> Ngaygiao}}</td>
                               <td>{{$donHang -> TongTien}}</td>
-                              <td>@if($donHang -> idTinhTrang == 13) Chưa xử lý
-                                  @elseif($donHang -> idTinhTrang == 14) Đã xử lý
-                                  @elseif($donHang -> idTinhTrang == 15) Đã hủy
-                                  @endif
-                              </td>
+                              <td>{{$donHang -> TinhTrang}}</td>
                               <td>
                                 <a href="{{$donHang -> id}}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Chi tiết </a>
                                 @if($donHang -> idTinhTrang == 13)
@@ -81,18 +107,7 @@
                         </tbody>
                       </table>
 
-
-                        <div class="pagination_div">
-                          <ul class="pagination pagination-sm">
-                              <li><a href="#"><<</a></li>
-                              <li><a href="/admin/donhang/danhsach?trang=1">1</a></li>
-                              <li><a href="/admin/donhang/danhsach?trang=2">2</a></li>
-                              <li><a href="/admin/donhang/danhsach?trang=3">3</a></li>
-                              <li><a href="/admin/donhang/danhsach?trang=4">4</a></li>
-                              <li><a href="/admin/donhang/danhsach?trang=5">5</a></li>
-                              <li><a href="#">>></a></li>
-                            </ul>
-                        </div>
+                      {{$dsDonHang->appends(['tinhtrang' => $idTinhTrang, 'taikhoan' => $idTaiKhoan])->links()}}
                     </div>
                   </div>
                 </div>

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,15 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . '/../../node_modules/angular-froala' => public_path('packages/angular-froala'),
             __DIR__ . '/../../node_modules/angular-ui-bootstrap' => public_path('packages/angular-ui-bootstrap'),
         ], 'public');
+
+        // Lấy danh sách tài khoản
+        $dsTaiKhoan = DB::table('dbo.taikhoan')
+                        ->get();
+        View::share('dsTaiKhoan', $dsTaiKhoan);
+        // Lấy danh sách tình trạng
+        $dsTinhTrang = DB::table('dbo.tinhtrang')
+                        ->get();
+        View::share('dsTinhTrang', $dsTinhTrang);
     }
 
     /**

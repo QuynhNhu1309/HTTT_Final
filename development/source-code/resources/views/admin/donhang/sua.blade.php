@@ -102,26 +102,24 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach($dsChiTietDonHang as $key=>$chiTietDonHang)
-                                        <tr>
-                                            <td>{{$key + 1}}</td>
-                                            <td>{{$chiTietDonHang->MaSP}}</td>
-                                            <td>{{$chiTietDonHang->TenSP}}</td>
-                                            <td>{{$chiTietDonHang->Gia}}</td>
-                                            <td>{{$chiTietDonHang->SoLuong}}</td>
-                                            <td>{{$chiTietDonHang->Gia*$chiTietDonHang->SoLuong}}</td>
+                                        <tr ng-repeat="chitiet in dsChiTietDonHang | orderBy : 'MaSP'">
+                                            <td>@{{$index + 1}}</td>
+                                            <td>@{{chitiet.MaSP}}</td>
+                                            <td>@{{chitiet.TenSP}}</td>
+                                            <td>@{{chitiet.Gia}}</td>
+                                            <td>@{{chitiet.SoLuong}}</td>
+                                            <td>@{{chitiet.Gia*chitiet.SoLuong}}</td>
                                             <td>
                                                 <center>
-                                                    <button class="btn btn-danger btn-xs" ng-click ="removeSanPham(sanpham.MaSP)"><i class="fa fa-trash-o"></i> Hủy </button>
+                                                    <button class="btn btn-danger btn-xs" ng-click ="removeChiTietDonHang(chitiet.id)"><i class="fa fa-trash-o"></i> Hủy </button>
                                                 </center>
                                             </td>
                                         </tr>
-                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>   
                                         <td colspan="5" class="text-right"><strong>Tổng tiền</strong></td>
-                                        <td colspan="2">{{$donHang->TongTien}}</td>
+                                        <td colspan="2">@{{getTotalChiTiet()}}</td>
                                     </tr>
                                 </tfoot>
                             </table>

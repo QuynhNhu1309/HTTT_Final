@@ -16,6 +16,7 @@
         $scope.khachHangInfo;
         $scope.sanPhamInfo = [];
         var flagDiaChiKhac = false;
+        $scope.dsChiTietDonHang = [];
 
         //Function
         $scope.togglePanelKhachHang = togglePanelKhachHang;
@@ -25,6 +26,9 @@
         $scope.submitSanPham = submitSanPham;
         $scope.removeSanPham = removeSanPham;
         $scope.getTotal = getTotal;
+        $scope.removeChiTietDonHang = removeChiTietDonHang;
+        $scope.getTotalChiTiet = getTotalChiTiet;
+        layDanhSachDonHang();
 
 
         //Cấu hình cho UIDatePicker
@@ -78,7 +82,7 @@
         function submitSanPham() {
             var duplicateFlag = false;
             $scope.sanPhamInfo.forEach(function(sanPham) {
-                if (sanPham.MaSP == $scope.maSanPham) {
+                if (sanPham.MaSP.toLowerCase() == $scope.maSanPham.toLowerCase()) {
                     alert('Sản phẩm bạn chọn bị trùng');
                     duplicateFlag = true;
                     return;
@@ -189,10 +193,51 @@
             });
         }
 
+        //Hàm xóa chi tiết đơn hàng được chọn
+        function removeChiTietDonHang(idChiTietDonHang) {
+            $http
+                .get('xoachitiet/' + idChiTietDonHang)
+                .then(function successCallback(response) {
+                    if (response.data == true) {
+                        $scope.dsChiTietDonHang.forEach(function(item, index) {
+                            if (item.id == idChiTietDonHang) {
+                                $scope.dsChiTietDonHang.splice(index, 1);
+                                return;
+                            }
+                        });
+                    }
+
+                }, function errorCallback(error) {
+                    console.log(error);
+                });
+        }
+
+
+        function layDanhSachDonHang() {
+            $http
+                .get('laydanhsachchitiet/')
+                .then(function successCallback(response) {
+                    if (response.data != "") {
+                        $scope.dsChiTietDonHang = response.data;
+                        console.log($scope.dsChiTietDonHang)
+                    }
+                }, function errorCallback(error) {
+                    console.log(error);
+                });
+        }
+
         function getTotal() {
             var grandTotal = 0;
             $scope.sanPhamInfo.forEach(function(sanpham) {
                 grandTotal += sanpham.GiaBanHienTai * sanpham.soLuong;
+            });
+            return grandTotal;
+        }
+
+        function getTotalChiTiet() {
+            var grandTotal = 0;
+            $scope.dsChiTietDonHang.forEach(function(chitiet) {
+                grandTotal += chitiet.Gia * chitiet.SoLuong;
             });
             return grandTotal;
         }

@@ -19,34 +19,30 @@ class DonHangController extends Controller
      */
     public function index(Request $request)
     {
-        $trangHienTai = $request->input('trang');
-        $idTinhTrang = $request->input('tinhtrang');
-        $idTaiKhoan = $request->input('taikhoan');
-        $dsDonHang = $this->execute_sp('dbo.sp_get_dsdonhang', ['Trang' => $trangHienTai, 
-                                                    'idTinhTrang' => $idTinhTrang,
-                                                    'idTaiKhoan' => $idTaiKhoan,
-                                                    'SoDongMotTrang' => 10]);
+        $idTinhTrang = null;
+        $idTaiKhoan = null;
+        $query = DB::table('dbo.donhang')
+                        ->join('dbo.taikhoan', 'dbo.donhang.idTaiKhoan', '=', 'dbo.taikhoan.id')
+                        ->join('dbo.tinhtrang', 'dbo.donhang.idTinhTrang', '=', 'dbo.tinhtrang.id')
+                        ->select('dbo.donhang.*', 'dbo.taikhoan.HoTen', 'dbo.tinhtrang.TinhTrang')
+                        ->orderby('MaDonHang', 'desc');
+        if($request->has('tinhtrang'))
+        {
+            $idTinhTrang = $request->input('tinhtrang');
+            $query->where('dbo.donhang.idTinhTrang', '=', $idTinhTrang);
+        }
+        if($request->has('taikhoan'))
+        {
+            $idTaiKhoan = $request->input('taikhoan');
+            $query->where('idTaiKhoan', '=', $idTaiKhoan);
+        }
+        $dsDonHang = $query->paginate(10);
         return view('admin.donhang.danhsach')
-                    ->with('dsDonHang', $dsDonHang);
+                    ->with('dsDonHang', $dsDonHang)
+                    ->with('idTinhTrang', $idTinhTrang)
+                    ->with('idTaiKhoan', $idTaiKhoan);
     }
 
-    public function execute_sp($procedureName, $parameters)
-    {
-        $spParameters = '';
-        foreach($parameters as $key => $parameter){
-            if(isset($parameter)){
-                $spParameters .= ' @'.$key.'='.$parameter;
-            }
-        }
-        $spParameters = trim($spParameters);
-        $spParameters = str_replace(' ',',',$spParameters);
-        $preparedStatement = 'DECLARE	@return_value int
-                                EXEC	@return_value = '.$procedureName.' '.
-                                $spParameters.
-                                'SELECT	\'Return Value\' = @return_value';
-        $result = DB::select($preparedStatement);
-        return $result;
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -74,7 +70,7 @@ class DonHangController extends Controller
         'diaChi' =>$request->thongTinKhachHang['DiaChi'], 
         'ngayGiao' => date("Y-m-d H:i:s", $request->thongTinKhachHang['ngayGiao']/1000), 
         'tongTien' => (int)$request->tongTien,
-        'idTinhTrang' => 1);
+        'idTinhTrang' => 13);
 
 
         $result = DB::select(DB::raw('
@@ -231,5 +227,55 @@ class DonHangController extends Controller
         return $result;
     }
     
+    public function removeChiTietDonHang($idDonHang, $idChiTietDonHang)
+    {
+        // Lay du lieu de truy van
+        $chiTietDonHang = DB::table('donhang_chitiet')
+                            ->where('id', '=', $idChiTietDonHang)
+                            ->first();
+        $soLuongSanPhamBan = $chiTietDonHang->SoLuong;
+        $idSanPham = $chiTietDonHang->idSanPham;
+        $sanPham = DB::table('sanpham')
+                    ->where('id','=', $idSanPham)
+                    ->first();
+        $soLuongTonSanPhamBan = $sanPham->SoLuongTonKho;
+        $donGiaSanPhamBan = $sanPham->GiaBanHienTai;
+
+        // Cap nhat lai so luong ton cua san pham theo idSanPham trong chi tiet don hang
+        $sanPhamUpdate = DB::table('sanpham')
+                        ->where('id','=',$idSanPham)
+                        ->update(['SoLuongTonKho' => $soLuongTonSanPhamBan + $soLuongSanPhamBan]);
+
+        // Cap nhat tong tien moi cho don hang
+        $donHang = DB::table('donhang')->where('id', '=', $idDonHang)->first();
+        $tongTienDonHang = $donHang->TongTien;
+        $tongTienMoi = $tongTienDonHang - ($soLuongSanPhamBan*$donGiaSanPhamBan);
+        DB::table('donhang')->where('id', '=', $idDonHang)
+                            ->update(['TongTien' => $tongTienMoi]);
+
+        // Xoa chi tiet don hang
+        $thanhCong = DB::table('donhang_chitiet')->where('id', '=', $idChiTietDonHang)->delete();
+
+        // Kiem tra neu khong con chi tiet nao thi cap nhat tinh trang cua don hang thanh Huy
+        $dsChiTietDonHang = DB::table('donhang_chitiet')
+                            ->where('idDonHang', '=', $idDonHang)
+                            ->first();
+        if($dsChiTietDonHang == null)
+        {
+            $thanhCong = DB::table('donhang')->where('id', '=', $idDonHang)
+                            ->update(['idTinhTrang' => 15]);
+        }
+
+        return json_encode($thanhCong);
+    }
     
+    public function danhSachChiTiet($idDonHang)
+    {
+        $dsChiTietDonHang = DB::table('donhang_chitiet')
+                                ->join('sanpham', 'donhang_chitiet.idSanPham', '=', 'sanpham.id')
+                                ->select('donhang_chitiet.*','sanpham.MaSP')
+                                ->where('idDonHang','=',$idDonHang)
+                                ->get();
+       return json_encode($dsChiTietDonHang);
+    }
 }
