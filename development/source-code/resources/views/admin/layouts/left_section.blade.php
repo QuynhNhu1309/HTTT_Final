@@ -7,7 +7,7 @@
 
 
     <!-- menu profile quick info -->
-
+     @if(Auth::check())
         <div class="profile">
             <div class="profile_pic">
                     <img src="{{asset('assets/img/'.Auth::user()->HinhDaiDien)}}" alt="..." class="img-circle profile_img">
@@ -17,7 +17,7 @@
                     <h2>{{ Auth::user()->Username}}</h2>
             </div>
         </div>
-
+@endif
     <!-- /menu profile quick info -->
 
                 <br />
@@ -63,8 +63,8 @@
 
                   <li><a><i class="fa fa-bar-chart-o"></i> Báo cáo<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="chartjs.html">Chart JS</a></li>
-                      <li><a href="chartjs2.html">Chart JS2</a></li>
+                      <li><a href="{{ route('baocao_doanhthu') }}">Doanh thu bán hàng</a></li>
+                      <li><a href="{{ route('baocao_khohang') }}">Kho hàng</a></li>
                       <li><a href="morisjs.html">Moris JS</a></li>
                       <li><a href="echarts.html">ECharts</a></li>
                       <li><a href="other_charts.html">Other Charts</a></li>

@@ -110,6 +110,11 @@ ALTER TABLE sanpham DROP CONSTRAINT DF__sanpham__GiaBanH__173876EA
 ALTER TABLE sanpham DROP CONSTRAINT DF__sanpham__GiaBan__164452B1
 UPDATE sanpham SET GiaNhap = GiaBan - GiaBan* 0.3
 
+UPDATE sanpham SET GiaNhap = GiaBan
+UPDATE sanpham SET GiaBanHienTai = GiaBanHienTai
+
+UPDATE sanpham SET GiaBan = GiaNhap + GiaNhap* 0.3
+
 INSERT INTO sanpham (idSP, idLoai, TenSP, urlPreview, MoTa, NgayCapNhat, Gia, urlHinh, SoLanXem, SoLuongTonKho, GhiChu, SoLanMua) VALUES
 ('SP01', 'L01', N'Bút bi vương miện Crown Love Magic', N'BUT_BI_Pre (1).jpg', N'<ul><li>Chiều dài: 20cm.</li><li>Chất liệu: Inox.Bút có 3 màu: đỏ, xanh, tím.</li><li>Ở trên đầu bút có hình vương miện màu vàng bóng kết hợp với đầu bi tròn.</li></ul>', '2015-02-12', 18000, N'Butbi1.jpg', 20, 10, NULL, 3),
 ('SP02', 'L01', N'Bút bi kẹo đầu bông bi', N'BUT_BI_Pre (2).jpg', N'<ul><li>Chiều dài: 20cm.</li><li>Đâu bông được làm từ len.</li><li>Chất liệu: Nhựa.</li><li>Bút đầu bông hình tròn có nhiều màu: trắng, đỏ, cam, hồng, xanh dương.</li><li>Thân bút còn có kèm theo một chiếc nơ nhỏ nhắn xinh xắn.</li></ul>', '2015-02-14', 18000, N'Butbi2.jpg', 4, 12, NULL, 4),

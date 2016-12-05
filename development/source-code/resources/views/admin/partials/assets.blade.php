@@ -27,7 +27,8 @@
 <script type="text/javascript" src="{{ URL::asset('packages/angular-froala/src/angular-froala.js')}}"></script>
 -->
 <!-- NHƯ: Bỏ script của datatable css -->
-
+<!--- Như để -->
+<script type="text/javascript" src="{{ URL::asset('assets/js/custom.min.js')}}"></script>
 
 <!-- Angular App -->
 <!--
@@ -46,7 +47,7 @@
 
 <!-- Bootstrap -->
     <!-- NProgress -->
-    <!--Cmt temp <link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/nprogress/nprogress.css')}}">-->
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/nprogress/nprogress.css')}}">
     <!-- iCheck -->
     <!--<link rel="stylesheet" type="text/css" href="{{ URL::asset('packages/iCheck/skins/flat/green.css')}}">-->
     <!-- bootstrap-progressbar -->
@@ -61,7 +62,6 @@
     <!-- jQuery -->
     <script type="text/javascript" src="{{ URL::asset('packages/jquery/jquery-1.8.3.min.js')}}"></script>
     
-    <script type="text/javascript" src="{{ URL::asset('packages/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
     <script type="text/javascript" src="{{ URL::asset('packages/bootstrap/js/bootstrap.min.js')}}"></script>
     <!-- FastClick -->
@@ -69,7 +69,9 @@
     <!-- NProgress -->
     <script type="text/javascript" src="{{ URL::asset('packages/nprogress/nprogress.js')}}"></script>
     <!-- Chart.js -->
-    <!--<script type="text/javascript" src="{{ URL::asset('packages/Chart.js/dist/Chart.min.js')}}"></script>-->
+    <script type="text/javascript" src="{{ URL::asset('packages/Chart.js/dist/Chart.min.js')}}"></script>
+
+    <script type="text/javascript" src="{{ URL::asset('assets/js/Chart_custom.js')}}"></script>
     <!-- gauge.js -->
     <!--<script type="text/javascript" src="{{ URL::asset('packages/gauge.js/dist/gauge.min.js')}}"></script>-->
     <!-- bootstrap-progressbar -->
@@ -102,8 +104,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/moment/moment.min.js')}}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/datepicker/daterangepicker.js')}}"></script>
 
-    <!-- Custom Theme Scripts -->
-    <script type="text/javascript" src="{{ URL::asset('js/custom.min.js')}}"></script>
+
     <!-- Project CSS -->
 
 

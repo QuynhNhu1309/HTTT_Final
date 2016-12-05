@@ -38,6 +38,8 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
         Route::get('them','admin\SanphamController@getThem')->name('getSpThem');
         Route::post('them','admin\SanphamController@postThem')->name('postSpThem');
 
+        Route::get('danhsach_hethang','admin\SanphamController@getDanhSach_hethang')->name('getSPList_hethang');
+
     });
 
     Route::group(['prefix'=>'nhanvien'], function(){
@@ -70,24 +72,16 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
     });
 
-    Route::group(['prefix'=>'donhang'], function(){
+   Route::group(['prefix'=>'donhang'], function(){
         
         Route::get('{idDonHang}/laydanhsachchitiet','admin\DonHangController@danhSachChiTiet');
-
         Route::get('danhsach','admin\DonHangController@index');
-
         Route::get('{id}/sua','admin\DonHangController@edit');
-
         Route::get('them','admin\DonHangController@create');
-
         Route::delete('{id}/xoa','admin\DonHangController@destroy');
-
         Route::post('them','admin\DonHangController@store')->name('them.donhang.post');
-
         Route::get('khachhang/{ma_khach_hang}','admin\DonHangController@timkhachhang');
-
         Route::get('sanpham/{ma_san_pham}','admin\DonHangController@timsanpham');
-
         Route::get('{id}','admin\DonHangController@show');
         
         Route::get('{id}/sua/{idTinhTrang}','admin\DonHangController@update');
@@ -106,7 +100,18 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
         Route::post('them','admin\PhieuNhapController@postThem')->name('post_them_phieu_nhap');
 
-        Route::post('them_exist/id','admin\PhieuNhapController@postThem')->name('post_them_phieu_nhap_exist')->where('id','[0-9]+');;
+        Route::get('them_exist/{id}','admin\PhieuNhapController@getThem_exist')->name('get_them_phieu_nhap_exist')->where('id','[0-9]+');
+
+        Route::post('them_exist/{id}','admin\PhieuNhapController@postThem_exist')->name('post_them_phieu_nhap_exist')->where('id','[0-9]+');
+
+    });
+
+     Route::group(['prefix'=>'baocao'], function(){
+        Route::get('doanhthu','admin\BaoCaoController@get_baocao_doanhthu')->name('baocao_doanhthu');
+
+        Route::get('khohang','admin\BaoCaoController@get_baocao_khohang')->name('baocao_khohang');
+
+        
 
     });
 

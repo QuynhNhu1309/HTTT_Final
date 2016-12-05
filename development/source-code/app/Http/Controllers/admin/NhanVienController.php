@@ -230,6 +230,7 @@ class NhanVienController extends Controller
 
     public function getSua_An($id)
     {
+       // if(isset($_GET['']))
         $nv= TaiKhoan::find($id);
         $nv->idTinhTrang = 5;
         $nv->save();

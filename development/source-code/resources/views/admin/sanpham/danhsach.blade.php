@@ -13,8 +13,12 @@
                 <ul class="breadcrumb">
                     <li><a href="#">Sản phẩm</a></li>
                     <li class="active">Danh sách sản phẩm</li>
+                    <button class="btn"><a href="{{ URL::Route('getSPList_hethang')}}">Báo hết hàng</a></button>
+                
                 </ul>
+               
                 </h2>
+           
               </div>
 
                  

@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title','Sản Phẩm')
+@section('title','Phiếu nhập')
 
 @section('content')
     <!--Begin Content -->
@@ -11,7 +11,7 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Phiếu nhập</a></li>
+                    <li><a href="{!! route('danh_sach_phieu_nhap') !!}">Phiếu nhập</a></li>
                     <li class="active">Xem chi tiết</li>
                 </ul>
                 </h2>
@@ -44,7 +44,7 @@
                           <th>Gía nhập</th>
                           <th>Số lượng nhập</th>
                           <th>Thành tiền</th>
-                          <th><center><a href="{!! route('get_them_phieu_nhap') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
+                          <th><center><a href="{!! route('get_them_phieu_nhap_exist',['id'=>$idPN]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
                         
                          
                         </tr>
@@ -66,7 +66,7 @@
                           <center>
                     
                             <a href="{!! route('getSpSua',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                            <a href="{!! route('getSpSua',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a>
+                            
                           </center>
                           </td>
                           

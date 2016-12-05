@@ -167,6 +167,43 @@ class SanphamController extends Controller
     }
 
 
+    public function getDanhSach_hethang ()
+    {
+        $loaisp = DB::table('loaisp')->get();
+        $search = \Request::get('search');
+        $data = SanPham::where('TenSP','like','%'.$search.'%')->orwhere('MaSP','like','%'.$search.'%')->paginate(2);
+
+        $data = SanPham::whereBetween('SoLuongTonKho', [0, 10])
+                                            ->where(function ($query) use($search) {
+                                                $query->orwhere('TenSP','like','%'.$search.'%')->orwhere('MaSP','like','%'.$search.'%');
+                                            })->paginate(3);
+
+         if(isset($_GET['status']))
+        {
+            $status = \Request::get('status');
+        }
+
+         if(isset($_GET['status']) && $_GET['status']!= "")
+        {
+            if($_GET['status'] == 2)
+            {
+                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->paginate(15);
+            }
+
+            if($_GET['status'] == 3)
+            {
+                $data = SanPham::where('SoLuongTonKho', 0)->paginate(15);
+            }
+        }
+
+
+
+        return view('admin.sanpham.ds_hethang',['sp' => $data,'loaisp' => $loaisp]);
+    }
+
+
+
+
     public function getThem(){
         $data = DB::table('loaisp')->get();
 
