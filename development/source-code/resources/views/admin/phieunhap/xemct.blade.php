@@ -44,7 +44,7 @@
                           <th>Gía nhập</th>
                           <th>Số lượng nhập</th>
                           <th>Thành tiền</th>
-                          <th><center><a href="{!! route('get_them_phieu_nhap_exist',['id'=>$idPN]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
+                          
                         
                          
                         </tr>
@@ -62,13 +62,7 @@
                            <td>{!!  (float)$item->GiaNhap !!}</td>
                            <td>{!!  $item->SoLuongNhap !!}</td>
                            <td>{!!  (float)$item->ThanhTien !!}</td>
-                          <td>
-                          <center>
-                    
-                            <a href="{!! route('getSpSua',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                            
-                          </center>
-                          </td>
+                          
                           
                         </tr>
                         

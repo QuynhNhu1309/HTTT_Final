@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title','Sản Phẩm')
+@section('title','Phiếu nhập')
 
 @section('content')
     <!--Begin Content -->
@@ -11,7 +11,7 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Phiếu nhập</a></li>
+                    <li><a href="{{ Route('danh_sach_phieu_nhap') }}">Phiếu nhập</a></li>
                     <li class="active">Danh sách phiếu nhập</li>
                 </ul>
                 </h2>
@@ -24,9 +24,9 @@
                 
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   
-                 <form action="{{ URL::Route('getSPList')}}" method="GET" name="form_search_sp">
+                 <form action="{{ URL::Route('danh_sach_phieu_nhap')}}" method="GET" name="form_search_sp">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Tìm nhanh ... " name="search" id="search" 
+                    <input type="text" class="form-control" placeholder="Tìm theo mã ... " name="search" id="search" 
                     value ="<?php if(isset($_GET['search'])) {echo $_GET['search']; }?>">
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="submit">Tìm</button>
@@ -86,7 +86,7 @@
                           <th>Tổng tiền</th>
                           <th>Ngày xuất hóa đơn</th>
                           <th>Ngày cập nhật</th>
-                          <th><center><a href="{!! route('get_them_phieu_nhap') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
+                          <th><center> Chức năng</center></th>
                         
                          
                         </tr>
@@ -108,7 +108,7 @@
                           <center>
                     
                             <a href="{!! route('get_chi_tiet_phieu_nhap',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Xem </a>
-                            <a href="{!! route('getSpSua',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a>
+                           
                           </center>
                           </td>
                           

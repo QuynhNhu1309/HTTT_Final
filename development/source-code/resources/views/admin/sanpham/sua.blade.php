@@ -202,7 +202,7 @@
                       <div class="form-group">
                         <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-5">
                           <button type="submit" class="btn btn-primary">Lưu</button>
-                          <button type="Hủy" class="btn btn-success">Hủy</button>
+                          <button type="reset" class="btn btn-success">Hủy</button>
                         </div>
                       </div>
 

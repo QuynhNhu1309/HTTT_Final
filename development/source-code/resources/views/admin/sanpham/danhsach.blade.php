@@ -131,7 +131,7 @@
                           <th>Tên SP</th>
                           <th>Số lượng</th>
                           <th>Giá bán</th>
-                          <th><center><a href="{!! route('getSpThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
+                          <th><center><a href="{!! route('getSpThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Thêm </a></center></th>
                         
                          
                         </tr>
@@ -156,7 +156,8 @@
                           <center>
                     
                             <a href="{!! route('getSpSua',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                            <a href="{!! route('getSpXoa',['id'=>$item->id]) !!}" onclick="return xacnhanxoa('Bạn Có Chắc Muốn Xóa Sản Phẩm Này ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                           <!-- <a href="{!! route('getSpXoa',['id'=>$item->id]) !!}" onclick="return xacnhanxoa('Bạn Có Chắc Muốn Xóa Sản Phẩm Này ?')" 
+                           class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>-->
                           </center>
                           </td>
                           

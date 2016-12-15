@@ -47,6 +47,9 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
         Route::get('sua/{id}','admin\NhanVienController@getSua')->name('get_sua_nhanvien')->where('id','[0-9]+');
 
+        Route::get('xem/{id}','admin\NhanVienController@getXem')->name('get_xem_nhanvien')->where('id','[0-9]+');
+
+
         Route::get('an/{id}','admin\NhanVienController@getSua_An')->name('get_nhan_vien_an')->where('id','[0-9]+');
  
         Route::get('hien/{id}','admin\NhanVienController@getSua_Hien')->name('get_nhan_vien_hien')->where('id','[0-9]+');

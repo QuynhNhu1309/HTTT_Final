@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title','Trang chủ')
+@section('title','Nhân viên')
 
 @section('content')
     <!--Begin Content -->
@@ -154,7 +154,9 @@
                           ?></td>
                           <td>
                           <center>
-                            <a href="{!! route('get_sua_nhanvien', ['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+                            <!-- <a href="{!! route('get_sua_nhanvien', ['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>-->
+
+                            <a href="{!! route('get_xem_nhanvien', ['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Xem </a>
                             <?php 
                               if($item -> idTinhTrang == 4)
                               {

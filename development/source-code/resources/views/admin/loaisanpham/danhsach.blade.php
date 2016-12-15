@@ -27,9 +27,9 @@
                   <form action="{{ URL::Route('getLoaiSPList')}}" method="GET" name="form_search_lsp">
                   <div class="input-group">
                     
-                    <input type="text" class="form-control" placeholder="Search for..." name="search" id="search_lsp"  value ="<?php if(isset($_GET['search'])) {echo $_GET['search']; }?>">
+                    <input type="text" class="form-control" placeholder="Nhập tên loại..." name="search" id="search_lsp"  value ="<?php if(isset($_GET['search'])) {echo $_GET['search']; }?>">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="submit">Go!</button>
+                      <button class="btn btn-default" type="submit">Tìm</button>
                     </span>
                   </div>
                   </form>
@@ -61,7 +61,7 @@
                           <th>STT</th>
                           <th>Mã loại</th>
                           <th>Tên loại</th>
-                          <th><center><a href="{!! route('getLSPThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Thêm </a></center></th>
+                          <th><center><a href="{!! route('getLSPThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Thêm </a></center></th>
                          
                         </tr>
                       </thead>
@@ -78,7 +78,7 @@
                           <center>
                           
                             <a href="{!! route('getLSPSua',['id'=>$item->id]) !!}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                            <a href="{!! route('getLoaiSPXoa',['id'=>$item->id]) !!}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                            <!--<a href="{!! route('getLoaiSPXoa',['id'=>$item->id]) !!}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>-->
                           </center>
                           </td>
                           

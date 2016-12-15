@@ -17,7 +17,7 @@ class SanphamController extends Controller
         //$data = SanPham::paginate(15);
         $loaisp = DB::table('loaisp')->get();
         $search = \Request::get('search');
-        $data = SanPham::where('TenSP','like','%'.$search.'%')->orwhere('MoTa','like','%'.$search.'%')->paginate(2);
+        $data = SanPham::where('TenSP','like','%'.$search.'%')->orwhere('MoTa','like','%'.$search.'%')->paginate(10);
 
          if(isset($_GET['s_loaisp']))
         {
@@ -42,7 +42,7 @@ class SanphamController extends Controller
          //Loại SP
         if(isset($_GET['s_loaisp']) && $_GET['s_loaisp']!= "" && $_GET['status'] =="" && $_GET['cost_min'] =="" && $_GET['cost_max'] == "")
         {
-            $data = SanPham::where('idLoai',$s_loaisp)->paginate(2);
+            $data = SanPham::where('idLoai',$s_loaisp)->paginate(10);
         }
 
 
@@ -53,17 +53,17 @@ class SanphamController extends Controller
 
             if($_GET['status'] == 1)
             {
-                $data = SanPham::where('SoLuongTonKho','>', 10)->paginate(2);
+                $data = SanPham::where('SoLuongTonKho','>', 10)->paginate(10);
             }
 
             if($_GET['status'] == 2)
             {
-                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->paginate(1);
+                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->paginate(10);
             }
 
             if($_GET['status'] == 3)
             {
-                $data = SanPham::where('SoLuongTonKho', 0)->paginate(2);
+                $data = SanPham::where('SoLuongTonKho', 0)->paginate(10);
             }
         }
 
@@ -71,7 +71,7 @@ class SanphamController extends Controller
         {
            if($cost_max >= $cost_min)
            {
-               $data = SanPham::whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+               $data = SanPham::whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(10);
            }
 
         }
@@ -82,7 +82,7 @@ class SanphamController extends Controller
         {
            if($cost_max >= $cost_min)
            {
-               $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(12);
+               $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(10);
            }
 
         }
@@ -93,17 +93,17 @@ class SanphamController extends Controller
         {
                if($_GET['status'] == 1)
             {
-                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho','>', 10)->paginate(2);
+                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho','>', 10)->paginate(10);
             }
 
             if($_GET['status'] == 2)
             {
-                $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('SoLuongTonKho',[1, 10])->paginate(1);
+                $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('SoLuongTonKho',[1, 10])->paginate(10);
             }
 
             if($_GET['status'] == 3)
             {
-                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho', 0)->paginate(2);
+                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho', 0)->paginate(10);
             }
            
 
@@ -118,17 +118,17 @@ class SanphamController extends Controller
 
                if($_GET['status'] == 1)
             {
-                $data = SanPham::where('SoLuongTonKho','>', 10)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+                $data = SanPham::where('SoLuongTonKho','>', 10)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(10);
             }
 
             if($_GET['status'] == 2)
             {
-                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(1);
+                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(10);
             }
 
             if($_GET['status'] == 3)
             {
-                $data = SanPham::where('SoLuongTonKho', 0)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+                $data = SanPham::where('SoLuongTonKho', 0)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(10);
             }
                
         }
@@ -143,17 +143,17 @@ class SanphamController extends Controller
 
                if($_GET['status'] == 1)
             {
-                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho','>', 10)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho','>', 10)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(10);
             }
 
             if($_GET['status'] == 2)
             {
-                $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('SoLuongTonKho',[1, 10])->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(1);
+                $data = SanPham::where('idLoai',$s_loaisp)->whereBetween('SoLuongTonKho',[1, 10])->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(10);
             }
 
             if($_GET['status'] == 3)
             {
-                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho', 0)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(2);
+                $data = SanPham::where('idLoai',$s_loaisp)->where('SoLuongTonKho', 0)->whereBetween('GiaBanHienTai', [$cost_min, $cost_max])->paginate(10);
             }
                
         }
@@ -176,7 +176,7 @@ class SanphamController extends Controller
         $data = SanPham::whereBetween('SoLuongTonKho', [0, 10])
                                             ->where(function ($query) use($search) {
                                                 $query->orwhere('TenSP','like','%'.$search.'%')->orwhere('MaSP','like','%'.$search.'%');
-                                            })->paginate(3);
+                                            })->paginate(10);
 
          if(isset($_GET['status']))
         {
@@ -187,12 +187,12 @@ class SanphamController extends Controller
         {
             if($_GET['status'] == 2)
             {
-                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->paginate(15);
+                $data = SanPham::whereBetween('SoLuongTonKho',[1, 10])->paginate(10);
             }
 
             if($_GET['status'] == 3)
             {
-                $data = SanPham::where('SoLuongTonKho', 0)->paginate(15);
+                $data = SanPham::where('SoLuongTonKho', 0)->paginate(10);
             }
         }
 

@@ -23,7 +23,18 @@ class NhanVienController extends Controller
         $nhanvien_sort_tinhtrang = DB::select("EXEC Data_NV_Feature_TinhTrang");
 
         $search = \Request::get('search');
-        $danhsach_nhanvien = TaiKhoan::where('HoTen','like','%'.$search.'%')->orwhere('Username','like','%'.$search.'%')->orWhere('DiaChi','like','%'.$search.'%')->orWhere('Email','like','%'.$search.'%')->paginate(2);
+
+        $danhsach_nhanvien = TaiKhoan::where(function ($query) {
+                                                $query->where('idGroup', '<', 3);
+                                            })
+                                            ->where(function ($query) use($search) {
+                                                $query->orwhere('HoTen','like','%'.$search.'%')
+                                                ->orwhere('Username','like','%'.$search.'%')
+                                                ->orWhere('DiaChi','like','%'.$search.'%')
+                                                ->orWhere('Email','like','%'.$search.'%');
+                                            })->paginate(10);
+
+        // $danhsach_nhanvien = TaiKhoan::where('HoTen','like','%'.$search.'%')->orwhere('Username','like','%'.$search.'%')->orWhere('DiaChi','like','%'.$search.'%')->orWhere('Email','like','%'.$search.'%')->paginate(10);
 
         //if(\Request::get('cb_gender') && isset($_GET['sort']))
         if(isset($_GET['gender']))
@@ -49,28 +60,38 @@ class NhanVienController extends Controller
         //Gender
         if(isset($_GET['gender']) && $_GET['gender']!= "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] == "")
         {
-            $danhsach_nhanvien = TaiKhoan::where('GioiTinh',$gender)->paginate(2);
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('GioiTinh',$gender)->paginate(10);
         }
 
         //Chức vụ
         if(isset($_GET['chucvu']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] == "")
         {
             
-            $danhsach_nhanvien = TaiKhoan::where('idGroup',$chucvu)->paginate(2);
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->paginate(10);
         }
 
         //Tình trạng
         if(isset($_GET['status']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] == "")
         {
             
-            $danhsach_nhanvien = TaiKhoan::where('idTinhTrang', $status)->paginate(2);
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idTinhTrang', $status)->paginate(10);
         }
 
         //Key
          if(isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] != "")
         {
+
+            $danhsach_nhanvien = TaiKhoan::where(function ($query) {
+                                                $query->where('idGroup', '<', 3);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
             
-            $danhsach_nhanvien = TaiKhoan::where('HoTen','like','%'.$key.'%')->orwhere('Username','like','%'.$key.'%')->orWhere('DiaChi','like','%'.$key.'%')->orWhere('Email','like','%'.$key.'%')->paginate(2);
+           
         }
 
 
@@ -78,14 +99,14 @@ class NhanVienController extends Controller
         if(isset($_GET['gender']) && isset($_GET['chucvu']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] == "")
         {
              
-            $danhsach_nhanvien = TaiKhoan::where('idGroup',$chucvu)->where('GioiTinh',$gender)->paginate(2);
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('GioiTinh',$gender)->paginate(10);
         }
 
         //Giới tính và tình trạng
         if(isset($_GET['gender']) && isset($_GET['status']) &&  $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] == "")
         {
              
-            $danhsach_nhanvien = TaiKhoan::where('GioiTinh',$gender)->where('idTinhTrang', $status)->paginate(2);
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('GioiTinh',$gender)->where('idTinhTrang', $status)->paginate(10);
         }
 
 
@@ -93,7 +114,7 @@ class NhanVienController extends Controller
         if(isset($_GET['gender']) && isset($_GET['key']) &&  $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] != "")
         {
             
-                $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($gender) {
+                $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($gender) {
                                                 $query->where('GioiTinh', $gender);
                                             })
                                             ->where(function ($query) use($key) {
@@ -101,7 +122,7 @@ class NhanVienController extends Controller
                                                 ->orwhere('Username','like','%'.$key.'%')
                                                 ->orWhere('DiaChi','like','%'.$key.'%')
                                                 ->orWhere('Email','like','%'.$key.'%');
-                                            })->paginate(2);
+                                            })->paginate(10);
 
 
             
@@ -111,14 +132,14 @@ class NhanVienController extends Controller
         if(isset($_GET['chucvu']) && isset($_GET['status']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] == "")
         {
              
-            $danhsach_nhanvien = TaiKhoan::where('idGroup',$chucvu)->where('idTinhTrang', $status)->paginate(2);
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('idTinhTrang', $status)->paginate(10);
         }
 
         //Chức vụ và key
         if(isset($_GET['chucvu']) && isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] != "")
         {
              
-            $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($chucvu) {
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($chucvu) {
                                                 $query->where('idGroup', $chucvu);
                                             })
                                             ->where(function ($query) use($key) {
@@ -126,7 +147,7 @@ class NhanVienController extends Controller
                                                 ->orwhere('Username','like','%'.$key.'%')
                                                 ->orWhere('DiaChi','like','%'.$key.'%')
                                                 ->orWhere('Email','like','%'.$key.'%');
-                                            })->paginate(2);
+                                            })->paginate(10);
         }
 
 
@@ -134,7 +155,7 @@ class NhanVienController extends Controller
         if(isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] != "")
         {
              
-            $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($status) {
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($status) {
                                                 $query->where('idTinhTrang', $status);
                                             })
                                             ->where(function ($query) use($key) {
@@ -142,14 +163,14 @@ class NhanVienController extends Controller
                                                 ->orwhere('Username','like','%'.$key.'%')
                                                 ->orWhere('DiaChi','like','%'.$key.'%')
                                                 ->orWhere('Email','like','%'.$key.'%');
-                                            })->paginate(2);
+                                            })->paginate(10);
         }
 
         //Gioi tính và chức vụ và tình trạng
         if(isset($_GET['gender']) && isset($_GET['chucvu']) && isset($_GET['status']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] == "")
         {
              
-            $danhsach_nhanvien = TaiKhoan::where('idGroup',$chucvu)->where('GioiTinh', $gender)->where('idTinhTrang', $status)->paginate(2);
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('GioiTinh', $gender)->where('idTinhTrang', $status)->paginate(10);
         }
 
         //Gioi tính và chức vụ và key
@@ -165,14 +186,14 @@ class NhanVienController extends Controller
                                                 ->orwhere('Username','like','%'.$key.'%')
                                                 ->orWhere('DiaChi','like','%'.$key.'%')
                                                 ->orWhere('Email','like','%'.$key.'%');
-                                            })->paginate(2);
+                                            })->paginate(10);
         }
 
         //Gioi tính và tình trạng và key
         if(isset($_GET['gender']) && isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] != "")
         {
              
-            $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($gender, $chucvu, $status){
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($gender,                                      $chucvu, $status){
                                                 $query->where('GioiTinh', $gender)
                                                 ->where('idTinhTrang', $status);
                                             })
@@ -181,7 +202,7 @@ class NhanVienController extends Controller
                                                 ->orwhere('Username','like','%'.$key.'%')
                                                 ->orWhere('DiaChi','like','%'.$key.'%')
                                                 ->orWhere('Email','like','%'.$key.'%');
-                                            })->paginate(2);
+                                            })->paginate(10);
         }
 
         //Chức vụ và tình trạng và key
@@ -197,7 +218,7 @@ class NhanVienController extends Controller
                                                 ->orwhere('Username','like','%'.$key.'%')
                                                 ->orWhere('DiaChi','like','%'.$key.'%')
                                                 ->orWhere('Email','like','%'.$key.'%');
-                                            })->paginate(2);
+                                            })->paginate(10);
 
         }
 
@@ -215,7 +236,7 @@ class NhanVienController extends Controller
                                                 ->orwhere('Username','like','%'.$key.'%')
                                                 ->orWhere('DiaChi','like','%'.$key.'%')
                                                 ->orWhere('Email','like','%'.$key.'%');
-                                            })->paginate(2);
+                                            })->paginate(10);
         }
 
         return view('admin.nhanvien.danhsach', ['danhsach_nhanvien' => $danhsach_nhanvien, 'nhanvien_sort_gender' => $nhanvien_sort_gender, 'nhanvien_sort_chucvu' => $nhanvien_sort_chucvu, 'nhanvien_sort_tinhtrang' => $nhanvien_sort_tinhtrang]);
@@ -228,6 +249,13 @@ class NhanVienController extends Controller
         return view('admin.nhanvien.sua', ['chi_tiet_nhan_vien'=>$chi_tiet_nhan_vien]);
     }
 
+    public function getXem ($id)
+    {
+
+        $chi_tiet_nhan_vien = DB::table('taikhoan')->where ('id',$id)->get();
+        return view('admin.nhanvien.xem', ['chi_tiet_nhan_vien'=>$chi_tiet_nhan_vien]);
+    }
+
     public function getSua_An($id)
     {
        // if(isset($_GET['']))
@@ -235,7 +263,228 @@ class NhanVienController extends Controller
         $nv->idTinhTrang = 5;
         $nv->save();
         $danhsach_nhanvien = DB::select("EXEC Data_nhanvien");
-        return view('admin.nhanvien.danhsach', ['danhsach_nhanvien' => $danhsach_nhanvien]);
+        $nhanvien_sort_gender = DB::select("EXEC Data_NV_Feature_Gender");
+        $nhanvien_sort_chucvu = DB::select("EXEC Data_NV_Feature_Chucvu");
+        $nhanvien_sort_tinhtrang = DB::select("EXEC Data_NV_Feature_TinhTrang");
+
+        $search = \Request::get('search');
+
+        $danhsach_nhanvien = TaiKhoan::where(function ($query) {
+                                                $query->where('idGroup', '<', 3);
+                                            })
+                                            ->where(function ($query) use($search) {
+                                                $query->orwhere('HoTen','like','%'.$search.'%')
+                                                ->orwhere('Username','like','%'.$search.'%')
+                                                ->orWhere('DiaChi','like','%'.$search.'%')
+                                                ->orWhere('Email','like','%'.$search.'%');
+                                            })->paginate(10);
+
+        // $danhsach_nhanvien = TaiKhoan::where('HoTen','like','%'.$search.'%')->orwhere('Username','like','%'.$search.'%')->orWhere('DiaChi','like','%'.$search.'%')->orWhere('Email','like','%'.$search.'%')->paginate(10);
+
+        //if(\Request::get('cb_gender') && isset($_GET['sort']))
+        if(isset($_GET['gender']))
+        {
+            $gender = \Request::get('gender');
+        }
+
+        if(isset($_GET['chucvu']))
+        {
+            $chucvu = \Request::get('chucvu');
+        }
+
+        if(isset($_GET['status']))
+        {
+            $status = \Request::get('status');
+        }
+
+        if(isset($_GET['key']))
+        {
+            $key =  \Request::get('key');
+        }
+
+        //Gender
+        if(isset($_GET['gender']) && $_GET['gender']!= "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] == "")
+        {
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('GioiTinh',$gender)->paginate(10);
+        }
+
+        //Chức vụ
+        if(isset($_GET['chucvu']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] == "")
+        {
+            
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->paginate(10);
+        }
+
+        //Tình trạng
+        if(isset($_GET['status']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] == "")
+        {
+            
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idTinhTrang', $status)->paginate(10);
+        }
+
+        //Key
+         if(isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] != "")
+        {
+
+            $danhsach_nhanvien = TaiKhoan::where(function ($query) {
+                                                $query->where('idGroup', '<', 3);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+            
+           
+        }
+
+
+        //Giới tính và chức vụ
+        if(isset($_GET['gender']) && isset($_GET['chucvu']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] == "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('GioiTinh',$gender)->paginate(10);
+        }
+
+        //Giới tính và tình trạng
+        if(isset($_GET['gender']) && isset($_GET['status']) &&  $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] == "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('GioiTinh',$gender)->where('idTinhTrang', $status)->paginate(10);
+        }
+
+
+        //Giới tính và key
+        if(isset($_GET['gender']) && isset($_GET['key']) &&  $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] != "")
+        {
+            
+                $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($gender) {
+                                                $query->where('GioiTinh', $gender);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+
+
+            
+        }
+
+        //Chức vụ & tình trạng
+        if(isset($_GET['chucvu']) && isset($_GET['status']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] == "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('idTinhTrang', $status)->paginate(10);
+        }
+
+        //Chức vụ và key
+        if(isset($_GET['chucvu']) && isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] != "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($chucvu) {
+                                                $query->where('idGroup', $chucvu);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+
+        //Tình trạng và key
+        if(isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] != "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($status) {
+                                                $query->where('idTinhTrang', $status);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+        //Gioi tính và chức vụ và tình trạng
+        if(isset($_GET['gender']) && isset($_GET['chucvu']) && isset($_GET['status']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] == "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('GioiTinh', $gender)->where('idTinhTrang', $status)->paginate(10);
+        }
+
+        //Gioi tính và chức vụ và key
+        if(isset($_GET['gender']) && isset($_GET['chucvu']) && isset($_GET['key']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] != "")
+        {
+             
+           $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($gender, $chucvu){
+                                                $query->where('GioiTinh', $gender)
+                                                ->where('idGroup',$chucvu);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+        //Gioi tính và tình trạng và key
+        if(isset($_GET['gender']) && isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] != "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($gender,                                      $chucvu, $status){
+                                                $query->where('GioiTinh', $gender)
+                                                ->where('idTinhTrang', $status);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+        //Chức vụ và tình trạng và key
+        if(isset($_GET['chucvu']) && isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] != "")
+        {
+             
+           $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($chucvu, $status){
+                                                $query->where('idGroup',$chucvu)
+                                                ->where('idTinhTrang', $status);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+
+        }
+
+        //Gioi tính và chức vụ và tình trạng và key
+        if(isset($_GET['gender']) && isset($_GET['chucvu']) && isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] != "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($gender, $chucvu, $status){
+                                                $query->where('GioiTinh', $gender)
+                                                ->where('idGroup',$chucvu)
+                                                ->where('idTinhTrang', $status);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+        return view('admin.nhanvien.danhsach', ['danhsach_nhanvien' => $danhsach_nhanvien, 'nhanvien_sort_gender' => $nhanvien_sort_gender, 'nhanvien_sort_chucvu' => $nhanvien_sort_chucvu, 'nhanvien_sort_tinhtrang' => $nhanvien_sort_tinhtrang]);
     }
 
     public function getSua_Hien($id)
@@ -244,7 +493,228 @@ class NhanVienController extends Controller
         $nv->idTinhTrang = 4;
         $nv->save();
         $danhsach_nhanvien = DB::select("EXEC Data_nhanvien");
-        return view('admin.nhanvien.danhsach', ['danhsach_nhanvien' => $danhsach_nhanvien]);
+        $nhanvien_sort_gender = DB::select("EXEC Data_NV_Feature_Gender");
+        $nhanvien_sort_chucvu = DB::select("EXEC Data_NV_Feature_Chucvu");
+        $nhanvien_sort_tinhtrang = DB::select("EXEC Data_NV_Feature_TinhTrang");
+
+        $search = \Request::get('search');
+
+        $danhsach_nhanvien = TaiKhoan::where(function ($query) {
+                                                $query->where('idGroup', '<', 3);
+                                            })
+                                            ->where(function ($query) use($search) {
+                                                $query->orwhere('HoTen','like','%'.$search.'%')
+                                                ->orwhere('Username','like','%'.$search.'%')
+                                                ->orWhere('DiaChi','like','%'.$search.'%')
+                                                ->orWhere('Email','like','%'.$search.'%');
+                                            })->paginate(10);
+
+        // $danhsach_nhanvien = TaiKhoan::where('HoTen','like','%'.$search.'%')->orwhere('Username','like','%'.$search.'%')->orWhere('DiaChi','like','%'.$search.'%')->orWhere('Email','like','%'.$search.'%')->paginate(10);
+
+        //if(\Request::get('cb_gender') && isset($_GET['sort']))
+        if(isset($_GET['gender']))
+        {
+            $gender = \Request::get('gender');
+        }
+
+        if(isset($_GET['chucvu']))
+        {
+            $chucvu = \Request::get('chucvu');
+        }
+
+        if(isset($_GET['status']))
+        {
+            $status = \Request::get('status');
+        }
+
+        if(isset($_GET['key']))
+        {
+            $key =  \Request::get('key');
+        }
+
+        //Gender
+        if(isset($_GET['gender']) && $_GET['gender']!= "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] == "")
+        {
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('GioiTinh',$gender)->paginate(10);
+        }
+
+        //Chức vụ
+        if(isset($_GET['chucvu']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] == "")
+        {
+            
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->paginate(10);
+        }
+
+        //Tình trạng
+        if(isset($_GET['status']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] == "")
+        {
+            
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idTinhTrang', $status)->paginate(10);
+        }
+
+        //Key
+         if(isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] != "")
+        {
+
+            $danhsach_nhanvien = TaiKhoan::where(function ($query) {
+                                                $query->where('idGroup', '<', 3);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+            
+           
+        }
+
+
+        //Giới tính và chức vụ
+        if(isset($_GET['gender']) && isset($_GET['chucvu']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] == "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('GioiTinh',$gender)->paginate(10);
+        }
+
+        //Giới tính và tình trạng
+        if(isset($_GET['gender']) && isset($_GET['status']) &&  $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] == "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('GioiTinh',$gender)->where('idTinhTrang', $status)->paginate(10);
+        }
+
+
+        //Giới tính và key
+        if(isset($_GET['gender']) && isset($_GET['key']) &&  $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] =="" && $_GET['key'] != "")
+        {
+            
+                $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($gender) {
+                                                $query->where('GioiTinh', $gender);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+
+
+            
+        }
+
+        //Chức vụ & tình trạng
+        if(isset($_GET['chucvu']) && isset($_GET['status']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] == "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('idTinhTrang', $status)->paginate(10);
+        }
+
+        //Chức vụ và key
+        if(isset($_GET['chucvu']) && isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] != "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($chucvu) {
+                                                $query->where('idGroup', $chucvu);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+
+        //Tình trạng và key
+        if(isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] != "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($status) {
+                                                $query->where('idTinhTrang', $status);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+        //Gioi tính và chức vụ và tình trạng
+        if(isset($_GET['gender']) && isset($_GET['chucvu']) && isset($_GET['status']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] == "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where('idGroup',$chucvu)->where('GioiTinh', $gender)->where('idTinhTrang', $status)->paginate(10);
+        }
+
+        //Gioi tính và chức vụ và key
+        if(isset($_GET['gender']) && isset($_GET['chucvu']) && isset($_GET['key']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] =="" && $_GET['key'] != "")
+        {
+             
+           $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($gender, $chucvu){
+                                                $query->where('GioiTinh', $gender)
+                                                ->where('idGroup',$chucvu);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+        //Gioi tính và tình trạng và key
+        if(isset($_GET['gender']) && isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] != "" && $_GET['chucvu'] =="" && $_GET['status'] !="" && $_GET['key'] != "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where('idGroup', '<', 3)->where(function ($query) use ($gender,                                      $chucvu, $status){
+                                                $query->where('GioiTinh', $gender)
+                                                ->where('idTinhTrang', $status);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+        //Chức vụ và tình trạng và key
+        if(isset($_GET['chucvu']) && isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] == "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] != "")
+        {
+             
+           $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($chucvu, $status){
+                                                $query->where('idGroup',$chucvu)
+                                                ->where('idTinhTrang', $status);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+
+        }
+
+        //Gioi tính và chức vụ và tình trạng và key
+        if(isset($_GET['gender']) && isset($_GET['chucvu']) && isset($_GET['status']) && isset($_GET['key']) && $_GET['gender'] != "" && $_GET['chucvu'] !="" && $_GET['status'] !="" && $_GET['key'] != "")
+        {
+             
+            $danhsach_nhanvien = TaiKhoan::where(function ($query) use ($gender, $chucvu, $status){
+                                                $query->where('GioiTinh', $gender)
+                                                ->where('idGroup',$chucvu)
+                                                ->where('idTinhTrang', $status);
+                                            })
+                                            ->where(function ($query) use($key) {
+                                                $query->orwhere('HoTen','like','%'.$key.'%')
+                                                ->orwhere('Username','like','%'.$key.'%')
+                                                ->orWhere('DiaChi','like','%'.$key.'%')
+                                                ->orWhere('Email','like','%'.$key.'%');
+                                            })->paginate(10);
+        }
+
+        return view('admin.nhanvien.danhsach', ['danhsach_nhanvien' => $danhsach_nhanvien, 'nhanvien_sort_gender' => $nhanvien_sort_gender, 'nhanvien_sort_chucvu' => $nhanvien_sort_chucvu, 'nhanvien_sort_tinhtrang' => $nhanvien_sort_tinhtrang]);
     }
 
     public function postSua(Request $request,$id)

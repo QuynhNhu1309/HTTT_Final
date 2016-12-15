@@ -22,11 +22,19 @@ class PhieuNhapController extends Controller
     public function getDanhSach ()
     {
         //$data = SanPham::paginate(15);
-        //$phieunhap = PhieuNhap::paginate(2);
+        //$phieunhap = PhieuNhap::paginate(10);
 
         
         $search = \Request::get('search');
-        $phieunhap = PhieuNhap::where('MaPhieuNhap','like','%'.$search.'%')->paginate(2);
+        if($search != "")
+        {
+            $phieunhap = PhieuNhap::where('MaPhieuNhap','=',$search)->paginate(10);
+        }
+        else if($search == "")
+        {
+            $phieunhap = PhieuNhap::where('MaPhieuNhap','like','%'.$search.'%')->paginate(10);
+        }
+        
         
         if(isset($_GET['month']))
         {
@@ -37,7 +45,7 @@ class PhieuNhapController extends Controller
 
         if(isset($_GET['month']) && $_GET['month'] != "")
         {
-            $phieunhap = PhieuNhap::whereYear('NgayXuatHoaDon', $current_year)->whereMonth('NgayXuatHoaDon', $month)->paginate(2);
+            $phieunhap = PhieuNhap::whereYear('NgayXuatHoaDon', $current_year)->whereMonth('NgayXuatHoaDon', $month)->paginate(10);
         }
   
 
@@ -144,7 +152,16 @@ class PhieuNhapController extends Controller
 
        $rs = DB::select("EXEC Them_PhieuNhap_PhieuNhapChiTiet @id_PhieuNhap = ".$idPhieuNhap.", @idTaiKhoan = ".$idTaiKhoan.",
        @NgayXuatHoaDon = '". $NgayXuatHoaDon."'");
-       return redirect('admin/phieunhap/them')->with('thongbao', 'Thêm thành công');
+
+        $query_id = PhieuNhap::orderBy('id', 'desc')->take(1)->get();
+        $id =  $query_id[0]->{'id'};
+
+        $data = DB::table('loaisp')->get();
+
+        $data1 = DB::table('TinhTrang')->where('TenBang','sanpham')->get();
+
+       return redirect('admin/phieunhap/them_exist/'.$id)->with('data', $data)
+       ->with('data1', $data1)->with('thongbao', 'Thêm thành công, thêm tiếp nào!');
     }
 
 
@@ -158,7 +175,7 @@ class PhieuNhapController extends Controller
             ->join('sanpham', 'phieunhap_chitiet.idSanPham', '=', 'sanpham.id')
             ->where('phieunhap_chitiet.idPN', $id)
             ->select('phieunhap_chitiet.*', 'loaisp.TenLoai', 'sanpham.TenSP')
-            ->paginate(1);
+            ->paginate(10);
          //return $chi_tiet_phieu_nhap;
         return view('admin.phieunhap.xemct', ['chi_tiet_phieu_nhap'=>$chi_tiet_phieu_nhap, 'idPN' => $id]);
     }
@@ -174,6 +191,8 @@ class PhieuNhapController extends Controller
     }
 
     public function postThem_exist(Request $request, $id){
+       
+
         $sp    = new SanPham;
         $MaSP = DB::select("EXEC Them_Lay_Ma_SP");
         $sp->MaSP=  $MaSP[0]->MaSP;
@@ -263,7 +282,7 @@ class PhieuNhapController extends Controller
 
        $rs = DB::select("EXEC Them_PhieuNhap_PhieuNhapChiTiet @id_PhieuNhap = ".$idPhieuNhap.", @idTaiKhoan = ".$idTaiKhoan.",
        @NgayXuatHoaDon = '". $NgayXuatHoaDon."'");
-       return redirect('admin/phieunhap/them_exist/'.$id)->with('thongbao', 'Thêm thành công');
+       return redirect('admin/phieunhap/them_exist/'.$id)->with('thongbao', 'Thêm thành công, thêm tiếp nào!');
     }
 
     public function getSua($id){
@@ -355,6 +374,7 @@ class PhieuNhapController extends Controller
         }
 
        $sp ->save();
+        
        return redirect('admin/phieunhap/sua/'.$id)->with('thongbao', 'Sửa thành công');
     }
 
