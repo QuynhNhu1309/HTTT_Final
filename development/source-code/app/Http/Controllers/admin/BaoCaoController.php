@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BaoCaoController extends Controller
 {
@@ -86,10 +87,10 @@ class BaoCaoController extends Controller
             }
         }
 
-  
-            //return $baocao_doanhthu_thang;
 
-        return view('admin.baocao.doanhthu',['baocao_doanhthu_thang' => $baocao_doanhthu_thang,'sort_year' => $sort_year, 'thongbao_loi'=>$thongbao_loi]);
+        return view('admin.baocao.doanhthu',['baocao_doanhthu_thang' => $baocao_doanhthu_thang,
+        'sort_year' => $sort_year, 'thongbao_loi'=>$thongbao_loi, 
+        'baocao_doanhthu_thang_json' => json_encode($baocao_doanhthu_thang)]);
     }
 
 
@@ -309,5 +310,33 @@ class BaoCaoController extends Controller
         return view('admin.baocao.chiphinhap',['baocao_chiphinhap_thang' => $baocao_chiphinhap_thang,'sort_year' => $sort_year, 'thongbao_loi'=>$thongbao_loi]);
     }
 
+    public function excel_doanhthu(Request $request)
+    {   
+        $baocao_doanhthu_thang = json_decode($request->baocao_doanhthu_thang_json);
+        $data = $baocao_doanhthu_thang;
+        // Tạo file excel với tên là Báo cáo doanh thu
+        Excel::create('Báo cáo doanh thu', function($excel) use ($data) {
+            // Đặt tiêu đề
+            $excel->setTitle('Báo cáo doanh thu');
+            // Đặt tên người tạo và công ty
+            $excel->setCreator('Xuan Huynh')
+                ->setCompany('Minx Corp');
+            // Đặt mô tả
+            $excel->setDescription('Bản báo cáo doanh thu của doanh nghiệp trong xxx tháng');
+
+            $excel->sheet('Sheet 1', function($sheet) use ($data) {
+                $sheet->setOrientation('landscape');
+                // Nhập dữ liệu vào file Excel
+                foreach($data as $key=>$value)
+                {
+                    $sheet->row($key+1, array(
+                        $key+1, $value
+                    ));
+                }
+            });
+
+        })->export('xls');
+        return back();
+    }
 
 }

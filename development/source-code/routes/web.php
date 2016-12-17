@@ -119,6 +119,8 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
         Route::get('chiphinhap','admin\BaoCaoController@get_baocao_chiphinhap')->name('baocao_chiphinhap');
 
+        Route::post('doanhthu/excel','admin\BaoCaoController@excel_doanhthu')->name('excel_doanhthu');
+
         
 
     });

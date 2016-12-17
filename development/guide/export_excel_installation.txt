@@ -1,0 +1,19 @@
+# HƯỚNG DẪN CÀI ĐẶT (DÀNH CHO AI CLONE SOURCE XUÂN ĐÃ LÀM VỀ)
+Khi clone source về thì trong file composer.json đã có require "maatwebsite/excel": "~2.1.0" rồi nên chỉ cần chạy lệnh
+php artisan update 
+là composer sẽ download package về
+
+# HƯỚNG DẪN CÀI ĐẶT (DÀNH CHO AI MUỐN LÀM LẠI TỪ ĐẦU)
+Để sử dụng chức năng export excel, trước tiên ta cần cài đặt package Laravel-Excel.
+Link github: https://github.com/Maatwebsite/Laravel-Excel
+
+MỞ FILE config/app.php, CHÈN DÒNG SAU VÀO MẢNG Providers
+Maatwebsite\Excel\ExcelServiceProvider::class
+
+TIẾP TỤC CHÈN DÒNG SAU VÀO MẢNG Aliases
+'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+SAU ĐÓ CHẠY LỆNH 
+php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider"
+
+VÀO CONTROLLER VÀ GỌI CÁC HÀM CỦA LARAVEL EXCEL RA SỬ DỤNG

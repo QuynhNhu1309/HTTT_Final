@@ -18,7 +18,7 @@
                 </div>
                   @endif
 
-            <form action="{{ URL::Route('baocao_doanhthu')}}" method="GET" name="form_ad_search_nv">
+            <form class="col-md-10 col-xs-12" action="{{ URL::Route('baocao_doanhthu')}}" method="GET" name="form_ad_search_nv">
 
             <div class="col-md-2 col-sm-2 col-xs-12">
                 <div class="form-group">
@@ -66,7 +66,16 @@
                 </div>
               </div>
 
-
+              </form>
+                
+              <form class="col-md-2 col-sm-2 col-xs-12" action="{{ URL::Route('excel_doanhthu') }}" method="POST">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    {{csrf_field()}}
+                    <input name="baocao_doanhthu_thang_json" type="hidden" value="{{($baocao_doanhthu_thang_json)}}" />
+                    <button class="btn btn-primary" type="submit">Xuất Excel</button>
+                  </div>
+                </div>
               </form>
              <?php if(isset($_GET['s_year']) && isset($_GET['s_month']) && ($_GET['s_month']!="" && $_GET['s_year']!="" && $_GET['day']==""))
              { ?>
