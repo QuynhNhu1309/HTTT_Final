@@ -44,6 +44,7 @@
 <script type="text/javascript" src="{{ URL::asset('packages/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('app/app.module.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('app/controllers/ThongTinDonHangCtrl.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('app/controllers/NhapSanPhamCtrl.js')}}"></script>
 
 <!-- Bootstrap -->
     <!-- NProgress -->
@@ -60,7 +61,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/datatable.js')}}"></script>
 
     <!-- jQuery -->
-    <script type="text/javascript" src="{{ URL::asset('packages/jquery/jquery-1.8.3.min.js')}}"></script>
+    <!--<script type="text/javascript" src="{{ URL::asset('packages/jquery/jquery-1.8.3.min.js')}}"></script>-->
     
     <!-- Bootstrap -->
     <script type="text/javascript" src="{{ URL::asset('packages/bootstrap/js/bootstrap.min.js')}}"></script>

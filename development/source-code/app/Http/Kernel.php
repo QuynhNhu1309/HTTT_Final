@@ -53,5 +53,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'adminDangNhap_Middleware'=>\App\Http\Middleware\adminDangNhap_Middleware::class,
+       
     ];
 }

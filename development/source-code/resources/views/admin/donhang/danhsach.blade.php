@@ -17,7 +17,9 @@
                         <li class="active">Danh sách đơn hàng</li>
                     </ul>
                   </h2>
+                  @if(Auth::user()->idGroup == 1)
                   <button  class="btn"><a href="/admin/donhang/them">Thêm mới</a></button>
+                  @endif
                 </div>
 
                 <div class="title_right">
@@ -98,9 +100,12 @@
                               <td>{{$donHang -> TinhTrang}}</td>
                               <td>
                                 <a href="{{$donHang -> id}}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Chi tiết </a>
-                                @if($donHang -> idTinhTrang == 13)
+                                 
+                                @if($donHang -> idTinhTrang == 13 && Auth::user()->idGroup == 1)
                                   <a href="{{$donHang -> id}}/sua" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Cập nhật </a>
                                 @endif
+
+                
                               </td>
                             </tr>
                           @endforeach

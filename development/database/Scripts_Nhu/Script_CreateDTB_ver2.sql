@@ -92,7 +92,7 @@ CREATE TABLE  phieunhap (
   id int primary key NOT NULL IDENTITY(1, 1),
   MaPhieuNhap varchar(100),
   idTaiKhoan int FOREIGN KEY (idTaiKhoan) references taikhoan(id),
-  NgayXuatHoaDon DATETIME,
+  NgayXuatHoaDon DATE,
   NgayCapNhat DATETIME,
   TongTien float,
   idTinhTrang int,

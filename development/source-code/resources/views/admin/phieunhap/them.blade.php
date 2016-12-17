@@ -12,7 +12,10 @@
               <div class="title_left">
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Thêm Sản Phẩm Mới</a></li>
+                    <li><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#themmoi">Thêm sản phẩm mới</button></li>
+                    <li>
+                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#them">Thêm sản phẩm</button>
+                    </li>
                 </ul>
                 </h2>
               </div>
@@ -21,13 +24,81 @@
             </div>
             
             <div class="clearfix"></div>
-
-                <div class="row">
+            <!-- Thêm sản phẩm đã tồn tại -->
+              <div class="row collapse" id="them" ng-app="minxApp" ng-controller="NhapSanPhamCtrl">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
+                <div class="x_panel " >
+                <div class="x_content" >
+
+                 <form class="form-horizontal form-label-left input_mask" action="{{URL::Route('post_them_phieu_nhap')}}" name= "form_nhap_san_pham" method="POST">
+                                        {{csrf_field()}}
+                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                            <div class="input-group">
+                                <input type="text" ng-model="maSanPham" class="form-control" placeholder="Nhập mã sản phẩm" name="ma_san_pham" id="ma_san_pham">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="submitSanPham()">Tìm</button>
+                                    </span>
+                            </div>
+                        </div>
+
+                        <div class="x_content" ng-show="panelSanPhamShow">
+                            <table id="datatable" class="table table-striped table-bordered" name="datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-1">STT</th>
+                                        <th class="col-md-1">Mã sản phẩm</th>
+                                        <th class="col-md-1">Tên sản phẩm</th>
+                                        <th class="col-md-1">Gía nhập</th>
+                                        <th class="col-md-1">Số lượng</th>
+                                        <th class="col-md-1">Thành tiền</th>
+                                        <th class="col-md-1">Chức năng</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr ng-repeat="sanpham in sanPhamInfo | orderBy : 'MaSP'">
+                                        <td>@{{$index + 1}}</td>
+                                        <td>@{{sanpham.MaSP}}</td>
+                                        <td>@{{sanpham.TenSP}}</td>
+                                        <td>@{{sanpham.GiaBanHienTai}}</td>
+                                        <td> 
+                                            <input type="number" ng-model="sanpham.soLuong" class="form-control" name="so_luong" id="so_luong">
+                                        </td>
+                                        <td>@{{sanpham.GiaBanHienTai*sanpham.soLuong}}</td>
+                                        <td>
+                                            <center>
+                                                <button class="btn btn-danger btn-xs" ng-click ="removeSanPham(sanpham.MaSP)"><i class="fa fa-trash-o"></i> Delete </button>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>   
+                                        <td colspan="5" class="text-right"><strong>Tổng tiền</strong></td>
+                                        <td colspan="2">@{{getTotal()}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                           
+                        </div>
+
+                         <div class="text-right">
+                <button class="btn btn-primary btn-hoan-tat" ng-click="submitDonHang(form_nhap_san_pham.$valid)">Hoàn tất</button>
+            </div>
+                        </form>
+                </div>
+                </div>
+                </div>
+
+              </div>
+              <!-- End thêm sản phẩm đã tồn tại -->
+              <div class="row collapse" id="themmoi">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel " >
                  
-                      
-                  <div class="x_content">
+                 
+                  <div class="x_content" >
 
                    @if(count($errors) > 0 )
                   <div class="alert alert-danger" fade in>

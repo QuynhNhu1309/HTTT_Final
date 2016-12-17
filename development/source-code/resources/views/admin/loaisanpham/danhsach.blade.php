@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title','Trang chủ')
+@section('title','Loại sản phẩm')
 
 @section('content')
     <!--Begin Content -->
@@ -61,7 +61,9 @@
                           <th>STT</th>
                           <th>Mã loại</th>
                           <th>Tên loại</th>
-                          <th><center><a href="{!! route('getLSPThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Thêm </a></center></th>
+                           <?php if(Auth::user()->idGroup == 2 )
+                      {?><th><center><a href="{!! route('getLSPThem') !!}" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Thêm </a></center></th>
+                      <?php } ?>
                          
                         </tr>
                       </thead>
@@ -74,6 +76,10 @@
                           <td>{!! $stt !!}</td>
                           <td>{!! $item->MaLoai !!}</td>
                           <td>{!! $item->TenLoai !!}</td>
+
+                          <!-- Nếu là người quản kho -->
+                          <?php if(Auth::user()->idGroup == 2 )
+                      {?>
                           <td>
                           <center>
                           
@@ -81,6 +87,7 @@
                             <!--<a href="{!! route('getLoaiSPXoa',['id'=>$item->id]) !!}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>-->
                           </center>
                           </td>
+                          <?php } ?>
                           
                         </tr>
                        

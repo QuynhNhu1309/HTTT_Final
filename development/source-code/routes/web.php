@@ -37,6 +37,7 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
         Route::post('sua/{id}','admin\SanphamController@postSua')->name('postSpSua')->where('id','[0-9]+');
         Route::get('them','admin\SanphamController@getThem')->name('getSpThem');
         Route::post('them','admin\SanphamController@postThem')->name('postSpThem');
+        Route::get('xem/{id}','admin\SanphamController@getXem')->name('getXemSP');
 
         Route::get('danhsach_hethang','admin\SanphamController@getDanhSach_hethang')->name('getSPList_hethang');
 
@@ -107,12 +108,16 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
         Route::post('them_exist/{id}','admin\PhieuNhapController@postThem_exist')->name('post_them_phieu_nhap_exist')->where('id','[0-9]+');
 
+         Route::get('sanpham/{ma_san_pham}','admin\PhieuNhapController@timsanpham');
+
     });
 
      Route::group(['prefix'=>'baocao'], function(){
         Route::get('doanhthu','admin\BaoCaoController@get_baocao_doanhthu')->name('baocao_doanhthu');
 
         Route::get('khohang','admin\BaoCaoController@get_baocao_khohang')->name('baocao_khohang');
+
+        Route::get('chiphinhap','admin\BaoCaoController@get_baocao_chiphinhap')->name('baocao_chiphinhap');
 
         
 

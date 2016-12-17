@@ -37,34 +37,61 @@
                       <li><a href="{{ route('getSPList') }}">Sản phẩm</a></li>
                     </ul>
                   </li>
+                  <?php if(Auth::user()->idGroup == 1 || Auth::user()->idGroup == 3 )
+                      {?>
                   <li><a><i class="fa fa-edit"></i> Thông tin cá nhân <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                    <?php if(Auth::user()->idGroup == 3 )
+                      {?>
                       <li><a href="{{ route('danh_sach_nhan_vien') }}">Nhân viên </a></li>
+                    <?php } ?>
                       <li><a href="{{ route('danh_sach_khach_hang') }}">Khách hàng</a></li>
+                    </ul>
+                  </li>
+                  <?php } ?>
+                 
+
+                 <?php if(Auth::user()->idGroup == 1 || Auth::user()->idGroup == 3)
+                      {?>
+                  <li><a><i class="fa fa-table"></i> Đơn hàng<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <?php if(Auth::user()->idGroup == 1)
+                      {?>
+                      <li><a href="/admin/donhang/them">Tạo đơn hàng</a></li>
+                      <?php } ?>
+                      <li><a href="/admin/donhang/danhsach">Danh sách đơn hàng</a></li>
                       
                     </ul>
                   </li>
-                 
-                  <li><a><i class="fa fa-table"></i> Đơn hàng<span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/admin/donhang/them">Tạo đơn hàng</a></li>
-                      <li><a href="/admin/donhang/danhsach">Danh sách đơn hàng</a></li>
-                      <li><a href="tables_dynamic.html">Đơn hàng chưa xử lý</a></li>
-                      <li><a href="tables_dynamic.html">Đơn hàng đã xử lý</a></li>
-                    </ul>
-                  </li>
 
+                  <?php } ?>
+
+                  <?php if(Auth::user()->idGroup == 3 || Auth::user()->idGroup == 2 )
+                      {?>
                    <li><a><i class="fa fa-clone"></i>Kho hàng<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                      <?php if(Auth::user()->idGroup == 2 )
+                      {?>
                       <li><a href="{{ route('get_them_phieu_nhap') }}">Tạo phiếu nhập</a></li>
+                      <?php } ?>
+                     
                       <li><a href="{{ route('danh_sach_phieu_nhap') }}">Danh sách phiếu nhập</a></li>
+                     
                     </ul>
                   </li>
+                  <?php } ?>
 
                   <li><a><i class="fa fa-bar-chart-o"></i> Báo cáo<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                      <?php if(Auth::user()->idGroup == 3 || Auth::user()->idGroup == 1 )
+                      {?>
                       <li><a href="{{ route('baocao_doanhthu') }}">Doanh thu bán hàng</a></li>
+                      <?php } ?>
+                      <?php if(Auth::user()->idGroup == 3 || Auth::user()->idGroup == 2)
+                      {?>
                       <li><a href="{{ route('baocao_khohang') }}">Kho hàng</a></li>
+                      <li><a href="{{ route('baocao_chiphinhap') }}">Chi phí nhập hàng</a></li>
+                      <?php } ?>
                      
                  
                       

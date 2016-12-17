@@ -78,7 +78,10 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên Sản Phẩm</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" name ="txt_tensp" placeholder="Default Input" value="{!!  $item->TenSP !!}">
+                          <input type="text" class="form-control" name ="txt_tensp" 
+                          
+                          <?php if(Auth::user()->idGroup == 1)
+                      {?>readonly <?php } ?> placeholder="Default Input" value="{!!  $item->TenSP !!}">
                         </div>
                       </div>
 
@@ -87,7 +90,7 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <!--<input type="text" name="txt_mota" required="required" class="form-control col-md-7 col-xs-12" value=""/>   -->  
-                          <textarea id="txt_mota" name="txt_mota" rows="7" required="required" class="form-control ckeditor col-md-7 col-xs-12" placeholder="Thêm mô tả vào đây">{{ $item->MoTa }}</textarea>                      
+                          <textarea id="txt_mota" name="txt_mota" rows="7" required="required" readonly class="form-control ckeditor col-md-7 col-xs-12" placeholder="Thêm mô tả vào đây">{{ $item->MoTa }}</textarea>                      
                                 <script type="text/javascript">
                                       CKEDITOR.replace( 'txt_mota',
                                       {
@@ -102,7 +105,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Giá nhập: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="number" name="txt_gianhap" id ="txt_gianhap" required="required" class="form-control col-md-7 col-xs-12" value="{{ (float)$item->GiaNhap }}" oninput="Process_Cost()" />                          
+                          <input type="number" name="txt_gianhap" id ="txt_gianhap" required="required" class="form-control col-md-7 col-xs-12" readonly value="{{ (float)$item->GiaNhap }}" oninput="Process_Cost()" />                          
                         </div>
                       </div>
 
@@ -134,14 +137,14 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Số lượng tồn</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" name="txt_soluong" value="{{ $item->SoLuongTonKho }}">
+                          <input type="text" class="form-control" name="txt_soluong" readonly value="{{ $item->SoLuongTonKho }}">
                         </div>
                       </div>
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Nhà Sản Xuất</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" name="txt_nsx" required="required" value="{{ $item->NhaSanXuat }}">
+                          <input type="text" class="form-control" name="txt_nsx" readonly required="required" value="{{ $item->NhaSanXuat }}">
                         </div>
                       </div>
 

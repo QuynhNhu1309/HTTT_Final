@@ -18,7 +18,7 @@
                 </div>
                   @endif
 
-            <form action="{{ URL::Route('baocao_doanhthu')}}" method="GET" name="form_ad_search_nv">
+            <form action="{{ URL::Route('baocao_khohang')}}" method="GET" name="form_ad_search_nv">
 
             <div class="col-md-2 col-sm-2 col-xs-12">
                 <div class="form-group">
@@ -73,7 +73,7 @@
               <div class="col-md-10 col-sm-10 col-xs-10 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Doanh thu </h2>
+                    <h2>Số lượng sản phẩm được nhập </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -92,20 +92,20 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <canvas id="Chart_doanhthu_tuan"></canvas>
+                    <canvas id="Chart_khohang_tuan"></canvas>
                     <div style ="padding-top: 20px;"></div>
                     <table id="datatable" class="table table-striped table-bordered" name="datatable">
                       <thead>
                         <tr>
                           <th><center>STT</center></th>
                           <th><center>Tuần</center></th>
-                          <th><center>Doanh thu</center></th>  
+                          <th><center>Số lượng sản phẩm được nhập</center></th>  
                         </tr>
                       </thead>
 
                       <tbody>
                       <?php $stt = 0; ?>
-                      @foreach($baocao_doanhthu_thang as $key=>$value)
+                      @foreach($baocao_khohang_thang as $key=>$value)
                       <tr>
                           <td><center><?php $stt = $stt + 1;  echo $stt; ?></center></td>
                           <td><center>{{ $key + 1 }}</center></td>
@@ -128,7 +128,7 @@
               <div class="col-md-10 col-sm-10 col-xs-10 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Doanh thu </h2>
+                    <h2>Số lượng sản phẩm được nhập </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -154,13 +154,13 @@
                         <tr>
                           <th><center>STT</center></th>
                           <th><center>Tháng</center></th>
-                          <th><center>Doanh thu</center></th>  
+                          <th><center>Số lượng sản phẩm được nhập</center></th>  
                         </tr>
                       </thead>
 
                       <tbody>
                       <?php $stt = 0; ?>
-                      @foreach($baocao_doanhthu_thang as $key=>$value)
+                      @foreach($baocao_khohang_thang as $key=>$value)
                       <tr>
                           <td><center><?php $stt = $stt + 1;  echo $stt; ?></center></td>
                           <td><center>{{ $key + 1 }}</center></td>
@@ -190,7 +190,7 @@
           <div class="col-md-10 col-sm-10 col-xs-10 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Doanh thu </h2>
+                    <h2>Số lượng sản phẩm được nhập </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -215,7 +215,7 @@
                         <tr>
                           <th><center>STT</center></th>
                           <th><center>Ngày</center></th>
-                          <th><center>Doanh thu</center></th>  
+                          <th><center>Số lượng sản phẩm được nhập</center></th>  
                         </tr>
                       </thead>
 
@@ -223,7 +223,7 @@
                       <?php $stt = 0; ?>
                        <tr>
                        <td><center><?php $stt = $stt + 1;  echo $stt; ?></center></td>
-                      @foreach($baocao_doanhthu_thang as $key=>$value)
+                      @foreach($baocao_khohang_thang as $key=>$value)
                      
                           
                           <td><center>{{ $value }}</center></td>
@@ -248,11 +248,13 @@
 
          
             <script type="text/javascript">
-            function getArray()
+            function getArray_khohang()
             {
-              var obj = <?php echo json_encode($baocao_doanhthu_thang); ?>;
-              console.log(obj);
-              return obj;
+              var obj_khohang = <?php echo json_encode($baocao_khohang_thang); ?>;
+              //alert(obj_khohang);
+              console.log(obj_khohang);
+              return obj_khohang;
+              //console.log(obj_khohang);
             }
 </script>
            

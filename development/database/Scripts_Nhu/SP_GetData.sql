@@ -250,8 +250,8 @@ declare @ThanhTien float;
 	declare @idDH int;
 
 	DECLARE @cur_DH CURSOR
-
 	SET @cur_DH = CURSOR FOR SELECT id FROM donhang WHERE idTinhTrang = 14 And MONTH(Ngaygiao) = @month 
+	AND YEAR(Ngaygiao)= @year
 
 	OPEN @cur_DH
 	WHILE ( 0 = 0 )
@@ -291,7 +291,7 @@ END
 
 
 EXEC ThongKe_DoanhThu_Week 2016, 12, '2016-12-29'
-EXEC ThongKe_DoanhThu_Week @year = 2016, @month = 12, @first_day =''
+EXEC ThongKe_DoanhThu_Week @year = 2016, @month = 12, @first_day ='2016-12-15 00:00:00.000'
 
 
 SELECT DATEADD(day,6,'2016-12-29') AS OrderPayDate
@@ -318,7 +318,7 @@ SELECT TongTien FROM donhang WHERE Ngaygiao BETWEEN '2016-12-01' and
 
 
 
-	----- THỐNG KÊ THEO NGÀY -----
+	----- THỐNG KÊ DOANH THU THEO NGÀY -----
 IF OBJECT_ID('ThongKe_DoanhThu_Day') IS NOT NULL
 DROP PROCEDURE ThongKe_DoanhThu_Day;
 GO
@@ -357,7 +357,7 @@ declare @idDH int;
 
  END
 
- EXEC ThongKe_DoanhThu_Day 2016, 12, 30
+ EXEC ThongKe_DoanhThu_Day 2016, 12, 14
 
 
 
@@ -374,7 +374,7 @@ GO
  SELECT DISTINCT YEAR(NgayXuatHoaDon) AS sort_year FROM phieunhap 
  END
 
-EXEC ThongKe_DoanhThu_GetYear
+EXEC ThongKe_KhoHang_GetYear
 
 
 
@@ -391,11 +391,17 @@ GO
  BEGIN
 	declare @ThanhTien float;
 	declare @TongTien float;
+	declare @SoLuong int;
+	declare @TongSoLuong int;
+	declare @idCT int;
+	SET @SoLuong = 0;
+	SET @TongSoLuong = 0;
 	SET @TongTien = 0;
+	SET @TongSoLuong = 0;
 	declare @idDH int;
 
 	DECLARE @cur_DH CURSOR
-	SET @cur_DH = CURSOR FOR SELECT id FROM phieunhap WHERE idTinhTrang = 14 And MONTH(NgayXuatHoaDon) = @month and YEAR(NgayXuatHoaDon) = @year
+	SET @cur_DH = CURSOR FOR SELECT id FROM phieunhap WHERE MONTH(NgayXuatHoaDon) = @month and YEAR(NgayXuatHoaDon) = @year
 
 	OPEN @cur_DH
 	WHILE ( 0 = 0 )
@@ -404,23 +410,22 @@ GO
 			IF @@FETCH_STATUS <> 0 BREAK;
 				
 				DECLARE @cur_idCT CURSOR
-				SET @cur_idCT = CURSOR FOR SELECT SoLuong FROM donhang_chitiet WHERE idDonHang = @idDH
-						WHERE idDH = @idDH
-					OPEN @cur_idSP 
+				SET @cur_idCT = CURSOR FOR SELECT id FROM phieunhap_chitiet WHERE idPN = @idDH
+						
+					OPEN @cur_idCT 
 					WHILE ( 0 = 0)
 					BEGIN
-						FETCH NEXT FROM @cur_idSP INTO @idSP, @Gia, @SoLuong
+						FETCH NEXT FROM @cur_idCT INTO @idCT
 						IF @@FETCH_STATUS <> 0 BREAK;
-						
-							SELECT @Gia_Nhap = Gia_Nhap FROM phieunhap_chitiet pnct WHERE idSP = @idSP
-								SET @TienLoi = @TienLoi + (@Gia - @Gia_Nhap)*@SoLuong
-								SET @Tong_Gia_Nhap = @Tong_Gia_Nhap + @Gia_Nhap*@SoLuong
-								
+							SET @SoLuong = (SELECT SoLuongNhap FROM phieunhap_chitiet WHERE id = @idCT);
+							SET @TongSoLuong = @TongSoLuong + @SoLuong;
 					END
 
 		
 	END
-	SELECT @TongTien AS TongTien
+	SELECT @TongSoLuong AS TongSoLuong
+	CLOSE @cur_idCT
+		DEALLOCATE @cur_idCT
 		CLOSE @cur_DH
 		DEALLOCATE @cur_DH
 	
@@ -428,11 +433,229 @@ GO
  END
 
 
-  EXEC ThongKe_KhoHang_Thang @year = 2016, @month = 12
+
+ 
+ IF OBJECT_ID('ThongKe_KhoHang_GetYear') IS NOT NULL
+DROP PROCEDURE ThongKe_KhoHang_GetYear;
+GO
+ CREATE PROCEDURE ThongKe_KhoHang_GetYear
+ AS
+ BEGIN
+ SELECT DISTINCT YEAR(NgayXuatHoaDon) AS sort_year FROM phieunhap 
+ END
+
+EXEC ThongKe_KhoHang_GetYear
 
 
 
+ ------ THỐNG KÊ KHO HÀNG THEO THÁNG----
 
+
+ IF OBJECT_ID('ThongKe_KhoHang_Thang') IS NOT NULL
+DROP PROCEDURE ThongKe_KhoHang_Thang;
+GO
+ CREATE PROCEDURE ThongKe_KhoHang_Thang
+	@year int,
+	@month int
+ AS
+ BEGIN
+	declare @ThanhTien float;
+	declare @TongTien float;
+	declare @SoLuong int;
+	declare @TongSoLuong int;
+	declare @idCT int;
+	SET @SoLuong = 0;
+	SET @TongSoLuong = 0;
+	SET @TongTien = 0;
+	SET @TongSoLuong = 0;
+	declare @idDH int;
+
+	DECLARE @cur_DH CURSOR
+	SET @cur_DH = CURSOR FOR SELECT id FROM phieunhap WHERE MONTH(NgayXuatHoaDon) = @month and YEAR(NgayXuatHoaDon) = @year
+
+	OPEN @cur_DH
+	WHILE ( 0 = 0 )
+	BEGIN
+		FETCH NEXT FROM @cur_DH INTO @idDH
+			IF @@FETCH_STATUS <> 0 BREAK;
+				SET @ThanhTien = (SELECT TongTien FROM phieunhap WHERE id = @idDH);
+							SET @TongTien = @TongTien + @ThanhTien;
+				DECLARE @cur_idCT CURSOR
+				SET @cur_idCT = CURSOR FOR SELECT id FROM phieunhap_chitiet WHERE idPN = @idDH
+						
+					OPEN @cur_idCT 
+					WHILE ( 0 = 0)
+					BEGIN
+						FETCH NEXT FROM @cur_idCT INTO @idCT
+						IF @@FETCH_STATUS <> 0 BREAK;
+							SET @SoLuong = (SELECT SoLuongNhap FROM phieunhap_chitiet WHERE id = @idCT);
+							SET @TongSoLuong = @TongSoLuong + @SoLuong;
+					END
+
+		
+	END
+	SELECT @TongSoLuong AS TongSoLuong, @TongTien AS TongTien
+	CLOSE @cur_idCT
+		DEALLOCATE @cur_idCT
+		CLOSE @cur_DH
+		DEALLOCATE @cur_DH
+	
+
+ END
+
+
+EXEC ThongKe_KhoHang_Thang @year = 2016, @month = 11
+
+
+---- THỐNG KÊ KHO HÀNG TRONG THÁNG ----
+
+ IF OBJECT_ID('ThongKe_KhoHang_Week') IS NOT NULL
+DROP PROCEDURE ThongKe_KhoHang_Week;
+GO
+ CREATE PROCEDURE ThongKe_KhoHang_Week
+	@year int,
+	@month int,
+	@first_day datetime
+ AS
+ BEGIN
+ --declare @first_day datetime;
+ declare @ThanhTien float;
+	declare @TongTien float;
+	declare @SoLuong int;
+	declare @TongSoLuong int;
+	declare @idCT int;
+	SET @SoLuong = 0;
+	SET @TongSoLuong = 0;
+	SET @TongTien = 0;
+	SET @TongSoLuong = 0;
+	declare @idDH int;
+
+ declare @next_week datetime;
+ declare @end_week datetime;
+ declare @number_day int;
+ SET @number_day = 7;
+
+ if (@first_day = '')
+ BEGIN
+SET @first_day = (SELECT DATEADD(month,@month-1,DATEADD(year,@year-1900,0))); /*First day*/
+END
+
+SET @next_week = (SELECT DATEADD(day,@number_day-1, @first_day) AS OrderPayDate);
+
+
+	DECLARE @cur_DH CURSOR
+
+	SET @cur_DH = CURSOR FOR SELECT id FROM phieunhap WHERE MONTH(NgayXuatHoaDon) = @month and YEAR(NgayXuatHoaDon) = @year
+	and NgayXuatHoaDon BETWEEN @first_day and 
+	@next_week
+
+	OPEN @cur_DH
+	WHILE ( 0 = 0 )
+	BEGIN
+		FETCH NEXT FROM @cur_DH INTO @idDH
+			IF @@FETCH_STATUS <> 0 BREAK;
+			SET @ThanhTien = (SELECT TongTien FROM phieunhap WHERE id = @idDH);
+							SET @TongTien = @TongTien + @ThanhTien;
+					DECLARE @cur_idCT CURSOR
+					SET @cur_idCT = CURSOR FOR SELECT id FROM phieunhap_chitiet WHERE idPN = @idDH 
+					OPEN @cur_idCT 
+					WHILE ( 0 = 0)
+					BEGIN
+						FETCH NEXT FROM @cur_idCT INTO @idCT
+						IF @@FETCH_STATUS <> 0 BREAK;
+							if exists(SELECT SoLuongNhap FROM phieunhap_chitiet WHERE id = @idCT)
+							BEGIN
+							SET @SoLuong = (SELECT SoLuongNhap FROM phieunhap_chitiet WHERE id = @idCT);
+							SET @TongSoLuong = @TongSoLuong + @SoLuong;
+							END
+				
+				END
+		
+	END
+	SET @next_week = DATEADD(day, 1,@next_week)
+	SET @end_week = (SELECT DATEADD(day,@number_day-1, @first_day) AS OrderPayDate);
+	SELECT @next_week AS next_week, @TongSoLuong AS TongSoLuong, @TongTien AS TongTien, @end_week AS end_week, @first_day as first_day
+	IF CURSOR_STATUS('global','@cur_idCT')>=-1
+BEGIN
+DEALLOCATE @cur_idCT
+END
+	CLOSE @cur_DH
+	DEALLOCATE @cur_DH
+
+END
+
+
+EXEC ThongKe_KhoHang_Week 2016, 12, ''
+EXEC ThongKe_KhoHang_Week @year = 2016, @month = 12, @first_day =''
+
+
+
+----- THỐNG KÊ kHO HÀNG THEO NGÀY -----
+IF OBJECT_ID('ThongKe_KhoHang_Day') IS NOT NULL
+DROP PROCEDURE ThongKe_KhoHang_Day;
+GO
+ CREATE PROCEDURE ThongKe_KhoHang_Day
+	@year int,
+	@month int,
+	@day int
+ AS
+ BEGIN
+ declare @ThanhTien float;
+	declare @TongTien float;
+	declare @SoLuong int;
+	declare @TongSoLuong int;
+	declare @idCT int;
+	SET @SoLuong = 0;
+	SET @TongSoLuong = 0;
+	SET @TongTien = 0;
+	SET @TongSoLuong = 0;
+	declare @idDH int;
+	declare @NgayXuatHoaDon varchar(100);
+
+	DECLARE @cur_DH CURSOR
+
+	SET @cur_DH = CURSOR FOR SELECT id FROM phieunhap WHERE MONTH(NgayXuatHoaDon) = @month and YEAR(NgayXuatHoaDon) = @year
+	and DAY(NgayXuatHoaDon) = @day 
+
+	OPEN @cur_DH
+	WHILE ( 0 = 0 )
+	BEGIN
+		FETCH NEXT FROM @cur_DH INTO @idDH
+			IF @@FETCH_STATUS <> 0 BREAK;
+				SET @ThanhTien = (SELECT TongTien FROM phieunhap WHERE id = @idDH);
+							SET @TongTien = @TongTien + @ThanhTien;
+					DECLARE @cur_idCT CURSOR
+					SET @cur_idCT = CURSOR FOR SELECT id FROM phieunhap_chitiet WHERE idPN = @idDH 
+					OPEN @cur_idCT 
+					WHILE ( 0 = 0)
+					BEGIN
+						FETCH NEXT FROM @cur_idCT INTO @idCT
+						IF @@FETCH_STATUS <> 0 BREAK;
+							if exists(SELECT SoLuongNhap FROM phieunhap_chitiet WHERE id = @idCT)
+							BEGIN
+							SET @SoLuong = (SELECT SoLuongNhap FROM phieunhap_chitiet WHERE id = @idCT);
+							SET @TongSoLuong = @TongSoLuong + @SoLuong;
+							
+							END
+				
+				END
+				
+		
+	END
+	SET @NgayXuatHoaDon = CONCAT(CAST(@year AS char),'-', CAST(@month as char), '-', CAST(@day as char));
+	SELECT @NgayXuatHoaDon AS NgayXuatHoaDon, @TongSoLuong AS TongSoLuong, @TongTien AS TongTien
+
+	IF CURSOR_STATUS('global','@cur_idCT')>=-1
+	BEGIN
+	DEALLOCATE @cur_idCT
+	END
+	CLOSE @cur_DH
+	DEALLOCATE @cur_DH
+
+
+ END
+
+ EXEC ThongKe_KhoHang_Day 2016, 12, 14
 
 
 

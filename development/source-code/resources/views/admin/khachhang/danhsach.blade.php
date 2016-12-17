@@ -24,7 +24,7 @@
                     <input type="text" class="form-control" placeholder="Tìm nhanh ... " name="search" id="search" 
                     value ="<?php if(isset($_GET['search'])) {echo $_GET['search']; }?>">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="submit">Tìm1</button>
+                      <button class="btn btn-default" type="submit">Tìm</button>
                     </span>
                   </div>
                 </form>
@@ -112,7 +112,15 @@
                           <th>Họ tên</th>
                           <th>Địa chỉ</th>
                           <th>Điện thoại</th>
+                          <?php if(Auth::user()->idGroup == 1)
+                      {?>
                           <th><center><a href="/admin/khachhang/them" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Thêm</a></center></th>
+                          <?php } ?>
+
+                           <?php if(Auth::user()->idGroup == 3 )
+                      {?>
+                          <th><center>Chức năng</center></th>
+                          <?php } ?>
                          
                         </tr>
                       </thead>
@@ -129,6 +137,7 @@
                           <td>{{$khachhang->HoTen}}</td>
                           <td>{{$khachhang->DiaChi}}</td>
                           <td>{{$khachhang->DienThoai}}</td>
+                          
                           <td>
                           <center>
                             <a href="/admin/khachhang/chitiet/{{$khachhang->id}}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Xem </a>

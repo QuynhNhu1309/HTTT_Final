@@ -427,6 +427,17 @@ class SanphamController extends Controller
        return redirect('admin/sanpham/sua/'.$id)->with('thongbao', 'Sửa thành công');
     }
 
+    public function getXem($id)
+    {
+        $data = DB::table('sanpham')
+        ->where('id', $id)
+        ->get();
+         $lsp = DB::table('loaisp')
+        
+        ->get();
+       return view('admin.sanpham.xem',['sps' => $data,'lsp' => $lsp]);
+    }
+
 
     
 }
