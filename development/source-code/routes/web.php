@@ -108,6 +108,12 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
 
         Route::post('them','admin\PhieuNhapController@postThem')->name('post_them_phieu_nhap');
 
+        Route::get('danhsachbaocao','admin\PhieuNhapController@getDanhSachBaoCao')->name('get_danh_sach_bao_cao');
+
+        Route::get('danhsachbaocao/{idBaoCao}','admin\PhieuNhapController@getDanhSachBaoCaoChiTiet')->name('get_nhap_hang');
+
+        Route::post('danhsachbaocao/{idBaoCao}','admin\PhieuNhapController@postNhapHang')->name('post_nhap_hang');
+
         Route::get('them_exist/{id}','admin\PhieuNhapController@getThem_exist')->name('get_them_phieu_nhap_exist')->where('id','[0-9]+');
 
         Route::post('them_exist/{id}','admin\PhieuNhapController@postThem_exist')->name('post_them_phieu_nhap_exist')->where('id','[0-9]+');

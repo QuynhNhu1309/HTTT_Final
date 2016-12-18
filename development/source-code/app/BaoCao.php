@@ -14,4 +14,14 @@ class BaoCao extends Model
     {
         return $this->hasOne('App\TinhTrang','id','idTinhTrang');
     }
+
+    public function tai_khoan()
+    {
+        return $this->hasOne('App\TaiKhoan','id','idTaiKhoan');
+    }
+
+    public function dsBaoCaoChiTiet()
+    {
+        return $this->hasMany('App\BaoCaoChiTiet','idBC','id');
+    }
 }

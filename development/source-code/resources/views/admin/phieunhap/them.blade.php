@@ -9,12 +9,15 @@
 
           <div class="">
             <div class="page-title">
-              <div class="title_left">
+              <div class="col-md-7">
                 <h2>
                 <ul class="breadcrumb">
                     <li><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#themmoi">Thêm sản phẩm mới</button></li>
                     <li>
                     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#them">Thêm sản phẩm</button>
+                    </li>
+                    <li>
+                      <a class="btn btn-info" href="{{ URL::Route('get_danh_sach_bao_cao') }}">Danh sách báo cáo</a>
                     </li>
                 </ul>
                 </h2>

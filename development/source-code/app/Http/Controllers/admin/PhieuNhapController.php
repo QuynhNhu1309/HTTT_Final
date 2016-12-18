@@ -12,6 +12,8 @@ use App\SanPham;
 use App\LoaiSanPham;
 use App\TinhTrang;
 use App\PhieuNhap;
+use App\BaoCao;
+use App\BaoCaoChiTiet;
 use App\PhieuNhapChiTiet;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,6 +54,76 @@ class PhieuNhapController extends Controller
         return view('admin.phieunhap.danhsach',['phieunhap' => $phieunhap]);
 
     
+    }
+
+    public function getDanhSachBaoCao()
+    {
+        $dsBaoCaoHetHang = BaoCao::where('idTinhTrang', 17)->get();
+        return view('admin.phieunhap.danhsachbaocao')
+                    ->with('dsBaoCaoHetHang', $dsBaoCaoHetHang);
+
+    }
+
+    public function getDanhSachBaoCaoChiTiet($idBaoCao)
+    {
+        $baoCaoHetHang = BaoCao::find($idBaoCao);
+        $dsChiTietBaoCaoHetHang = $baoCaoHetHang->dsBaoCaoChiTiet;
+        return view('admin.phieunhap.chitietbaocao')
+                    ->with('baoCaoHetHang', $baoCaoHetHang)
+                    ->with('dsChiTietBaoCaoHetHang', $dsChiTietBaoCaoHetHang)
+                    ->with('idBaoCao', $idBaoCao);
+
+    }
+
+    public function postNhapHang(Request $request)
+    {
+        $baoCaoHetHang = BaoCao::find($request->idBaoCao);
+        // Lấy id tài khoản đang đăng nhập
+        $idTaiKhoan = Auth::user()->id;
+        $dsChiTietNhapHang = $request->dsChiTietNhapHang;
+        // Tạo phiếu nhập
+        $phieuNhapIns = new PhieuNhap();
+        $phieuNhapIns->idTaiKhoan = $idTaiKhoan;
+        $phieuNhapIns->TongTien = 0;
+        $phieuNhapIns->save();
+
+        // Tạo mã phiếu nhập
+        $phieuNhapIns->MaPhieuNhap = 'PN'.$phieuNhapIns->id;
+        $phieuNhapIns->save();
+
+        foreach($dsChiTietNhapHang as $chiTietNhapHang)
+        {
+            // Tạo một chi tiết nhập hàng mới
+            $phieuNhapChiTietIns = new PhieuNhapChiTiet();
+            $phieuNhapChiTietIns->NhaSanXuat = 'MINX';
+            $phieuNhapChiTietIns->idSanPham = $chiTietNhapHang['idSanPham'];
+            $phieuNhapChiTietIns->idLoai = $chiTietNhapHang['idLoai'];
+            $phieuNhapChiTietIns->GiaNhap = $chiTietNhapHang['giaNhap'];
+            $phieuNhapChiTietIns->SoLuongNhap = $chiTietNhapHang['soLuongNhap'];
+            $phieuNhapChiTietIns->idPN = $phieuNhapIns->id;
+            $phieuNhapChiTietIns->ThanhTien = $phieuNhapChiTietIns->SoLuongNhap*$phieuNhapChiTietIns->GiaNhap;
+            $phieuNhapChiTietIns->save();
+
+            // Tạo mã phiếu nhập chi tiết
+            $phieuNhapChiTietIns->MaPhieuNhapChiTiet = 'PNCT'.$phieuNhapChiTietIns->id;
+            $phieuNhapChiTietIns->save();
+
+            // Cộng dồn tổng tiền của chi tiết vào phiếu nhập
+            $phieuNhapIns->TongTien = $phieuNhapIns->TongTien + $phieuNhapChiTietIns->ThanhTien;
+            $phieuNhapIns->save();
+
+            // Cập nhập tình trạng của báo cáo hết hàng
+            $baoCaoHetHang->idTinhTrang = 18;
+            $baoCaoHetHang->save();
+
+            // Tăng số lượng tồn kho và cập nhật giá gốc mới cho sản phẩm
+            $sanPhamIns = SanPham::find($phieuNhapChiTietIns->idSanPham);
+            $sanPhamIns->SoLuongTonKho = $sanPhamIns->SoLuongTonKho + $phieuNhapChiTietIns->SoLuongNhap;
+            $sanPhamIns->GiaBan = $phieuNhapChiTietIns->GiaNhap;
+            $sanPhamIns->save();
+
+        }
+        return redirect()->route('get_danh_sach_bao_cao');
     }
 
     public function getThem(){
