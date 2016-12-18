@@ -191,8 +191,7 @@ class KhachHangController extends Controller
         $kh->DiaChi = $request ->txt_diachi;
         $kh->DienThoai= $request ->txt_sdt;
         $kh->idTaiKhoan= Auth::user()->idGroup;
-        $kh->NgayDangKy = date("Y-m-d H:i:s");
-        $kh->NgayCapNhat = date("Y-m-d H:i:s");
+        
 
         $kh ->save();
         //return redirect('get_sua_nhanvien', $id)->with('thongbao', 'Sửa thành công');
