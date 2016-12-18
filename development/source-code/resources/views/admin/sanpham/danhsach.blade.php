@@ -11,7 +11,7 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Sản phẩm</a></li>
+                    <li><a href="{{ URL::Route('getSPList')}}">Sản phẩm</a></li>
                     <li class="active">Danh sách sản phẩm</li>
                     <button class="btn"><a href="{{ URL::Route('getSPList_hethang')}}">Báo hết hàng</a></button>
                 
@@ -151,7 +151,7 @@
                            <td>{!!  $item_lsp->TenLoai !!}</td>
                            <td>{!!  $item->TenSP !!}</td>
                            <td>{!!  $item->SoLuongTonKho !!}</td>
-                           <td>{!!  (float)$item->GiaBan !!}</td>    
+                           <td>{!!  (float)$item->GiaBanHienTai !!}</td>    
                           <td>
                           <center>
                            <?php if(Auth::user()->idGroup == 2 || Auth::user()->idGroup == 1)

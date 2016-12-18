@@ -63,9 +63,32 @@ class PhieuNhapController extends Controller
     }
 
     public function postThem(Request $request){
+        // Lấy dữ liệu JSON từ request của Angular và parse thành mảng để sử dụng
+        //$requestData = json_decode($request->getContent());
+        //return $request->thongTinSanPham;
+        //return $requestData;
         $sp    = new SanPham;
         $MaSP = DB::select("EXEC Them_Lay_Ma_SP");
         $sp->MaSP=  $MaSP[0]->MaSP;
+
+        
+        foreach($request->thongTinSanPham as $sanPham)
+        {
+            // $MaSP = DB::select("EXEC Them_Lay_Ma_SP");
+           // $sp->MaSP=  $MaSP[0]->MaSP;
+           $soluong = (int)$sanPham['soLuong'];
+            
+            // $ctdhinsert = array('procedureName' => '[dbo].[Them_Chi_Tiet_Don_Hang]',
+            // 'idDonHang' => (int)$idDonHang,
+            // 'idSanPham' => (int)$sanPham['id'],
+            // 'TenSP' => $sanPham['TenSP'],
+            // 'SoLuong' => (int)$sanPham['soLuong'],
+            // 'Gia' => (int)$sanPham['GiaBanHienTai']);
+
+           
+        }
+        return $soluong;
+
 
 
          $this ->validate($request, [

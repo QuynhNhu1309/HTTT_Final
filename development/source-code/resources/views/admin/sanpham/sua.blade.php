@@ -12,7 +12,7 @@
               <div class="title_left">
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Sản phẩm</a></li>
+                    <li><a href="{{ URL::Route('getSPList')}}">Sản phẩm</a></li>
                     @foreach($sps as $item)
                     <li class="active">{!!  $item->TenSP !!}</li>
                     @endforeach
@@ -90,7 +90,8 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <!--<input type="text" name="txt_mota" required="required" class="form-control col-md-7 col-xs-12" value=""/>   -->  
-                          <textarea id="txt_mota" name="txt_mota" rows="7" required="required" readonly class="form-control ckeditor col-md-7 col-xs-12" placeholder="Thêm mô tả vào đây">{{ $item->MoTa }}</textarea>                      
+                          <textarea id="txt_mota" name="txt_mota" rows="7" required="required"  <?php if(Auth::user()->idGroup == 1)
+                      {?>readonly <?php } ?>class="form-control ckeditor col-md-7 col-xs-12" placeholder="Thêm mô tả vào đây">{{ $item->MoTa }}</textarea>                      
                                 <script type="text/javascript">
                                       CKEDITOR.replace( 'txt_mota',
                                       {
@@ -105,7 +106,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Giá nhập: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="number" name="txt_gianhap" id ="txt_gianhap" required="required" class="form-control col-md-7 col-xs-12" readonly value="{{ (float)$item->GiaNhap }}" oninput="Process_Cost()" />                          
+                          <input type="number" name="txt_gianhap" id ="txt_gianhap" required="required" class="form-control col-md-7 col-xs-12"  
+                      readonly value="{{ (float)$item->GiaNhap }}" oninput="Process_Cost()" />                          
                         </div>
                       </div>
 
@@ -122,7 +124,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Phần trăm khuyến mãi <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="number" name="txt_phantramKM" id ="txt_phantramKM" required="required" class="form-control col-md-7 col-xs-12" value="{{ (float)$item->PhanTramKM }}" oninput="Process_Cost()"/>                          
+                          <input type="number" name="txt_phantramKM" id ="txt_phantramKM" required="required" class="form-control col-md-7 col-xs-12" value="{{ (float)$item->PhanTramKM }}"  <?php if(Auth::user()->idGroup == 2)
+                      {?>readonly <?php } ?> oninput="Process_Cost()"/>                          
                         </div>
                       </div>
 
@@ -137,14 +140,16 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Số lượng tồn</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" name="txt_soluong" readonly value="{{ $item->SoLuongTonKho }}">
+                          <input type="text" class="form-control"  
+                      readonly  name="txt_soluong" value="{{ $item->SoLuongTonKho }}">
                         </div>
                       </div>
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Nhà Sản Xuất</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" name="txt_nsx" readonly required="required" value="{{ $item->NhaSanXuat }}">
+                          <input type="text" class="form-control" name="txt_nsx"  <?php if(Auth::user()->idGroup == 1)
+                      {?>readonly <?php } ?> required="required" value="{{ $item->NhaSanXuat }}">
                         </div>
                       </div>
 
@@ -167,7 +172,10 @@
                     <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-2">
                          <img src="{{asset('assets/img/'.$item->AnhDaiDien)}}" alt="..."  width ="220px" height ="220px"/>
                             <h4>Ảnh đại diện: {{$item->AnhDaiDien}}</h4>
+                             <?php if(Auth::user()->idGroup == 2)
+                      {?> 
                             <input type="file" name="anh_dai_dien" id="anh_1" />
+                            <?php } ?>
                     </div>
                     </div> 
                         
@@ -182,17 +190,26 @@
                         <div style ="margin-top : 40px;"></div>
                           <img src="{{asset('assets/img/'.$item->AnhCT1)}}" alt="..." width ="220px" height ="220px"/>
                           <h4>Ảnh chi tiết 1: {{$item->AnhCT1}}</h4>
+                          <?php if(Auth::user()->idGroup == 2)
+                      {?> 
                             <input type="file" name="anh_ct_1" id="anh_ct_1" />
+                            <?php } ?>
                             <br/>
                    
                           <img src="{{asset('assets/img/'.$item->AnhCT2)}}" alt="..." width ="220px" height ="220px"/>
                           <h4>Ảnh chi tiết 2: {{$item->AnhCT2}}</h4>
+                          <?php if(Auth::user()->idGroup == 2)
+                      {?> 
                       <input type="file" name="anh_ct_2" id="anh_ct_2"/>
+                      <?php } ?>
                         <br/>
                         
                           <img src="{{asset('assets/img/'.$item->AnhCT3)}}" alt="..." width ="220px" height ="220px"/>
                           <h4>Ảnh chi tiết 3: {{$item->AnhCT3}}</h4>
+                          <?php if(Auth::user()->idGroup == 2)
+                      {?> 
                       <input type="file" name="anh_ct_3" id="anh_ct_3" />
+                       <?php } ?>
                             </div>
                         </div>
                         

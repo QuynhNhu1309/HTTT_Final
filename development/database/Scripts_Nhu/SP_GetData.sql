@@ -531,7 +531,7 @@ GO
 	declare @idDH int;
 
  declare @next_week datetime;
- declare @end_week datetime;
+ declare @the_next datetime;
  declare @number_day int;
  SET @number_day = 7;
 
@@ -572,9 +572,11 @@ SET @next_week = (SELECT DATEADD(day,@number_day-1, @first_day) AS OrderPayDate)
 				END
 		
 	END
-	SET @next_week = DATEADD(day, 1,@next_week)
-	SET @end_week = (SELECT DATEADD(day,@number_day-1, @first_day) AS OrderPayDate);
-	SELECT @next_week AS next_week, @TongSoLuong AS TongSoLuong, @TongTien AS TongTien, @end_week AS end_week, @first_day as first_day
+	SET @the_next = DATEADD(day, 1,@next_week)
+	SELECT @next_week AS next_week, @TongSoLuong AS TongSoLuong, @TongTien AS TongTien, @first_day as first_day, @the_next as the_next
+	
+	
+	
 	IF CURSOR_STATUS('global','@cur_idCT')>=-1
 BEGIN
 DEALLOCATE @cur_idCT
@@ -585,7 +587,7 @@ END
 END
 
 
-EXEC ThongKe_KhoHang_Week 2016, 12, ''
+EXEC ThongKe_KhoHang_Week 2016, 12, '2016-12-07 00:00:00.000'
 EXEC ThongKe_KhoHang_Week @year = 2016, @month = 12, @first_day =''
 
 

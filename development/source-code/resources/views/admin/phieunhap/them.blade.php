@@ -60,7 +60,10 @@
                                         <td>@{{$index + 1}}</td>
                                         <td>@{{sanpham.MaSP}}</td>
                                         <td>@{{sanpham.TenSP}}</td>
-                                        <td>@{{sanpham.GiaBanHienTai}}</td>
+                                        <td>
+                                            <input type="number" ng-model="sanpham.GiaBanHienTai" class="form-control" name="so_luong" id="so_luong">
+                                        </td>
+                                        
                                         <td> 
                                             <input type="number" ng-model="sanpham.soLuong" class="form-control" name="so_luong" id="so_luong">
                                         </td>
@@ -84,7 +87,7 @@
                         </div>
 
                          <div class="text-right">
-                <button class="btn btn-primary btn-hoan-tat" ng-click="submitDonHang(form_nhap_san_pham.$valid)">Hoàn tất</button>
+                <button class="btn btn-primary btn-hoan-tat" type="button" ng-click="submitDonHang(form_nhap_san_pham.$valid)">Hoàn tất</button>
             </div>
                         </form>
                 </div>

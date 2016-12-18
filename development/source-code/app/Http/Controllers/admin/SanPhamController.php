@@ -497,6 +497,14 @@ class SanphamController extends Controller
         }
 
        $sp ->save();
+
+        $id_chi_tiet_phieunhap = PhieuNhapChiTiet::where('idSanPham',$id)->get();
+
+       $phieunhap_chitiet = PhieuNhapChiTiet::find($id_chi_tiet_phieunhap[0]->{'id'});
+       $phieunhap_chitiet->NhaSanXuat = $request->txt_nsx;
+       $phieunhap_chitiet->idLoai = $request->txt_loaisp;
+       $phieunhap_chitiet->save();
+       
        return redirect('admin/sanpham/sua/'.$id)->with('thongbao', 'Sửa thành công');
     }
 
