@@ -13,7 +13,10 @@
                 <ul class="breadcrumb">
                     <li><a href="{{ URL::Route('getSPList')}}">Sản phẩm</a></li>
                     <li class="active">Danh sách sản phẩm</li>
+                  <?php if(Auth::user()->idGroup == 1 || Auth::user()->idGroup == 2)
+                      {?>
                     <button class="btn"><a href="{{ URL::Route('getSPList_hethang')}}">Báo hết hàng</a></button>
+                  <?php } ?>
                 
                 </ul>
                

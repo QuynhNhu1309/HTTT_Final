@@ -244,7 +244,7 @@ class SanphamController extends Controller
             $baoCaoIns->idTaiKhoan= $idTaiKhoan;
             $baoCaoIns->NgayTao=date("Y-m-d H:i:s");
             $baoCaoIns->GhiChu=$request->ghiChu;
-            $baoCaoIns->idTinhTrang=13;
+            $baoCaoIns->idTinhTrang=16;
             
             if($baoCaoIns->save())
             {
@@ -272,6 +272,15 @@ class SanphamController extends Controller
     }
 
 }
+
+    
+    public function updateHetHang(Request $request){
+            $id=$request->idtinhTrang;
+            $tinhtrang = BaoCao::find($id);
+            $tinhtrang ->idTinhTrang = 17;
+            $tinhtrang ->save();
+            return redirect()->route('getHetHang');
+    }
 
 
     public function getThem(){

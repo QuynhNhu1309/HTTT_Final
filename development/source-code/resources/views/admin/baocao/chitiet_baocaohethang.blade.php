@@ -13,7 +13,10 @@
                 <ul class="breadcrumb">
                     <li><a href="#">Sản phẩm</a></li>
                     <li class="active">Chi tiết báo cáo hết hàng</li>
+                    <?php if(Auth::user()->idGroup == 1 || Auth::user()->idGroup == 2    )
+                      {?>
                     <button class="btn"><a href="{{ URL::Route('getSPList_hethang')}}">Báo hết hàng</a></button>
+                    <?php } ?>
                 
                 </ul>
                
@@ -52,8 +55,8 @@
                       <thead>
                         <tr>
                           <th>STT</th>
-                          <th>Loại sản phẩm</th>
                           <th>Mã Sản Phẩm</th>
+                          <th>Loại sản phẩm</th>
                           <th>Tên Sản Phẩm</th>
                           <th>Số lượng</th>
                           <th>Giá Nhập</th>
@@ -64,8 +67,8 @@
                         @foreach ($dsctbaocao as $key=>$ctbaocao)
                           <tr>
                             <td>{{$key + 1}}</td>
-                            <td>{{$ctbaocao->loai->TenLoai}}</td>
                             <td>{{$ctbaocao->san_pham->MaSP}}</td>
+                            <td>{{$ctbaocao->loai->TenLoai}}</td>
                             <td>{{$ctbaocao->san_pham->TenSP}}</td>
                             <td>{{$ctbaocao->san_pham->SoLuongTonKho}}</td>
                             <td>{{$ctbaocao->san_pham->GiaBan}}</td>

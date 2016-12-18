@@ -13,7 +13,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">Sản phẩm</a></li>
                     <li class="active">Báo cáo hết hàng</li>
-                    <?php if(Auth::user()->idGroup == 1  )
+                    <?php if(Auth::user()->idGroup == 1 || Auth::user()->idGroup == 2    )
                       {?>
                     <button class="btn"><a href="{{ URL::Route('getSPList_hethang')}}">Báo hết hàng</a></button>
                     <?php } ?>
@@ -72,6 +72,7 @@
                           <th>Ngày tạo</th>
                           <th>Ghi chú</th>
                           <th>Tình Trạng</th>
+                          
                           <th>Chức năng</th>
                         
                           
@@ -87,10 +88,23 @@
                         <tr>
                           
                           <td>{!! $stt !!}</td>
-                          <td>{!!  $tk->Username !!}</td>
+                           
+                          <td>{!!  $item->tai_khoan->Username !!}</td>
+                          
                            <td>{!!  $item->NgayTao !!}</td>
                            <td>{!!  $item->GhiChu !!}</td>
-                           <td>{!!  $item->tinh_trang->TinhTrang !!}</td>
+                           
+                            <td>
+                           <form method="POST" action="{{ URL::Route('updateHetHang')}}">
+                           {{ csrf_field() }}
+                          <input name="disabled" value="{!!  $item->tinh_trang->TinhTrang !!}" disabled>
+                          <input type="hidden" name="idtinhTrang" value="{!!  $item->id !!}">
+                          <?php if(Auth::user()->idGroup == 3 )
+                      {?>
+                          <button type="submit" class="btn btn-primary btn-sm">Duyệt</button>
+                          <?php } ?>
+                          </form>
+                          </td>
                            <td>
                            <a href="{!! route('getCTHetHang',['id' => $item->id]) !!}">
                            <center><button type="button" class="btn btn-info">Xem</button>

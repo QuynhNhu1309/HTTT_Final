@@ -44,6 +44,7 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
         Route::post('hethang','admin\SanphamController@postHetHang')->name('postHetHang');
         Route::get('hethang','admin\SanphamController@getDanhSachHetHang')->name('getHetHang');
         Route::get('chitiethethang/{id}','admin\SanphamController@getCTHetHang')->name('getCTHetHang');
+         Route::post('updatehethang','admin\SanphamController@updateHetHang')->name('updateHetHang');
 
     });
 

@@ -12,8 +12,8 @@
                 <h2>
                 <ul class="breadcrumb">
                     <li><a href="#">Sản phẩm</a></li>
-                    <li class="active">Danh sách sản phẩm</li>
-                    <button class="btn"><a href="/admin/donhang/them">Báo hết hàng</a></button>
+                    <li class="active">Danh sách sản phẩm hết hàng</li>
+                    
                 
                 </ul>
                
