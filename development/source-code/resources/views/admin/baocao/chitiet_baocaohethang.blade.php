@@ -57,40 +57,21 @@
                           <th>Tên Sản Phẩm</th>
                           <th>Số lượng</th>
                           <th>Giá Nhập</th>
-
-
-                          
-                          
-                        
-                          
-                        
-                         
-                        </tr>
+                       </tr>
                       </thead>
-                      <?php $stt = 0; ?>
-                          @foreach($lsp as $item)
-                            <?php $stt++ ?>
-                              @foreach($sanpham as $sp)
 
                       <tbody>
-                        <tr>
-                          
-                          <td>{!! $stt !!}</td>
-                          <td>{!!  $item->TenLoai !!}</td>
-                          <td>{!!  $sp->MaSP !!}</td>
-                           <td>{!!  $sp->TenSP !!}</td>
-                           <td>{!!  $sp->SoLuongTonKho !!}</td>
-                           <td>{!!  $sp->GiaNhap !!}</td>
-                           
-                              
-            
-                      
-                          
-                        </tr>
-                        
-                          
+                        @foreach ($dsctbaocao as $key=>$ctbaocao)
+                          <tr>
+                            <td>{{$key + 1}}</td>
+                            <td>{{$ctbaocao->loai->TenLoai}}</td>
+                            <td>{{$ctbaocao->san_pham->MaSP}}</td>
+                            <td>{{$ctbaocao->san_pham->TenSP}}</td>
+                            <td>{{$ctbaocao->san_pham->SoLuongTonKho}}</td>
+                            <td>{{$ctbaocao->san_pham->GiaBan}}</td>
+                          </tr>
                         @endforeach
-                       @endforeach 
+                      </tbody>
                       
                           <a class="btn btn-default" href="{{ URL::previous() }}">Quay lại</a>
                     </table>

@@ -223,13 +223,10 @@ class SanphamController extends Controller
     }  
 
     public function getCTHetHang($id){
-        $ctbaocao=BaoCaoChiTiet::where('idBC',$id)->first();
-        $lsp = LoaiSanPham::where('id',$ctbaocao->idLoai)->get();
-        $sanpham=SanPham::where('id',$ctbaocao->idSanPham)->get();
-        return  view('admin.baocao.chitiet_baocaohethang')->with('chitiet',$ctbaocao)
-                                                            ->with('lsp',$lsp)
-                                                            ->with('sanpham',$sanpham);
-
+        $dsctbaocao = BaoCaoChiTiet::where('idBC',$id)->get();
+        // $lsp = LoaiSanPham::where('id',$ctbaocao->idLoai)->get();
+        // $sanpham=SanPham::where('id',$ctbaocao->idSanPham)->get();
+        return  view('admin.baocao.chitiet_baocaohethang')->with('dsctbaocao',$dsctbaocao);
 
     }  
 

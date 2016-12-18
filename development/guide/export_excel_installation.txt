@@ -1,6 +1,6 @@
-# HƯỚNG DẪN CÀI ĐẶT (DÀNH CHO AI CLONE SOURCE XUÂN ĐÃ LÀM VỀ)
+﻿# HƯỚNG DẪN CÀI ĐẶT (DÀNH CHO AI CLONE SOURCE XUÂN ĐÃ LÀM VỀ)
 Khi clone source về thì trong file composer.json đã có require "maatwebsite/excel": "~2.1.0" rồi nên chỉ cần chạy lệnh
-php artisan update 
+compser update (anh ghi sai chỗ này rồi)
 là composer sẽ download package về
 
 # HƯỚNG DẪN CÀI ĐẶT (DÀNH CHO AI MUỐN LÀM LẠI TỪ ĐẦU)

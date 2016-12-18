@@ -72,7 +72,7 @@
                           <th>Ngày tạo</th>
                           <th>Ghi chú</th>
                           <th>Tình Trạng</th>
-                          <th></th>
+                          <th>Chức năng</th>
                         
                           
                         
@@ -90,7 +90,7 @@
                           <td>{!!  $tk->Username !!}</td>
                            <td>{!!  $item->NgayTao !!}</td>
                            <td>{!!  $item->GhiChu !!}</td>
-                           <td>{!!  $item->idTinhTrang !!}</td>
+                           <td>{!!  $item->tinh_trang->TinhTrang !!}</td>
                            <td>
                            <a href="{!! route('getCTHetHang',['id' => $item->id]) !!}">
                            <center><button type="button" class="btn btn-info">Xem</button>
