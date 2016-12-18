@@ -25,7 +25,7 @@ class DangNhapController extends Controller
         $tenDangNhap=$request->txtUser;
         $matKhau=$request->txtPass;
         $credentials=['Username' => $tenDangNhap, 'password'=> $matKhau];
-       if(Auth::guard('web')->attempt($credentials))
+       if(Auth::guard('web')->attempt($credentials) && Auth::user()->idTinhTrang==4)
          {
   
        // return "Username: ".$tenDangNhap."Pass = ".$matKhau;

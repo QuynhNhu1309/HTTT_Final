@@ -53,15 +53,13 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-4 form-group"><button class="btn btn-primary form-control" type="submit" ng-disabled="form_login.txtUser.$dirty && form_login.txtUser.$invalid ||form_login.txtPass.$dirty && form_login.txtPass.$invalid">Login</button></div>
+                        <div class="col-md-4 col-md-offset-4 form-group"><button class="btn btn-primary form-control" type="submit" ng-disabled="form_login.txtUser.$dirty && form_login.txtUser.$invalid ||form_login.txtPass.$dirty && form_login.txtPass.$invalid">Đăng Nhập</button></div>
                     </div>
-                    <div class="form-group">
-                        <p class="text-center"><a href="{{ URL::Route('getDangKy') }}">Quên mật khẩu?</a></p>
-                    </div>
+                    
                 </form>
             </div>
         </div>
-        <p class="text-center">Bạn không có tài khoản? <a href="{{ URL::Route('getDangKy') }}">Đăng ký tài khoản mới </a></p>
+        
     </div>
 
     <script>

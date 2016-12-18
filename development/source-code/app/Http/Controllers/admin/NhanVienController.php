@@ -865,8 +865,7 @@ class NhanVienController extends Controller
         $nv->idGroup = $request->cb_chucvu;
         $nv->Pass = bcrypt($request->txt_mat_khau);
         $nv->idTinhTrang = 4;
-        $nv->NgayDangKy = date("Y-m-d H:i:s");
-        $nv->NgayCapNhat = date("Y-m-d H:i:s");
+        
 
         if(Input::file('upload_img'))
         {
