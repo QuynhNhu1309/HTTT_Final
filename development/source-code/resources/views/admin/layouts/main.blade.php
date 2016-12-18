@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" 
       type="image/png" 
-      href="../../assets/logo.png">
+      href="{{asset('assets/img/paw.png') }}">
     <title>@yield('title')</title>
     
     @include('admin.partials.css-assets')

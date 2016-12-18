@@ -7,8 +7,12 @@ use App\Http\Controllers\Controller;
 use App\SanPham;
 use App\LoaiSanPham;
 use App\TinhTrang;
+use App\TaiKhoan;
+use App\BaoCao;
+use App\BaoCaoChiTiet;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class SanphamController extends Controller
 {
     //
@@ -202,6 +206,75 @@ class SanphamController extends Controller
     }
 
 
+    public function getDanhSachHetHang(Request $request){
+        
+        if(Auth::user()->idGroup==1 || Auth::user()->idGroup ==2 )
+        {
+        $idTaiKhoan=Auth::user()->id;
+        $baocao=BaoCao::where('idTaiKhoan',$idTaiKhoan)->get();
+        $taikhoan=TaiKhoan::where('id',$idTaiKhoan)->get();
+        }   
+        else{
+        $idTaiKhoan=Auth::user()->id;
+        $baocao=BaoCao::all();
+        $taikhoan=TaiKhoan::where('id',$idTaiKhoan)->get();
+        }
+        return view('admin.baocao.baocaohethang')->with('baocao',$baocao)->with('taikhoan',$taikhoan);
+    }  
+
+    public function getCTHetHang($id){
+        $ctbaocao=BaoCaoChiTiet::where('idBC',$id)->first();
+        $lsp = LoaiSanPham::where('id',$ctbaocao->idLoai)->get();
+        $sanpham=SanPham::where('id',$ctbaocao->idSanPham)->get();
+        return  view('admin.baocao.chitiet_baocaohethang')->with('chitiet',$ctbaocao)
+                                                            ->with('lsp',$lsp)
+                                                            ->with('sanpham',$sanpham);
+
+
+    }  
+
+     public function postHetHang(Request $request){
+        $dsIdSanPham=[];
+        $ghiChu = null;
+        $idTaiKhoan=Auth::user()->id;
+        if($request->has('idSanPham')){
+           $dsIdSanPham = $request->idSanPham;
+           $ghiChu=$request->ghiChu;
+           
+           
+                    
+            $baoCaoIns = new BaoCao();
+            $baoCaoIns->idTaiKhoan= $idTaiKhoan;
+            $baoCaoIns->NgayTao=date("Y-m-d H:i:s");
+            $baoCaoIns->GhiChu=$request->ghiChu;
+            $baoCaoIns->idTinhTrang=13;
+            
+            if($baoCaoIns->save())
+            {
+            
+            
+            foreach($dsIdSanPham as $IdSanPham)
+            {   
+                $sanpham= SanPham::where('id',$IdSanPham)->first();
+                $chiTietBaoCaoIns = new BaoCaoChiTiet();
+                $chiTietBaoCaoIns->idLoai =  $sanpham->idLoai;
+                $chiTietBaoCaoIns->idSanPham= $IdSanPham;
+                $chiTietBaoCaoIns->idBC = $baoCaoIns->id;
+            
+                $chiTietBaoCaoIns->save();             
+                $baoCaoIns->save();
+                
+            }
+            echo '<script type="text/javascript">
+                alert("Báo Cáo Thành Công !");
+                window.location = "';               echo route('getSPList_hethang');
+            echo'"
+            </script>';;
+            
+        }
+    }
+
+}
 
 
     public function getThem(){

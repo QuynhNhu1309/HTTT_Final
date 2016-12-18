@@ -91,6 +91,7 @@
                       {?>
                       <li><a href="{{ route('baocao_khohang') }}">Kho hàng</a></li>
                       <li><a href="{{ route('baocao_chiphinhap') }}">Chi phí nhập hàng</a></li>
+                      <li><a href="{{ route('getHetHang') }}">Báo cáo hết hàng</a></li>
                       <?php } ?>
                      
                  

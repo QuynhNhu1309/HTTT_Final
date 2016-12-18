@@ -10,6 +10,7 @@
 | to using a Closure or controller method. Build something great!
 |
 */
+Route::get('/', 'admin\DangNhapController@getDangNhap');
 Route::get('dangnhap', 'admin\DangNhapController@getDangNhap')->name('getDangNhap');
 Route::post('dangnhap', 'admin\DangNhapController@postDangNhap')->name('postDangNhap');
 
@@ -40,6 +41,9 @@ Route::group(['prefix'=>'admin','middleware'=>'adminDangNhap_Middleware'], funct
         Route::get('xem/{id}','admin\SanphamController@getXem')->name('getXemSP');
 
         Route::get('danhsach_hethang','admin\SanphamController@getDanhSach_hethang')->name('getSPList_hethang');
+        Route::post('hethang','admin\SanphamController@postHetHang')->name('postHetHang');
+        Route::get('hethang','admin\SanphamController@getDanhSachHetHang')->name('getHetHang');
+        Route::get('chitiethethang/{id}','admin\SanphamController@getCTHetHang')->name('getCTHetHang');
 
     });
 
