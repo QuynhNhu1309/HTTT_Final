@@ -7,7 +7,7 @@
 
 
 
-          <div class="">
+          <div class="" ng-controller="NhapSanPhamCtrl">
             <div class="page-title">
               <div class="col-md-7">
                 <h2>
@@ -28,7 +28,7 @@
             
             <div class="clearfix"></div>
             <!-- Thêm sản phẩm đã tồn tại -->
-              <div class="row collapse" id="them" ng-app="minxApp" ng-controller="NhapSanPhamCtrl">
+              <div class="row collapse" id="them" >
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel " >
                 <div class="x_content" >
@@ -167,6 +167,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="number" name="txt_gianhap" required="required" ng-model="txt_gianhap" class="form-control col-md-7 col-xs-12" value="" ng-value="txt_gianhap"/>                          
+                          @{{txt_gianhap}}
                         </div>
                       </div>
 
