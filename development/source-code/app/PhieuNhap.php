@@ -8,6 +8,7 @@ class PhieuNhap extends Model
 {
     //
     protected $table = 'phieunhap';
-     public $timestamps = false;
-     protected $guarded=[];
+    const CREATED_AT = 'NgayXuatHoaDon';
+    const UPDATED_AT = 'NgayCapNhat';
+    protected $guarded=[];
 }

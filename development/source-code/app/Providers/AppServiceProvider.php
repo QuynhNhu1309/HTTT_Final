@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . '/../../node_modules/froala-editor' => public_path('packages/froala-editor'),
             __DIR__ . '/../../node_modules/angular-froala' => public_path('packages/angular-froala'),
             __DIR__ . '/../../node_modules/angular-ui-bootstrap' => public_path('packages/angular-ui-bootstrap'),
+            __DIR__ . '/../../node_modules/chart.js' => public_path('packages/chart.js'),
         ], 'public');
 
         // Lấy danh sách tài khoản

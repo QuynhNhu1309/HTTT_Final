@@ -326,10 +326,22 @@ class BaoCaoController extends Controller
 
             $excel->sheet('Sheet 1', function($sheet) use ($data) {
                 $sheet->setOrientation('landscape');
+                $sheet->setFitToWidth(true);
+                // Style excel sheet
+                $sheet->setStyle(array(
+                    'font' => array(
+                        'name'      =>  'Calibri',
+                        'size'      =>  15
+                    )
+                ));
+                $sheet->mergeCells('A1:D1');
+                $sheet->cell('A1', function($cell) {
+                    $cell->setValue('Báo cáo doanh thu bán hàng');
+                });
                 // Nhập dữ liệu vào file Excel
                 foreach($data as $key=>$value)
                 {
-                    $sheet->row($key+1, array(
+                    $sheet->row($key+2, array(
                         $key+1, $value
                     ));
                 }
