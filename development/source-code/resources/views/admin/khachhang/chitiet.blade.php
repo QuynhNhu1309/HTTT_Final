@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title','Trang chủ')
+@section('title','Chi tiết khách hàng')
 
 @section('content')
     <!--Begin Content -->

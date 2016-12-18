@@ -99,7 +99,7 @@
                            {{ csrf_field() }}
                           <input name="disabled" value="{!!  $item->tinh_trang->TinhTrang !!}" disabled>
                           <input type="hidden" name="idtinhTrang" value="{!!  $item->id !!}">
-                          <?php if(Auth::user()->idGroup == 3 )
+                         <?php if(Auth::user()->idGroup == 3 && $item->idTinhTrang == 16)
                       {?>
                           <button type="submit" class="btn btn-primary btn-sm">Duyệt</button>
                           <?php } ?>
