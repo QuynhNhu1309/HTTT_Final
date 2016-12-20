@@ -37,27 +37,14 @@
              <div class="row">
             <form action="{{ URL::Route('danh_sach_khach_hang')}}" method="GET" name="form_ad_search_nv">
 
-              <div class="col-md-2 col-sm-2 col-xs-12">
-                <div class="form-group">
-
-                         <select class="form-control" name="chucvu" id="chucvu" >
-                            <option value="">Chức vụ</option>
-                         @foreach($khachhhang_sort_NguoiTao as $item)
-                            <option value="{{ $item->id}}" <?php if (isset($_GET['chucvu']) && $_GET['chucvu'] == $item->id) echo 'selected'; ?>>{{ $item->TinhTrang }}</option>
-                        @endforeach
-                            </select>
-                </div>
-              </div>
-
-              
-
+            
               <div class="col-md-2 col-sm-2 col-xs-12">
                 <div class="form-group">
                          <select class="form-control" name="sapxep" id="sapxep">
                             <option value="">Sắp xếp</option>
                             <option value="1" 
-                            <?php if(isset($_GET['sapxep']) && $_GET['sapxep'] == 1) echo 'selected'; ?>>Tăng dần</option>
-                            <option value="2" <?php if(isset($_GET['sapxep']) && $_GET['sapxep'] == 2) echo 'selected'; ?>>Gỉam dần</option>
+                            <?php if(isset($_GET['sapxep']) && $_GET['sapxep'] == 1) echo 'selected'; ?>>Cũ nhất</option>
+                            <option value="2" <?php if(isset($_GET['sapxep']) && $_GET['sapxep'] == 2) echo 'selected'; ?>>Mới nhất</option>
                             </select>
                 </div>
               </div>

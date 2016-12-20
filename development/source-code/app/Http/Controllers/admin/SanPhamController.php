@@ -9,6 +9,7 @@ use App\LoaiSanPham;
 use App\TinhTrang;
 use App\TaiKhoan;
 use App\BaoCao;
+use App\PhieuNhapChiTiet;
 use App\BaoCaoChiTiet;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;

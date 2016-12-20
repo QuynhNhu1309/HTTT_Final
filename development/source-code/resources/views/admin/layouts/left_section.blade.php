@@ -1,6 +1,6 @@
  
  <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>MINX</span></a>
+              <a href="{{ route('getLoaiSPList') }}" class="site_title"><i class="fa fa-paw"></i> <span>MINX</span></a>
 </div>
 
 <div class="clearfix"></div>

@@ -23,12 +23,12 @@ class KhachHangController extends Controller
         
 
         $search = \Request::get('search');
-        $danhsach_khachhang = KhachHang::where('HoTen','like','%'.$search.'%')->orwhere('DiaChi','like','%'.$search.'%')->paginate(6);
+        $danhsach_khachhang = KhachHang::where('HoTen','like','%'.$search.'%')->orwhere('DiaChi','like','%'.$search.'%')->paginate(10);
 
-        if(isset($_GET['chucvu']))
-        {
-            $chucvu = \Request::get('chucvu');
-        }
+        // if(isset($_GET['chucvu']))
+        // {
+        //     $chucvu = \Request::get('chucvu');
+        // }
 
         if(isset($_GET['sapxep']))
         {
@@ -41,60 +41,34 @@ class KhachHangController extends Controller
         }
 
 
-          if(isset($_GET['chucvu']) && $_GET['chucvu'] !="" && $_GET['key'] == "" && $_GET['sapxep']=="")
-        {
-            $danhsach_khachhang = KhachHang::where('idTaiKhoan',$chucvu)->paginate(2);
-        }
+        
 
-        if(isset($_GET['sapxep']) && $_GET['sapxep'] !="" && $_GET['key'] == "" && $_GET['chucvu']=="")
+        if(isset($_GET['sapxep']) && $_GET['sapxep'] !="" && $_GET['key'] == "")
         {
           
-                 $danhsach_khachhang = KhachHang::paginate(3);
+                 $danhsach_khachhang = KhachHang::paginate(10);
 
             if($_GET['sapxep'] == 2)
             {
-                 $danhsach_khachhang = KhachHang::orderBy('id', 'desc')->paginate(4);
+                 $danhsach_khachhang = KhachHang::orderBy('id', 'desc')->paginate(10);
             }
            
         }
 
-        if(isset($_GET['key']) && $_GET['key'] !="" && $_GET['chucvu'] == "" && $_GET['sapxep']=="")
+        if(isset($_GET['key']) && $_GET['key'] !="" && $_GET['sapxep']=="")
         {
-           $danhsach_khachhang = KhachHang::where('HoTen','like','%'.$key.'%')->orwhere('DiaChi','like','%'.$key.'%')->paginate(5);
+           $danhsach_khachhang = KhachHang::where('HoTen','like','%'.$key.'%')->orwhere('DiaChi','like','%'.$key.'%')->paginate(10);
         }
 
-        if(isset($_GET['chucvu']) && $_GET['chucvu'] !="" && isset($_GET['sapxep']) && $_GET['sapxep'] !="" && $_GET['key'] == "")
-        {
+        
+        
 
-            if($_GET['sapxep'] == 1)
-            {
-                 $danhsach_khachhang = KhachHang::where('idTaiKhoan',$chucvu)->orderBy('id', 'asc')->paginate(6);
-            }
-
-            if($_GET['sapxep'] == 2)
-            {
-                 $danhsach_khachhang = KhachHang::where('idTaiKhoan',$chucvu)->orderBy('id', 'desc')->paginate(7);
-            }
-           
-        }
-
-        if(isset($_GET['chucvu']) && $_GET['chucvu'] !="" && isset($_GET['key']) && $_GET['key'] !="" && $_GET['sapxep']=="")
-        {
-            $danhsach_khachhang = KhachHang::where(function ($query) use ($chucvu) {
-                                                $query->where('idTaiKhoan', $chucvu);
-                                            })->where(function ($query) use($key) {
-                                                $query->orwhere('HoTen','like','%'.$key.'%')
-                                                ->orWhere('DiaChi','like','%'.$key.'%');
-                                            })->paginate(8);
-           
-        }
-
-        if(isset($_GET['sapxep']) && $_GET['sapxep'] !="" && isset($_GET['key']) && $_GET['key'] !="" && $_GET['chucvu']=="")
+        if(isset($_GET['sapxep']) && $_GET['sapxep'] !="" && isset($_GET['key']) && $_GET['key'] !="")
         {
 
             
                  $danhsach_khachhang = KhachHang::where('HoTen','like','%'.$key.'%')
-                                                ->orWhere('DiaChi','like','%'.$key.'%')->paginate(9);
+                                                ->orWhere('DiaChi','like','%'.$key.'%')->paginate(10);
            
 
              if($_GET['sapxep'] == 2)
@@ -105,33 +79,6 @@ class KhachHangController extends Controller
             
            
         }
-
-        if(isset($_GET['chucvu']) && $_GET['chucvu'] !="" && isset($_GET['sapxep']) && $_GET['sapxep'] !="" && isset($_GET['key']) && $_GET['key'] !="")
-        {
-
-            if($_GET['sapxep'] == 1)
-            {
-                 $danhsach_khachhang = KhachHang::where(function ($query) use ($chucvu) {
-                                                $query->where('idTaiKhoan', $chucvu);
-                                            })->where(function ($query) use($key) {
-                                                $query->orwhere('HoTen','like','%'.$key.'%')
-                                                ->orWhere('DiaChi','like','%'.$key.'%');
-                                            })->paginate(3);
-            }
-
-             else if($_GET['sapxep'] == 2)
-            {
-                 $danhsach_khachhang = KhachHang::where(function ($query) use ($chucvu) {
-                                                $query->where('idTaiKhoan', $chucvu);
-                                            })->where(function ($query) use($key) {
-                                                $query->orwhere('HoTen','like','%'.$key.'%')
-                                                ->orWhere('DiaChi','like','%'.$key.'%');
-                                            })->orderBy('id','desc')->paginate(4);
-            }
-            
-           
-        }
-
 
         return view('admin.khachhang.danhsach',['danhsach_khachhang' => $danhsach_khachhang, 'khachhhang_sort_NguoiTao'=> $khachhhang_sort_NguoiTao]) ;
     }
@@ -190,7 +137,7 @@ class KhachHangController extends Controller
         $kh->HoTen = $request ->txt_hoten;
         $kh->DiaChi = $request ->txt_diachi;
         $kh->DienThoai= $request ->txt_sdt;
-        $kh->idTaiKhoan= Auth::user()->idGroup;
+        $kh->idTaiKhoan= Auth::user()->id;
         
 
         $kh ->save();
