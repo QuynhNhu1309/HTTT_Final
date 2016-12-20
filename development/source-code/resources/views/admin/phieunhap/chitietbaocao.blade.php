@@ -45,7 +45,7 @@
                                 <input name="dsChiTietNhapHang[{{ $key+1 }}][idLoai]" type="hidden" value="{{ $chiTietHetHang->san_pham->idLoai }}" />
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $chiTietHetHang->san_pham->TenSP }}</td>
-                                <td><input name="dsChiTietNhapHang[{{ $key+1 }}][giaNhap]" type="number" class="form-control" value="{{ $chiTietHetHang->san_pham->GiaBan }}" /></td>
+                                <td><input name="dsChiTietNhapHang[{{ $key+1 }}][giaNhap]" type="number" class="form-control" value="{{ $chiTietHetHang->san_pham->GiaNhap }}" /></td>
                                 <td><input name="dsChiTietNhapHang[{{ $key+1 }}][soLuongNhap]" type="number" class="form-control" value="{{ $chiTietHetHang->san_pham->SoLuongTonKho }}" /></td>
                             </tr>
                             @endforeach

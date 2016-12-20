@@ -71,7 +71,7 @@
                             <td>{{$ctbaocao->loai->TenLoai}}</td>
                             <td>{{$ctbaocao->san_pham->TenSP}}</td>
                             <td>{{$ctbaocao->san_pham->SoLuongTonKho}}</td>
-                            <td>{{$ctbaocao->san_pham->GiaBan}}</td>
+                            <td>{{$ctbaocao->san_pham->GiaNhap}}</td>
                           </tr>
                         @endforeach
                       </tbody>

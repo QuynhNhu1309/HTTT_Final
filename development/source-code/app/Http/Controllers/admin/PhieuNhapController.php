@@ -85,6 +85,9 @@ class PhieuNhapController extends Controller
         $phieuNhapIns = new PhieuNhap();
         $phieuNhapIns->idTaiKhoan = $idTaiKhoan;
         $phieuNhapIns->TongTien = 0;
+        //$phieuNhapIns->TongTien = 0;
+        $phieuNhapIns->NgayXuatHoaDon = date("Y-m-d H:i:s");
+        $phieuNhapIns->NgayCapNhat = date("Y-m-d H:i:s");
         $phieuNhapIns->save();
 
         // Tạo mã phiếu nhập
@@ -119,7 +122,9 @@ class PhieuNhapController extends Controller
             // Tăng số lượng tồn kho và cập nhật giá gốc mới cho sản phẩm
             $sanPhamIns = SanPham::find($phieuNhapChiTietIns->idSanPham);
             $sanPhamIns->SoLuongTonKho = $sanPhamIns->SoLuongTonKho + $phieuNhapChiTietIns->SoLuongNhap;
-            $sanPhamIns->GiaBan = $phieuNhapChiTietIns->GiaNhap;
+            $sanPhamIns->GiaNhap = $phieuNhapChiTietIns->GiaNhap;
+             $sanPhamIns->GiaBan = $phieuNhapChiTietIns->GiaNhap + ($phieuNhapChiTietIns->GiaNhap*0.3);
+            $sanPhamIns->GiaBanHienTai=  $sanPhamIns->GiaBan-($sanPhamIns->PhanTramKM/100 * $sanPhamIns->GiaBan);
             $sanPhamIns->save();
 
         }
