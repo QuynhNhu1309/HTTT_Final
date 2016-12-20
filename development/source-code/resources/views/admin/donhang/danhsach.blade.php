@@ -58,14 +58,6 @@
 
                   </form>
 
-                  <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search for..." name="search_input" id="search_input">
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="search_function()">Tìm</button>
-                      </span>
-                    </div>
-                  </div>
                 </div>
               </div>
               

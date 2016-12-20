@@ -167,7 +167,6 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="number" name="txt_gianhap" required="required" ng-model="txt_gianhap" class="form-control col-md-7 col-xs-12" value="" ng-value="txt_gianhap"/>                          
-                          @{{txt_gianhap}}
                         </div>
                       </div>
 
