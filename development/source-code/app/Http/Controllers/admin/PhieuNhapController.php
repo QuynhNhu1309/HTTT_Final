@@ -35,8 +35,8 @@ class PhieuNhapController extends Controller
         else if($search == "")
         {
             $phieunhap = PhieuNhap::where('MaPhieuNhap','like','%'.$search.'%')->paginate(10);
+            
         }
-        
         
         if(isset($_GET['month']))
         {

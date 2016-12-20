@@ -8,7 +8,7 @@ class PhieuNhap extends Model
 {
     //
     protected $table = 'phieunhap';
-    const CREATED_AT = 'NgayXuatHoaDon';
-    const UPDATED_AT = 'NgayCapNhat';
+    //const CREATED_AT = 'NgayXuatHoaDon';
+   // const UPDATED_AT = 'NgayCapNhat';
     protected $guarded=[];
 }
