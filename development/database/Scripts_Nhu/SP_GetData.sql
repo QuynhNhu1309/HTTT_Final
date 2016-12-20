@@ -18,7 +18,7 @@ DROP PROCEDURE Data_CT_khachhang
  BEGIN
 	SELECT kh.HoTen as KH_HoTen, kh.MaKhachHang as KH_MaKhachHang, kh.DiaChi as KH_DiaChi, kh.DienThoai as KH_DienThoai,
 	kh.NgayCapNhat as KH_NgayCapNhat, kh.NgayDangKy as KH_NgayDangKy, tk.HoTen as TK_HoTen
-	FROM khachhang kh, taikhoan tk WHERE kh.id = @idkhachhang AND kh.idTaiKhoan = tk.idGroup
+	FROM khachhang kh, taikhoan tk WHERE kh.id = @idkhachhang AND kh.idTaiKhoan = tk.id
  END
 
 EXEC Data_CT_khachhang 1

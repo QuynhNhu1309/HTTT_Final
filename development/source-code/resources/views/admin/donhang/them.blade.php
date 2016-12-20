@@ -136,7 +136,7 @@
                                         <td>@{{sanpham.GiaBanHienTai*sanpham.soLuong}}</td>
                                         <td>
                                             <center>
-                                                <button class="btn btn-danger btn-xs" ng-click ="removeSanPham(sanpham.MaSP)"><i class="fa fa-trash-o"></i> Delete </button>
+                                                <button class="btn btn-danger btn-xs" ng-click ="removeSanPham(sanpham.MaSP)"><i class="fa fa-trash-o"></i> Xóa </button>
                                             </center>
                                         </td>
                                     </tr>

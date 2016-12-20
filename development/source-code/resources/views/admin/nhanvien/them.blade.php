@@ -12,7 +12,7 @@
                 <!-- Breadcrumbs go here -->
                 <h2>
                 <ul class="breadcrumb">
-                    <li><a href="#">Thông tin cá nhân</a></li>
+                    <li><a href="{{ Route('danh_sach_nhan_vien') }}">Thông tin cá nhân</a></li>
                     <li class="active">Thêm Nhân viên</li>
                 </ul>
                 </h2>

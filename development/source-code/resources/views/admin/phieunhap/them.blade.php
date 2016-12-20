@@ -17,7 +17,7 @@
                     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#them">Thêm sản phẩm</button>
                     </li>-->
                     <li>
-                      <a class="btn btn-info" href="{{ URL::Route('get_danh_sach_bao_cao') }}">Danh sách báo cáo</a>
+                      <a class="btn btn-info" href="{{ URL::Route('get_danh_sach_bao_cao') }}">Báo cáo được duyệt</a>
                     </li>
                 </ul>
                 </h2>

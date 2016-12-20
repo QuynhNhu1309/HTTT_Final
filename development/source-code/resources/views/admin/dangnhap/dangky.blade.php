@@ -9,7 +9,7 @@
 
     <title>Admin Login | </title>
 
-     @include('admin.partials.assets')
+     @include('admin.partials.css-assets')
   </head>
 
   <body class="login">

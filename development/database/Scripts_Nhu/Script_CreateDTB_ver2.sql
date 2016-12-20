@@ -10,6 +10,8 @@ Go
 
 --------------- TÌNH TRẠNG  -------------
 
+
+DROP TABLE tinhtrang
 create table tinhtrang(
 	id int primary key NOT NULL IDENTITY(1, 1),
 	TinhTrang nvarchar(255),
@@ -80,7 +82,7 @@ CREATE TABLE sanpham (
 )
 
 
-
+DROP TABLE taikhoan
 
 
 ------------------  PHIẾU NHẬP  ----------------------------
@@ -163,6 +165,28 @@ CREATE TABLE donhang_chitiet (
 ) 
 
 
+-------------- BÁO CÁO -------
+
+CREATE TABLE baocao (
+  id int primary key NOT NULL IDENTITY(1, 1),
+  idTaiKhoan int FOREIGN KEY (idTaiKhoan) references taikhoan(id) NOT NULL,
+  NgayTao smalldatetime NULL,
+  GhiChu nvarchar(255) NULL,
+  idTinhTrang int FOREIGN KEY (idTinhTrang) references tinhtrang(id) NOT NULL,
+)
+
+
+-------------- BÁO CÁO CHI TIẾT-------
+
+CREATE TABLE baocao (
+  id int primary key NOT NULL IDENTITY(1, 1),
+  idTaiKhoan int FOREIGN KEY (idTaiKhoan) references taikhoan(id) NOT NULL,
+  NgayTao smalldatetime NULL,
+  GhiChu nvarchar(255) NULL,
+  idTinhTrang int FOREIGN KEY (idTinhTrang) references tinhtrang(id) NOT NULL,
+)
+
+
 
 
 ---- INSERT DATA -----
@@ -196,6 +220,9 @@ INSERT INTO tinhtrang(TinhTrang, TenBang, ThuocTinh) VALUES (N'DEMO','', '');
 INSERT INTO tinhtrang(TinhTrang, TenBang, ThuocTinh) VALUES (N'Chưa xử lý','donhang', 'idTinhTrang');
 INSERT INTO tinhtrang(TinhTrang, TenBang, ThuocTinh) VALUES (N'Đã xử lý','donhang', 'idTinhTrang');
 INSERT INTO tinhtrang(TinhTrang, TenBang, ThuocTinh) VALUES (N'Hủy','donhang', 'idTinhTrang');
+INSERT INTO tinhtrang(TinhTrang, TenBang, ThuocTinh) VALUES (N'Chưa Duyệt','baocao', 'idTinhTrang');
+INSERT INTO tinhtrang(TinhTrang, TenBang, ThuocTinh) VALUES (N'Đã Duyệt','baocao', 'idTinhTrang');
+INSERT INTO tinhtrang(TinhTrang, TenBang, ThuocTinh) VALUES (N'Đã Nhập','baocao', 'idTinhTrang');
 
 
 		---SAN PHAM --
@@ -411,8 +438,8 @@ INSERT INTO phieunhap_chitiet(MaPhieuNhapChiTiet, NhaSanXuat, idLoai, idSanPham,
 				--- KHACH HANG -----
 
 INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'KH00001',N'Phạm Lê Quỳnh Như', N'An Dương Vương, Quận 5','2132314','2016-11-23 20:32:00','2016-11-23 20:32:00',3);
-INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'KH00002',N'fdsfsfs', N'An Dương Vương, Quận 6','243242343242','2016-11-23 20:41:00','2016-11-23 20:41:00',3);
-INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'KH00003',N'fsdfsfsfsf', N'An Dương Vương, Quận 7','989324324','2016-11-23 20:41:00','2016-11-23 20:41:006',3);
-INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'KH00004',N'fsfsdfsf', N'An Dương Vương, Quận 8','2323323213','2016-11-23 20:41:00','2016-11-23 20:41:00',3);
-INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'K01',N'Xuan', N'Bình Phú, Quận 9','232','2016-11-23 20:41:00','2016-11-23 20:41:00',1);
+INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'KH00002',N'Phạm Thị Phúc Xuân', N'An Dương Vương, Quận 6','243242343242','2016-11-23 20:41:00','2016-11-23 20:41:00',3);
+INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'KH00003',N'Guỳnh Kim Xuân', N'An Dương Vương, Quận 7','989324324','2016-11-23 20:41:00','2016-11-23 20:41:006',3);
+INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'KH00004',N'Lê Hoàng Minh Hiếu', N'An Dương Vương, Quận 8','2323323213','2016-11-23 20:41:00','2016-11-23 20:41:00',3);
+INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'K01',N'Nguyễn Tuấn Vũ', N'Bình Phú, Quận 9','232','2016-11-23 20:41:00','2016-11-23 20:41:00',1);
 INSERT INTO khachhang(MaKhachHang, HoTen,DiaChi, DienThoai, NgayDangKy, NgayCapNhat, idTaiKhoan) VALUES (N'K01',N'Xuan', N'An Dương Vương, Quận 10','324324','2016-11-23 20:41:00','2016-11-23 20:41:00',1);

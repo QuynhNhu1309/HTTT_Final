@@ -855,6 +855,7 @@ class NhanVienController extends Controller
         //echo $MaTaiKhoan[0]->MaTaiKhoan;
         //$MaTaiKhoan = DB::select("EXEC Them_Lay_Ma_Tai_Khoan");//Tạo mã tài khoản
         $nv->MaTaiKhoan = $MaTaiKhoan[0]->MaTaiKhoan;
+        
         $nv->HoTen = $request ->txt_hoten;
         $nv->Username = $request ->txt_ten_dang_nhap;
         $nv->Email = $request ->txt_email;

@@ -62,7 +62,7 @@
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="Search for..." name="search_input" id="search_input">
                       <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="search_function()">Go!</button>
+                        <button class="btn btn-default" type="button" onclick="search_function()">Tìm</button>
                       </span>
                     </div>
                   </div>
